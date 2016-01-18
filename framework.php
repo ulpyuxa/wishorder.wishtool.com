@@ -44,10 +44,10 @@ class Core {
 		if(C("DATAGATE") == "db"){
 			$db	=	C("DB_TYPE");
 			include	WEB_PATH."lib/db/".$db.".php";	//db直连
-			if($db	==	"mysql"){
+			if($db	==	"mysqli"){
 				global	$dbConn;
 				$db_config	=	C("DB_CONFIG");
-				$dbConn	=	new mysql();
+				$dbConn	=	new mysqliDB();
 				$dbConn->connect($db_config["master1"]['HOST'],$db_config["master1"]['USER'],$db_config["master1"]['PASS']);
 				$dbConn->select_db($db_config["master1"]['DBNAME']);
 			}

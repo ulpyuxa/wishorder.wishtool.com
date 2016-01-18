@@ -16,12 +16,13 @@ return  array(
 
 	//数据接口相关
 	"DATAGATE"		=>	"db",		//	数据接口层 cache, db, socket
-	"DB_TYPE"		=>	"mysql",	//	mysql	mssql	postsql	mongodb		
+	"DB_TYPE"		=>	"mysqli",	//	mysql	mssql	postsql	mongodb		
 	
 
 	//mysql db	配置
 	"DB_CONFIG"		=>	array(
 		"master1"	=>	array('HOST' => '192.168.191.2', 'USER' => 'root', 'PASS' => 'pdcxaje', 'PORT' => '3306', 'DBNAME' => 'zxh_wish'),			//主DB
+		"master1"	=>	array('HOST' => '192.168.200.233', 'USER' => 'root', 'PASS' => '123456', 'PORT' => '3306', 'DBNAME' => 'oversold'),			//主DB
 		//"slave1"	=>	array("localhost","root","","3306")		//从DB
 	),
 	'OPENTOKEN'	=> '5f5c4f8c005f09c567769e918fa5d2e3',

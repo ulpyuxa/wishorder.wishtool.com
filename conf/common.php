@@ -16,7 +16,7 @@ return  array(
 
 	//数据接口相关
 	"DATAGATE"		=>	"db",		//	数据接口层 cache, db, socket
-	"DB_TYPE"		=>	"mysql",	//	mysql	mssql	postsql	mongodb		
+	"DB_TYPE"		=>	"mysqli",	//	mysql	mssql	postsql	mongodb		
 	
 
 	//mysql db	配置

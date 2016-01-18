@@ -1,12 +1,12 @@
 <?php
-class mysqli{
+class mysqliDB{
 	var $version = '';
 	var $querynum = 0;
 	var $link = null;
 
 	function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE, $dbcharset2 = '') {
 		$func = empty($pconnect) ? 'mysqli_connect' : 'mysqli_connect';
-		if(!$this->link = @$func($dbhost, $dbuser, $dbpw, 1)) {
+		if(!$this->link = @$func($dbhost, $dbuser, $dbpw, $dbname)) {
 			$halt && $this->halt('Can not connect to MySQL server');
 		} else {
 			if($this->version() > '4.1') {
@@ -15,15 +15,15 @@ class mysqli{
 				$dbcharset = !$dbcharset && in_array(strtolower($charset), array('gbk', 'big5', 'utf-8')) ? str_replace('-', '', $charset) : $dbcharset;
 				$serverset = $dbcharset ? 'character_set_connection='.$dbcharset.', character_set_results='.$dbcharset.', character_set_client=binary' : '';
 				$serverset .= $this->version() > '5.0.1' ? ((empty($serverset) ? '' : ',').'sql_mode=\'\'') : '';
-				$serverset && mysqli_query("SET $serverset", $this->link);
+				$serverset && mysqli_query($this->link, "SET $serverset");
 			}
-			$dbname && @mysqli_select_db($dbname, $this->link);
+			$dbname && @mysqli_select_db($this->link, $dbname);
 		}
-		@mysql_query("set names utf8");
+		@mysqli_query($this->link, "set names utf8");
 	}
 
 	function select_db($dbname) {	//完成
-		return mysqli_select_db($dbname, $this->link);
+		return mysqli_select_db($this->link, $dbname);
 	}
 
 	function fetch_array($query, $result_type = MYSQL_ASSOC) {		//完成
@@ -55,7 +55,7 @@ class mysqli{
 
 		$func = $type == 'UNBUFFERED' && @function_exists('mysql_unbuffered_query') ?
 			'mysql_unbuffered_query' : 'mysqli_query';
-		if(!($query = $func($sql, $this->link))) {
+		if(!($query = $func($this->link, $sql))) {
 			if(in_array($this->errno(), array(2006, 2013)) && substr($type, 0, 5) != 'RETRY') {
 				$this->close();
 				$db_config	=	C("DB_CONFIG");
