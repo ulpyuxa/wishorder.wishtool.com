@@ -1,0 +1,11 @@
+name: wishitem
+version: 2
+handle:
+
+#- rewrite: if (path ~ "/index.php") goto "/html/index.php"
+#强制跳转到/html目录下面
+- rewrite:if (path ~ "^(?!html/)(.*)") goto "html/$1?%{QUERY_STRING}"
+
+
+#默认页面
+#- directoryindex: /html/index.php
