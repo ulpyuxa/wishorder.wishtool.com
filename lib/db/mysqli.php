@@ -1,11 +1,18 @@
 <?php
+/**
+ * 功能: mysql访问底层类
+ * 版本: v2.0
+ * 
+ * 修改历史:
+ * v2.0		修改为mysqli类
+ */
 class mysqliDB{
 	var $version = '';
 	var $querynum = 0;
 	var $link = null;
 
 	function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE, $dbcharset2 = '') {
-		$func = empty($pconnect) ? 'mysqli_connect' : 'mysqli_connect';
+		$func = empty($pconnect) ? 'mysqli_connect' : 'mysqli_connect';		//mysqli取消长连接
 		if(!$this->link = @$func($dbhost, $dbuser, $dbpw, $dbname)) {
 			$halt && $this->halt('Can not connect to MySQL server');
 		} else {
