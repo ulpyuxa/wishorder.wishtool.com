@@ -12,8 +12,13 @@ class mysqliDB{
 	var $link = null;
 
 	function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE, $dbcharset2 = '') {
-		$func = empty($pconnect) ? 'mysqli_connect' : 'mysqli_connect';		//mysqli取消长连接
-		if(!$this->link = @$func($dbhost, $dbuser, $dbpw, $dbname)) {
+		if(!empty($pconnect)) {
+			$socketPath = get_cfg_var('mysqli.default_socket');
+			$this->link = mysqli_connect('p'.$dbhost, $dbuser, $dbpw, $dbname, '3306', $socketPath);
+		} else {
+			$this->link = mysqli_connect($dbhost, $dbuser, $dbpw);
+		}
+		if(!$this->link) {
 			$halt && $this->halt('Can not connect to MySQL server');
 		} else {
 			if($this->version() > '4.1') {
@@ -116,6 +121,10 @@ class mysqliDB{
 		return $query;
 	}
 
+	function fetch_assoc($query) {
+		$query = mysqli_fetch_assoc($query);
+		return $query;
+	}
 	function fetch_fields($query) {		//完成
 		return mysqli_fetch_field($query);
 	}
@@ -140,6 +149,28 @@ class mysqliDB{
 		Log::write($errorStr,Log::ERR);
 		throw new Exception($message);
 	}
-}
+	
+	
+	
+	/*************************
+	 * 事务支持(必须是inodb或ndb引擎)
+	 */
+	function begin(){
+		$this->query("SET AUTOCOMMIT=0");
+		$this->query("BEGIN");
+	}
+	
+	function commit(){
+		$this->query("COMMIT");
+	}
+	
+	function rollback(){
+		$this->query("ROLLBACK");
+	}
+	
 
-?>
+	function ping(){
+		
+		return mysqli_ping($this->link);
+	}
+}
