@@ -48,7 +48,7 @@ class Core {
 				global	$dbConn;
 				$db_config	=	C("DB_CONFIG");
 				$dbConn	=	new mysqliDB();
-				$dbConn->connect($db_config["master1"]['HOST'],$db_config["master1"]['USER'],$db_config["master1"]['PASS']);
+				$dbConn->connect($db_config["master1"]['HOST'],$db_config["master1"]['USER'],$db_config["master1"]['PASS'],$db_config["master1"]['DBNAME']);
 				$dbConn->select_db($db_config["master1"]['DBNAME']);
 			}
 		}
