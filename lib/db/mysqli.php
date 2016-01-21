@@ -14,6 +14,7 @@ class mysqliDB{
 	function connect($dbhost, $dbuser, $dbpw, $dbname = '', $pconnect = 0, $halt = TRUE, $dbcharset2 = '') {
 		if(!empty($pconnect)) {
 			$socketPath = get_cfg_var('mysqli.default_socket');
+			echo $socketPath;exit;
 			$this->link = mysqli_connect('p'.$dbhost, $dbuser, $dbpw, $dbname, '3306', $socketPath);
 		} else {
 			$this->link = mysqli_connect($dbhost, $dbuser, $dbpw);
