@@ -41,7 +41,7 @@ class Core {
 		include	WEB_PATH."lib/cache/cache.php";	//cache
 		include	WEB_PATH."lib/service/http.php";	//网络接口	
 		include	WEB_PATH."lib/functions.php";
-		/*if(C("DATAGATE") == "db"){
+		if(C("DATAGATE") == "db"){
 			$db	=	C("DB_TYPE");
 			include	WEB_PATH."lib/db/".$db.".php";	//db直连
 			if($db	==	"mysqli"){
@@ -51,7 +51,7 @@ class Core {
 				$dbConn->connect($db_config["master1"]['HOST'],$db_config["master1"]['USER'],$db_config["master1"]['PASS'],$db_config["master1"]['DBNAME']);
 				$dbConn->select_db($db_config["master1"]['DBNAME']);
 			}
-		}*/
+		}
 		
 		//自动加载类
 		 spl_autoload_register(array('Core', 'autoload'));
