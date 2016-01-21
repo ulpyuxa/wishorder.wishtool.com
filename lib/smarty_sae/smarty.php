@@ -3,7 +3,7 @@ include 'libs/Smarty.class.php';
 class AppSmarty extends Smarty{
 	public function __construct(){
 		parent::__construct();
-
+echo ENV;exit;
 		//$this->cache_lifetime = 30*24*3600; //更新周期
 		$this->template_dir		= WEB_PATH.'html/templates';
 		$this->compile_dir		= !defined('ENV') ? 'saemc://smartytpl/' : WEB_PATH.'lib/smarty_sae/template_c/';
