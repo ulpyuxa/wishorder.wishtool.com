@@ -6,7 +6,7 @@ class AppSmarty extends Smarty{
 	
 		//$this->cache_lifetime = 30*24*3600; //更新周期
 		$this->caching			= false; //是否使用缓存，项目在调试期间，不建议启用缓存
-		$this->setTemplateDir(WEB_PATH.'html/tpmplates'); //设置模板目录
+		$this->setTemplateDir(WEB_PATH.'html/templates'); //设置模板目录
 		if(!defined('ENV')) {
 			mkdir('saemc://templates_c/');
 		}
