@@ -16,6 +16,6 @@ class AppSmarty extends Smarty{
 		$this->setCompileLocking(false);
 		$this->setLeftDelimiter('{');
 		$this->setRightDelimiter('}');
-		$this->setDebugging(true);
+		$this->setDebugging(false);
 	}
 }
