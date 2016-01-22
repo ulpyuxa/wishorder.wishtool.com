@@ -94,7 +94,7 @@ class Log {
             $destination   =   $destination?$destination:C('LOG_DEST');
             $extra   =  $extra?$extra:C('LOG_EXTRA');
         }
-        //error_log("{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n", $type,$destination,$extra );
+        error_log("{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n", $type,$destination,$extra );
 		//echo "{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n";
     }
 }
