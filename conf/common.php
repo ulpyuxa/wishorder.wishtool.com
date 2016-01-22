@@ -27,6 +27,11 @@ return  array(
 	),
 	'OPENTOKEN'	=> '5f5c4f8c005f09c567769e918fa5d2e3',
 	/**图片系统相关变量**/
+	'ORDERSTAT'	=> array(
+		'APPROVED'	=> '已付款未发货',
+		'SHIPPED'	=> '已发货',
+		'REFUNDED'	=> '已退款',
+	),
 );
 
 ?>

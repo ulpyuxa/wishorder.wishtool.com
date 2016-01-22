@@ -1,5 +1,8 @@
 <?php
 class WishOrderAct extends CommonAct{
+	static $errCode	=	0;
+	static $errMsg	=	"";
+
 	public function __construct() {
 		parent::__construct();
 		$this->smarty->template_dir = WEB_PATH.'html/templates/order';	//设置本功能所有页面的模板路径
@@ -12,6 +15,10 @@ class WishOrderAct extends CommonAct{
 		$wishOrderApi	= new WishOrderApi('geshan0728', 1);
 		$ret			= $wishOrderApi->getAllorder($start, $count);
 		$insert			= WishOrderModel::addOrder($ret);
+		if(!$insert) {
+			self::$errCode	= WishOrderModel::$errCode;
+			self::$errMsg	= WishOrderModel::$errMsg;
+		}
 		return $insert;
 	}
 
@@ -19,10 +26,9 @@ class WishOrderAct extends CommonAct{
 	 * 订单列表
 	 */
 	public function act_wishOrderList() {
-		echo 'fff';exit;
 		$orderData	= wishOrderModel::getOrderData();
-		print_r($orderData);exit
-		$this->smarty->assign('data', $orderData);
+
+		$this->smarty->assign('orderData', $orderData);
 		$this->smarty->display('wishOrderList.tpl');
 	}
 }

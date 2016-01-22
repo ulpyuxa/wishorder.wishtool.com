@@ -14,9 +14,13 @@ class WishOrderModel {
 
 	public static function getOrderData() {
 		self::initDB();
-		$sql	= 'SELECT * FROM `ws_order`';
-		$query	= self::$dbConn->query($sql);
-		$ret	= self::$dbConn->fetch_array_all($query);
+		$sql		= 'SELECT * FROM `ws_order`';
+		$query		= self::$dbConn->query($sql);
+		$ret		= self::$dbConn->fetch_array_all($query);
+		$orderStat	= C('ORDERSTAT');
+		foreach($ret as $k => $v) {
+			$ret[$k]['stateZH'] = $orderStat[$v['state']];
+		}
 		return $ret;
 	}
 
@@ -42,21 +46,21 @@ class WishOrderModel {
 	public static function addOrder($orderData) {
 		self::initDB();
 		$orderId	= array();
-		foreach($orderData as $key => $val) {
-			$orderId[] = $val['order_id'];
+		foreach($orderData[0]['data'] as $key => $val) {
+			$orderId[] = $val['Order']['order_id'];
 		}
 		$ret	= self::getOrderDataById($orderId);
-		foreach($orderData as $k => $v) {		//删除重复的订单
-			if(isset($ret[$v['order_id']])) {
-				unset($orderData[$k]);
+		foreach($orderData[0]['data'] as $k => $v) {		//删除重复的订单
+			if(isset($ret[$v['Order']['order_id']])) {
+				unset($orderData[0]['data'][$k]);
 			}
 		}
-		$orderInfo = array();
-		if(!isset($orderData[0]['data'])) {
+		if(!isset($orderData[0]['data']) || empty($orderData[0]['data'])) {
 			self::$errCode	= '1001';
-			self::$errMsg	= '没有订单数据';
+			self::$errMsg	= '遗憾, 还没有新订单';
 			return false;
 		}
+		$orderInfo = array();
 		$insertSql = array();
 		foreach($orderData[0]['data'] as $k => $v) {
 			$skuInfo		= explode('#', $v['Order']['sku']);

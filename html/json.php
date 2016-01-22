@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 header("Content-type: text/html; charset=utf-8");
 date_default_timezone_set('Asia/Shanghai');
-include "../index.php";
+include "../framework.php";
 Core::getInstance();
 
 $mod	=	isset($_REQUEST['mod']) ? $_REQUEST['mod']: "";
