@@ -53,12 +53,14 @@ class Log {
     static function save($type='',$destination='',$extra='') {
         $type = $type?$type:C('LOG_TYPE');
         if(self::FILE == $type) { // 文件方式记录日志信息
-            if(empty($destination))
-                $destination = C('LOG_PATH').date('y_m_d').'.log';
+            if(empty($destination)) {
+                $destination = C('LOG_PATH').date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
+			}
             //检测日志文件大小，超过配置大小则备份日志文件重新生成
-            if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination) )
-                  rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
-        }else{
+            if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination)) {
+				rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
+			}
+        } else {
             $destination   =   $destination?$destination:C('LOG_DEST');
             $extra   =  $extra?$extra:C('LOG_EXTRA');
         }
@@ -83,16 +85,18 @@ class Log {
      */
     static function write($message,$level=self::ERR,$type='',$destination='',$extra='') {
         $now = date(self::$format);
-        $type = $type?$type:C('LOG_TYPE');
+        $type = $type ? $type : C('LOG_TYPE');
         if(self::FILE == $type) { // 文件方式记录日志
-            if(empty($destination))
-                $destination = C('LOG_PATH').date('y_m_d').'.log';
+            if(empty($destination)) {
+                $destination = C('LOG_PATH').date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
+			}
             //检测日志文件大小，超过配置大小则备份日志文件重新生成
-            if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination) )
-                  rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
+            if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination) ) {
+				rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
+			}
         }else{
-            $destination   =   $destination?$destination:C('LOG_DEST');
-            $extra   =  $extra?$extra:C('LOG_EXTRA');
+            $destination	= $destination ? $destination : C('LOG_DEST');
+            $extra			= $extra?$extra:C('LOG_EXTRA');
         }
         error_log("{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n", $type,$destination,$extra );
 		//echo "{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n";

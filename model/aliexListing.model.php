@@ -15,7 +15,7 @@ class AliexListingModel {
 	public static function getListingData() {
 		self::initDB();
 
-		$sql	= 'SELECT * FROM `wish_account`';
+		$sql	= 'SELECT * FROM `ws_account`';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 		return $ret;
