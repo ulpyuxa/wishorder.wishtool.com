@@ -32,11 +32,11 @@ class mysqliDB{
 		return mysqli_select_db($this->link, $dbname);
 	}
 
-	function fetch_array($query, $result_type = MYSQL_ASSOC) {		//完成
+	function fetch_array($query, $result_type = MYSQLI_ASSOC) {		//完成
 		return mysqli_fetch_array($query, $result_type);
 	}
 
-	function fetch_array_all($query, $result_type = MYSQL_ASSOC){	//完成
+	function fetch_array_all($query, $result_type = MYSQLI_ASSOC){	//完成
 		$arr	=	array();
 		while(1 && $ret	=	mysqli_fetch_array($query, $result_type)){
 			$arr[]	=	$ret;	
