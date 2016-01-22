@@ -54,7 +54,7 @@ class Log {
         $type = $type?$type:C('LOG_TYPE');
         if(self::FILE == $type) { // 文件方式记录日志信息
             if(empty($destination)) {
-                $destination = C('LOG_PATH').date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
+                $destination = C('LOG_PATH').'sys_log'.date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
 			}
             //检测日志文件大小，超过配置大小则备份日志文件重新生成
             if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination)) {
@@ -88,16 +88,19 @@ class Log {
         $type = $type ? $type : C('LOG_TYPE');
         if(self::FILE == $type) { // 文件方式记录日志
             if(empty($destination)) {
-                $destination = C('LOG_PATH').date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
+                $destination = C('LOG_PATH').'sys_log'.date('Y').'/'.date('m').'/'.date('y_m_d').'.log';
 			}
             //检测日志文件大小，超过配置大小则备份日志文件重新生成
             if(is_file($destination) && floor(C('LOG_FILE_SIZE')) <= filesize($destination) ) {
-				rename($destination,dirname($destination).'/'.time().'-'.basename($destination));
+				rename($destination,'sys_log'.dirname($destination).'/'.time().'-'.basename($destination));
 			}
         }else{
             $destination	= $destination ? $destination : C('LOG_DEST');
             $extra			= $extra?$extra:C('LOG_EXTRA');
         }
+		if(!is_dir(dirname($destination))) {
+			mkdir(dirname($destination), 0777, 1);
+		}
         error_log("{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n", $type,$destination,$extra );
 		//echo "{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n";
     }

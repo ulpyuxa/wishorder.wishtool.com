@@ -90,6 +90,15 @@ class Core {
 			}
 			include_once Core::$classFile;
 		}
+		if(strpos($class,"Api")){
+			$name	=	preg_replace("/Api/","",$class);
+			$fileName	=	lcfirst($name).".class.php";
+			Core::getFile($fileName,WEB_PATH."lib/sdk/wishSdk/");			
+			if(empty(Core::$classFile)){
+				exit('View not exits');
+			}
+			include_once Core::$classFile;
+		}
 	}
 	
 	public static function getFile($fileName,$path){ 

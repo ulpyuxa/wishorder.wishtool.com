@@ -13,7 +13,7 @@
 	<body>
 		<div class="container-fluid">
 			<div id = 'nav'>
-				{include file='header.tpl'}
+				{include file='../header.tpl'}
 			</div>
 			<div class="row">
 				<div class="col-md-3">

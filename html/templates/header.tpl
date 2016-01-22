@@ -1,14 +1,3 @@
-			<!--菜单导航-->
-			<!--<nav class="navbar navbar-default navbar-static-top ">
-			  <div class="navbar-inner">
-				  <ul class="nav navbar-nav">
-					<li class="active"><a href="#">范本管理</a></li>
-					<li><a href="#">listing管理</a></li>
-					<li><a href="#">账号管理</a></li>
-				  </ul>
-			  </div>
-			</nav>-->
-			<!--菜单导航-->
 			<nav class="navbar navbar-default navbar-static-top ">
 			  <div class="navbar-inner">
 				  <div class="collapse navbar-collapse navbar-ex1-collapse">

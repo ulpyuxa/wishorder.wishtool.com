@@ -9,7 +9,7 @@ return  array(
 	//日志相关
 	"LOG_RECORD"	=>	true,		//	开启日志记录
 	"LOG_TYPE"		=>	3,			//	1.mail  2.file 3.api
-	"LOG_PATH"		=>	WEB_PATH."/log/",	//文件日志目录
+	"LOG_PATH"		=>	WEB_PATH."log/",	//文件日志目录
 	"LOG_FILE_SIZE"	=>	2097152,
 	"LOG_DEST"		=>	"",			//	日志记录目标
 	"LOG_EXTRA"		=>	"",			//	日志记录额外信息

@@ -22,8 +22,8 @@ use Wish\Model\WishTracker;
 use Wish\Exception\OrderAlreadyFulfilledException;
 use Wish\Model\WishReason;
 
-$token = 'ACCESS_TOKEN';
-$client = new WishClient($token,'sandbox');
+$token = 'JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=';
+$client = new WishClient($token,'prod');
 
 //Fulfill one order by ID
 //$tracker = new WishTracker('USPS','123123123','Thanks for buying!');
@@ -35,7 +35,7 @@ $client = new WishClient($token,'sandbox');
 //Get an array of all changed orders since January 20, 2010
 $changed_orders = $client->getAllChangedOrdersSince();
 print(count($changed_orders)." changed orders.\n");
-
+exit;
 //Get an array of all unfufilled orders since January 20, 2010
 $unfulfilled_orders = $client->getAllUnfulfilledOrdersSince('2010-01-20');
 print(count($unfulfilled_orders)." changed orders.\n");
