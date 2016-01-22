@@ -23,6 +23,7 @@ return  array(
 	"DB_CONFIG"		=>	array(
 		//"master1"	=>	array('HOST' => 'localhost', 'USER' => 'root', 'PASS' => 'pdcxaje', 'PORT' => '3306', 'DBNAME' => 'zxh_wish'),			//主DB
 		"master1"	=>	array('HOST' => '192.168.200.233', 'USER' => 'root', 'PASS' => '123456', 'PORT' => '3306', 'DBNAME' => 'oversold'),			//主DB
+		//"master1"	=>	array('HOST' => '192.168.1.103', 'USER' => 'www', 'PASS' => '123456', 'PORT' => '3306', 'DBNAME' => 'zxh_wish'),	
 		//"slave1"	=>	array("localhost","root","","3306")		//从DB
 	),
 	'OPENTOKEN'	=> '5f5c4f8c005f09c567769e918fa5d2e3',
