@@ -8,12 +8,20 @@ class WishOrderAct extends CommonAct{
 	/**
 	 * 获取线上订单
 	 */
-	public function act_wishOrderList() {
+	public function act_wishOrderSync($start = 0, $count = 50) {
 		$wishOrderApi	= new WishOrderApi('geshan0728', 1);
-		$ret			= $wishOrderApi->getAllorder(0, 50);
-		print_r($ret);
-		/*$listingData = wishOrderModel::getOrderData();
-		$this->smarty->assign('data', $listingData[0]);
-		$this->smarty->display('wishListinglist.tpl');*/
+		$ret			= $wishOrderApi->getAllorder($start, $count);
+		$insert			= WishOrderModel::addOrder($ret);
+		return $insert;
+	}
+
+	/**
+	 * 订单列表
+	 */
+	public function act_wishOrderList() {
+		$orderData	= wishOrderModel::getOrderData();
+
+		$this->smarty->assign('data', $orderData);
+		$this->smarty->display('wishOrderList.tpl');
 	}
 }
