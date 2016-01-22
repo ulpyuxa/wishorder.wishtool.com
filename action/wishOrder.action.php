@@ -19,8 +19,9 @@ class WishOrderAct extends CommonAct{
 	 * 订单列表
 	 */
 	public function act_wishOrderList() {
+		echo 'fff';exit;
 		$orderData	= wishOrderModel::getOrderData();
-
+		print_r($orderData);exit
 		$this->smarty->assign('data', $orderData);
 		$this->smarty->display('wishOrderList.tpl');
 	}
