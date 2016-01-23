@@ -14,7 +14,12 @@ class WishOrderModel {
 
 	public static function getOrderData() {
 		self::initDB();
-		$sql		= 'SELECT * FROM `ws_order`';
+
+		$where = ' where 1 ';
+		if (isset($_REQUEST['state']) && $_REQUEST['state'] !== 'ALL') {
+			$where .= ' and state="'.$_REQUEST['state'].'"';
+		}
+		$sql		= 'SELECT * FROM `ws_order`'.$where;
 		$query		= self::$dbConn->query($sql);
 		$ret		= self::$dbConn->fetch_array_all($query);
 		$orderStat	= C('ORDERSTAT');
@@ -100,5 +105,20 @@ class WishOrderModel {
 		$sql	= 'insert into ws_order (`'.implode('`,`', array_keys($orderInfo[0])).'`) values '.implode(',', $insertSql);
 		$query	= self::$dbConn->query($sql);
 		return $query;
+	}
+
+	public static function orderCount() {
+		self::initDB();
+
+		$orderStat	= C('ORDERSTAT');
+		$orderCount	= array();
+		foreach($orderStat as $k => $v) {
+			$sql	= 'select count(*) as counts from ws_order where state = "'.$k.'"';
+			$query	= self::$dbConn->query($sql);
+			$ret	= self::$dbConn->fetch_array_all($query);
+			$orderCount[$k] = $ret[0]['counts'];
+		}
+		$orderCount['sum'] = array_sum($orderCount);
+		return $orderCount;
 	}
 }
