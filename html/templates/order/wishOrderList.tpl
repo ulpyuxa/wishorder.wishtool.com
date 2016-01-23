@@ -47,7 +47,7 @@
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr class="info">
-											<th width="3%">图片</th>
+											<th width="5%">图片</th>
 											<th width="20%">标题</th>
 											<th width="5%">SKU</th>
 											<th width="5%">订单<br />价格</th>
