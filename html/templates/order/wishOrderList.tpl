@@ -47,7 +47,7 @@
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr class="info">
-											<th width="8%">图片</th>
+											<th width="5%">图片</th>
 											<th width="20%">标题</th>
 											<th width="5%">SKU</th>
 											<th width="5%">订单<br />价格</th>
@@ -60,7 +60,7 @@
 									<tbody>
 										{foreach $orderData as $key => $val}
 										<tr>
-											<td><img src="{$val.product_image_url}" alt="10006-G" width="100px" class="img-circle img-thumbnail"></td>
+											<td><img src="{$val.product_image_url}" alt="10006-G" width="100px" class="img-thumbnail"></td>
 											<td>{$val.product_name}</td>
 											<td>{$val.trueSku}</td>
 											<td>{$val.order_total}</td>
