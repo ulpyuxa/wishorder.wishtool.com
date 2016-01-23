@@ -43,6 +43,7 @@
 							<h3 class="panel-title">订单信息</h3>
 						  </div>
 						  <div class="panel-body">
+							<div class="table-responsive">
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr class="info">
@@ -73,6 +74,7 @@
 									<tfoot>
 									</tfoot>
 								</table>
+							</div>
 						  </div>
 						</div>
 					</form>
