@@ -16,18 +16,18 @@
 				{include file='../header.tpl'}
 			</div>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					<div class="list-group">
 					  <a href="##" class="list-group-item active">
 						订单管理
 					  </a>
 					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=ALL" class="list-group-item"><span class="badge">{$orderCount.sum}</span>全部订单</a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=APPROVED" class="list-group-item"><span class="badge">{$orderCount.APPROVED}</span>未处理订单</a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=SHIPPED" class="list-group-item"><span class="badge">{$orderCount.SHIPPED}</span>已完成订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=APPROVED" class="list-group-item"><span class="badge">{$orderCount.APPROVED}</span>新订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=SHIPPED" class="list-group-item"><span class="badge">{$orderCount.SHIPPED}</span>已发货订单</a>
 					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=REFUNDED" class="list-group-item"><span class="badge">{$orderCount.REFUNDED}</span>已退货订单</a>
 					</div>
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-10">
 					<form class="form-horizontal">
 						<div class="panel panel-primary">
 						  <div class="panel-heading">

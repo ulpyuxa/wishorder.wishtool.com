@@ -54,12 +54,15 @@ class WishOrderModel {
 		foreach($orderData[0]['data'] as $key => $val) {
 			$orderId[] = $val['Order']['order_id'];
 		}
-		$ret	= self::getOrderDataById($orderId);
+		$oldOrder	= array();
+		$ret		= self::getOrderDataById($orderId);
 		foreach($orderData[0]['data'] as $k => $v) {		//删除重复的订单
 			if(isset($ret[$v['Order']['order_id']])) {
+				$oldOrder[$v['Order']['order_id']] = $v['Order']['state'];
 				unset($orderData[0]['data'][$k]);
 			}
 		}
+		self::updateOrderInfo($oldOrder);
 		if(!isset($orderData[0]['data']) || empty($orderData[0]['data'])) {
 			self::$errCode	= '1001';
 			self::$errMsg	= '遗憾, 还没有新订单';
@@ -120,5 +123,23 @@ class WishOrderModel {
 		}
 		$orderCount['sum'] = array_sum($orderCount);
 		return $orderCount;
+	}
+
+	/**
+	 * 根据ID，更新订单的状态
+	 * @para	$orderState
+	 */
+	public static function updateOrderInfo($orderState) {
+		self::initDB();
+
+		if(!empty($orderState)) {
+			self::$dbConn->autocommit(FALSE);
+			foreach($orderState as $k => $v) {
+				$sql	= 'update ws_order set state="'.$v.'" where order_id="'.$k.'"';
+				$query	= self::$dbConn->query($sql);
+			}
+			self::$dbConn->commit();
+		}
+		return true;
 	}
 }

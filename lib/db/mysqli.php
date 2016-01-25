@@ -5,6 +5,7 @@
  * 
  * 修改历史:
  * v2.0		修改为mysqli类
+ * v2.1		修改事务处理部分，删除无用注释
  */
 class mysqliDB{
 	var $version = '';
@@ -28,15 +29,15 @@ class mysqliDB{
 		@mysqli_query($this->link, "set names utf8");
 	}
 
-	function select_db($dbname) {	//完成
+	function select_db($dbname) {
 		return mysqli_select_db($this->link, $dbname);
 	}
 
-	function fetch_array($query, $result_type = MYSQLI_ASSOC) {		//完成
+	function fetch_array($query, $result_type = MYSQLI_ASSOC) {
 		return mysqli_fetch_array($query, $result_type);
 	}
 
-	function fetch_array_all($query, $result_type = MYSQLI_ASSOC){	//完成
+	function fetch_array_all($query, $result_type = MYSQLI_ASSOC){
 		$arr	=	array();
 		while(1 && $ret	=	mysqli_fetch_array($query, $result_type)){
 			$arr[]	=	$ret;	
@@ -44,15 +45,15 @@ class mysqliDB{
 		return $arr;
 	}
 
-	function fetch_first($sql) {		//完成
+	function fetch_first($sql) {
 		return $this->fetch_array($this->query($sql));
 	}
 
-	function result_first($sql) {		//完成
+	function result_first($sql) {
 		return $this->result($this->query($sql), 0);
 	}
 
-	function query($sql, $type = '') {		//完成
+	function query($sql, $type = '') {
 		global $debug, $discuz_starttime, $sqldebug, $sqlspenttimes;
 		if(defined('SYS_DEBUG') && SYS_DEBUG) {
 			@include_once DISCUZ_ROOT.'./include/debug.func.php';
@@ -76,7 +77,7 @@ class mysqliDB{
 		return $query;
 	}
 
-	function affected_rows() {		//完成
+	function affected_rows() {
 		return mysqli_affected_rows($this->link);
 	}
 
@@ -84,7 +85,7 @@ class mysqliDB{
 		return (($this->link) ? mysqli_error($this->link) : mysqli_error());
 	}
 
-	function errno() {		//完成
+	function errno() {
 		return intval(($this->link) ? mysqli_errno($this->link) : mysqli_errno());
 	}
 
@@ -93,24 +94,24 @@ class mysqliDB{
 		return $query;
 	}
 
-	function num_rows($query) {		//完成
+	function num_rows($query) {
 		$query = mysqli_num_rows($query);
 		return $query;
 	}
 
-	function num_fields($query) {	//完成
+	function num_fields($query) {
 		return mysqli_num_fields($query);
 	}
 
-	function free_result($query) {	//完成
+	function free_result($query) {
 		return mysqli_free_result($query);
 	}
 
-	function insert_id() {		//完成
+	function insert_id() {
 		return ($id = mysqli_insert_id($this->link)) >= 0 ? $id : $this->result($this->query("SELECT last_insert_id()"), 0);
 	}
 
-	function fetch_row($query) {	//完成
+	function fetch_row($query) {
 		$query = mysqli_fetch_row($query);
 		return $query;
 	}
@@ -119,22 +120,22 @@ class mysqliDB{
 		$query = mysqli_fetch_assoc($query);
 		return $query;
 	}
-	function fetch_fields($query) {		//完成
+	function fetch_fields($query) {
 		return mysqli_fetch_field($query);
 	}
 
-	function version() {	//改造完成
+	function version() {
 		if(empty($this->version)) {
 			$this->version = mysqli_get_server_version($this->link);
 		}
 		return $this->version;
 	}
 
-	function close() {	//改造完成
+	function close() {
 		return mysqli_close ($this->link);
 	}
 
-	function halt($message = '', $sql = '') {	//改造完成
+	function halt($message = '', $sql = '') {
 		if(!empty($sql)){
 			$errorStr	=	"message : ".$message. ", sql: ".$sql."\r\n";
 		}else{
@@ -147,24 +148,37 @@ class mysqliDB{
 	
 	
 	/*************************
-	 * 事务支持(必须是inodb或ndb引擎)
+	 * 事务开始(必须是inodb或ndb引擎)
 	 */
 	function begin(){
 		$this->query("SET AUTOCOMMIT=0");
-		$this->query("BEGIN");
+		$this->autocommit(false);
+	}
+
+	/**
+	 * 设置是否自动提交
+	 */
+	function autocommit($mode) {
+		return mysqli_autocommit($this->link, $mode);
 	}
 	
+	/**
+	 * 提交事务
+	 */
 	function commit(){
-		$this->query("COMMIT");
+		mysqli_commit($this->link);
+		$this->autocommit(true);
 	}
-	
+	/**
+	 * 事务回滚
+	 */
 	function rollback(){
-		$this->query("ROLLBACK");
+		mysqli_rollback($this->link);
+		return $this->autocommit(true);
 	}
-	
+	/*****************事务处理*****************/
 
 	function ping(){
-		
 		return mysqli_ping($this->link);
 	}
 }
