@@ -6,6 +6,7 @@ class WishOrderApi extends WishBase {
 	 */
 	public function __construct($account, $companyId) {
 		parent::__construct($account, $companyId);
+		parent::$url = 'https://merchant.wish.com/api/v1/order/multi-get?key=';
 	}
 
 	public function getAllorder($start = 0, $count = 50) {
