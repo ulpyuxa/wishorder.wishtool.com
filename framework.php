@@ -29,7 +29,6 @@ class Core {
 		set_exception_handler(array("Core",'appException'));
 
 		include	WEB_PATH."lib/common.php";
-
 		//加载全局配置信息
 		C(include WEB_PATH.(defined('ENV') ? 'conf/common_'.ENV.'.php' : "conf/common.php"));
 		include	WEB_PATH."conf/constant.php";
