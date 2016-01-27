@@ -1,14 +1,14 @@
 <?php
 class WishBase {
-	public $token	= '';
-	public $url		= 'https://merchant.wish.com/api/v1/order/multi-get?key=';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
+	public static $token	= '';
+	public static $url		= 'https://merchant.wish.com/api/v1/order/multi-get?key=';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
 
 	/**
 	 * 功能: 初使化
 	 */
 	public function __construct($account, $companyId) {
 		$accountCfg		= include WEB_PATH.'conf/key/'.$companyId.'/'.$account.'.php';
-		$this->token	= $accountCfg['token'];
+		self::$token	= $accountCfg['token'];
 	}
 
 	/**
@@ -37,7 +37,7 @@ class WishBase {
 	 * 功能: 单个请求
 	 */
 	public function sendHttpRequest ($para) {
-		$url	= $this->url.$this->token.'&'.http_build_query($para);
+		$url	= self::$url.self::$token.'&'.http_build_query($para);
 		$ret	= $this->curlResult(array($url));
 		return $ret;
 	}
@@ -48,7 +48,7 @@ class WishBase {
 	public function sendHttpRequestMulti ($para) {
 		$url = array();
 		foreach($para as $key => $val) {
-			$url[] = $this->url.$this->token.'&'.http_build_query($para);
+			$url[] = self::$url.self::$token.'&'.http_build_query($para);
 		}
 		$ret = $this->curlResult($url);
 		return $ret;
