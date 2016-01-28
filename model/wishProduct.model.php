@@ -121,6 +121,7 @@ class WishProductModel {
 	 * 功能：获取数据库中的商品信息
 	 */
 	public function productList() {
-		
+		self::initDB();
+		//$sql	= 'select * from ws_product where ';
 	}
 }

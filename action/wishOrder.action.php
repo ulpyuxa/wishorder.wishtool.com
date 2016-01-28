@@ -18,8 +18,9 @@ class WishOrderAct extends CommonAct{
 		if(!$insert) {
 			self::$errCode	= WishOrderModel::$errCode;
 			self::$errMsg	= WishOrderModel::$errMsg;
+			return false;
 		}
-		return $insert;
+		return true;
 	}
 
 	/**

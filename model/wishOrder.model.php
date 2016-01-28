@@ -37,12 +37,13 @@ class WishOrderModel {
 		$sql	= 'select * from ws_order where order_id in ("'.implode('","', $ids).'")';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
+		$data	= array();
 		if(!empty($ret)) {
 			foreach($ret as $k => $v) {
-				$ret[$v['order_id']] = $v;
+				$data[$v['order_id']] = $v;
 			}
 		}
-		return $ret;
+		return $data;
 	}
 
 	/**
