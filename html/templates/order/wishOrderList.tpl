@@ -9,6 +9,8 @@
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="../public/css/main.css" rel="stylesheet">
+		<link href="../public/tokenfield/css/bootstrap-tokenfield.min.css" rel="stylesheet">
+		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -34,8 +36,14 @@
 							<h3 class="panel-title">操作</h3>
 						  </div>
 						  <div class="panel-body">
-								<div class="form-group">
+								<div class="form-inline">
 									<input type="button" class="btn btn-success" value="更新订单信息" id="updateOrderInfo" />
+									<select class="form-control js-example-basic-multiple" multiple="multiple">
+									  <option value="AL">Alabama</option>
+									  <option value="WY">Wyoming</option>
+									</select>
+								</div>
+								<div class="form-group">
 								</div>
 						  </div>
 						</div>
@@ -85,5 +93,10 @@
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 		<script src="../public/js/order.js"></script>
+		<script src="../public/tokenfield/bootstrap-tokenfield.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+		<script type="text/javascript">
+			$(".js-example-basic-multiple").select2();
+		</script>
 	</body>
 </html>

@@ -19,11 +19,13 @@
 				<div class="col-md-3">
 					<div class="list-group">
 					  <a href="##" class="list-group-item active">
-						范本管理
+						商品管理
 					  </a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>深圳仓范本</a>
-					  <a href="##" class="list-group-item">美国仓范本</a>
-					  <a href="##" class="list-group-item">德国仓范本</a>
+					  <a href="##" class="list-group-item"><span class="badge">14</span>收藏数</a>
+					  <a href="##" class="list-group-item"><span class="badge">14</span>订单数</a>
+					  <a href="##" class="list-group-item"><span class="badge">14</span>在售商品</a>
+					  <a href="##" class="list-group-item"><span class="badge">14</span>下架商品</a>
+					  <a href="##" class="list-group-item"><span class="badge">14</span>侵权商品</a>
 					</div>
 				</div>
 				<div class="col-md-9">
