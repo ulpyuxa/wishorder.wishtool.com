@@ -17,7 +17,7 @@ class WishProductModel {
 	}
 
 	/**
-	 * 获取wish服务器的商品信息
+	 * 获取wish服务器的商品信息，递归方式拉取
 	 */
 	public function getWishProduct($start = 0, $count = 50) {
 		$wishProduct	= new WishProductApi('geshan0728', 1);
@@ -122,6 +122,19 @@ class WishProductModel {
 	 */
 	public function productList() {
 		self::initDB();
-		//$sql	= 'select * from ws_product where ';
+
+		$sql = !isset($_REQUEST['order']) ? 'select * from ws_product order by numSold desc' : 'select * from ws_product ';
+		if(isset($_REQUEST['order'])) {
+			$sql .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+		}
+		$_REQUEST['order'] = $_REQUEST['order'] === 'desc' ? 'asc' : 'desc';
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+		return array('data' => $ret, 'order' => $order);
 	}
+
+	/**
+	 * 功能: 统计产品各种状态的数量
+	 */
+	
 }
