@@ -37,11 +37,11 @@
 						  </div>
 						  <div class="panel-body">
 								<div class="form-inline">
-									<input type="button" class="btn btn-success" value="更新订单信息" id="updateOrderInfo" />
+									<!-- <input type="button" class="btn btn-success" value="更新订单信息" id="updateOrderInfo" />
 									<select class="form-control js-example-basic-multiple" multiple="multiple">
 									  <option value="AL">Alabama</option>
 									  <option value="WY">Wyoming</option>
-									</select>
+									</select> -->
 								</div>
 								<div class="form-group">
 								</div>

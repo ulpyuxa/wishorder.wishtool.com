@@ -127,10 +127,9 @@ class WishProductModel {
 			$sql .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
 		}
 		$_REQUEST['order'] = $_REQUEST['order'] === 'desc' ? 'asc' : 'desc';
-		unset($_REQUEST['order'], $_REQUEST['orderBy']);
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
-		return array('data' => $ret, 'order' => $order);
+		return array('data' => $ret, 'order' => $_REQUEST['order']);
 	}
 
 	/**

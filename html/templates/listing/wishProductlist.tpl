@@ -43,8 +43,8 @@
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
 									<input type="text" name="spu" value="" class="form-control" required />
-									<input type="button" name="search" value="搜索" class="btn btn-warning" />
-									<input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" />
+									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
+									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
 								</div>
 						  </div>
 						</div>
@@ -59,9 +59,9 @@
 											<th>图片</th>
 											<th>商品标题</th>
 											<th>料号</th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}{$smarty.server.REQUEST_URI}&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}{$smarty.server.REQUEST_URI}&orderBy=numSold&order={$productData.order}">订单数量</a></th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}{$smarty.server.REQUEST_URI}&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
+											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
+											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
 										</tr>
 									</thead>
 									<tbody>
