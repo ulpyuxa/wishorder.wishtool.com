@@ -2,8 +2,18 @@
 			  <div class="navbar-inner">
 				  <div class="collapse navbar-collapse navbar-ex1-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="#">范本管理</a></li>
-						<li><a href="#">listing管理</a></li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">商品管理 <b class="caret"></b></a>
+							<ul class="dropdown-menu menu-top">
+								<li><a href="/index.php?mod=wishProduct&act=wishProductList">商品列表</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">订单管理 <b class="caret"></b></a>
+							<ul class="dropdown-menu menu-top">
+								<li><a href="/index.php?mod=wishOrder&act=wishOrderList">订单列表</a></li>
+							</ul>
+						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">账号管理 <b class="caret"></b></a>
 							<ul class="dropdown-menu menu-top">
