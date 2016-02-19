@@ -71,7 +71,7 @@ class WishProductModel {
 				'isOnline'		=> 'Yes',
 			);
 			$ids[] = $v['Product']['id'];
-			$sql[] = '("'.implode('","', end($data)).'")';
+			$sql[$v['Product']['id']] = '("'.implode('","', end($data)).'")';
 		}
 		if(empty(end($data))) {		//没有拉取到数据
 			self::$errCode	= '1501';
@@ -85,7 +85,7 @@ class WishProductModel {
 		foreach($ret as $k => $v) {		//过滤重复的listing
 			if(isset($data[$v['productId']])) {
 				$updateInfo[] = $data[$v['productId']];
-				unset($data[$v['productId']]);
+				unset($data[$v['productId']]，$sql[$v['productId']]);
 			}
 		}
 		if(!empty($updateInfo)) {	//更新listing
