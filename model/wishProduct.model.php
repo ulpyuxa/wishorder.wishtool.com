@@ -85,7 +85,7 @@ class WishProductModel {
 		foreach($ret as $k => $v) {		//过滤重复的listing
 			if(isset($data[$v['productId']])) {
 				$updateInfo[] = $data[$v['productId']];
-				unset($data[$v['productId']]，$sql[$v['productId']]);
+				unset($data[$v['productId']], $sql[$v['productId']]);
 			}
 		}
 		if(!empty($updateInfo)) {	//更新listing
