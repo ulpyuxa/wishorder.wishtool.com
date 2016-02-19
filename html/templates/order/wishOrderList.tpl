@@ -67,7 +67,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										{foreach $orderData as $key => $val}
+										{foreach $orderData.data as $key => $val}
 										<tr>
 											<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="100px" class="img-thumbnail"></td>
 											<td>{$val.product_name}</td>
@@ -84,6 +84,7 @@
 									</tfoot>
 								</table>
 							</div>
+							{$orderData.pageHtml}
 						  </div>
 						</div>
 					</form>

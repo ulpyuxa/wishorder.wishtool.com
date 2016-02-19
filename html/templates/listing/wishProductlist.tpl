@@ -81,6 +81,7 @@
 									</tfoot>
 								</table>
 						  </div>
+						  {$productData.pagination}
 						</div>
 					</form>
 				</div>

@@ -33,6 +33,7 @@ class Core {
 		C(include WEB_PATH.(defined('ENV') ? 'conf/common_'.ENV.'.php' : "conf/common.php"));
 		include	WEB_PATH."conf/constant.php";
 		include	WEB_PATH."lib/auth.php";	//鉴权
+		include	WEB_PATH."lib/Pagination.class.php";	//鉴权
 		//Auth::setAccess(include WEB_PATH.'conf/access.php');
 		
 

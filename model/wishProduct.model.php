@@ -122,15 +122,31 @@ class WishProductModel {
 	public function productList() {
 		self::initDB();
 
-		$sql = !isset($_REQUEST['order']) ? 'select * from ws_product order by numSold desc' : 'select * from ws_product ';
+		$page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;
+
+		$limit	= ' limit '.(($page - 1)*30).', 30';
+		$where	= !isset($_REQUEST['order']) ? ' order by numSold desc ' : '';
 		if(isset($_REQUEST['order'])) {
-			$sql .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+			$where .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
 		}
-		$_REQUEST['order'] = $_REQUEST['order'] === 'desc' ? 'asc' : 'desc';
-		$query			= self::$dbConn->query($sql);
-		$ret			= self::$dbConn->fetch_array_all($query);
+		//统计数据库中的数量
+		$sql		.= 'select count(*) as count from ws_product '.$where;
+		$query		= self::$dbConn->query($sql);
+		$countRet	= self::$dbConn->fetch_array_all($query);
+
+		//查询数据库的数据
+		$sql	= 'select * from ws_product '.$where.$limit;
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+
+		//数据分页
+		$pagination = new Pagination($page, $countRet[0]['count'], 30);
+		$pageHtml	= $pagination->parse();
+
+		//其他数据组装
 		$statisticInfo	= self::statisticProduct();
-		return array('data' => $ret, 'order' => $_REQUEST['order'], 'statisticInfo' => $statisticInfo);
+		$_REQUEST['order'] = $_REQUEST['order'] === 'desc' ? 'asc' : 'desc';
+		return array('data' => $ret, 'pagination' => $pageHtml, 'order' => $_REQUEST['order'], 'statisticInfo' => $statisticInfo,);
 	}
 
 	/**

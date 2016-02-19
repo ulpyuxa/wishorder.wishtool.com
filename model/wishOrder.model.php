@@ -14,19 +14,34 @@ class WishOrderModel {
 
 	public static function getOrderData() {
 		self::initDB();
+		
+		//设置当前页及limit
+		$page	= isset($_GET['page']) ? ((int) $_GET['page']) : 1;
+		$limit	= ' limit '.(($page - 1)*30).', 30';
 
 		$where = ' where 1 ';
 		if (isset($_REQUEST['state']) && $_REQUEST['state'] !== 'ALL') {
 			$where .= ' and state="'.$_REQUEST['state'].'"';
 		}
-		$sql		= 'SELECT * FROM `ws_order`'.$where;
+		
+		//读取表的记录数量
+		$sql		= 'SELECT count(*) as counts FROM `ws_order`'.$where;
+		$query		= self::$dbConn->query($sql);
+		$countRet	= self::$dbConn->fetch_array_all($query);
+
+		//初使化分页类
+		$pagination = new Pagination($page, $countRet[0]['counts'], 30);
+		$pageHtml	= $pagination->parse();
+
+		//分页读取记录
+		$sql		= 'SELECT * FROM `ws_order`'.$where.$limit;
 		$query		= self::$dbConn->query($sql);
 		$ret		= self::$dbConn->fetch_array_all($query);
 		$orderStat	= C('ORDERSTAT');
 		foreach($ret as $k => $v) {
 			$ret[$k]['stateZH'] = $orderStat[$v['state']];
 		}
-		return $ret;
+		return array('data' => $ret, 'pageHtml' => $pageHtml);
 	}
 
 	/** 
