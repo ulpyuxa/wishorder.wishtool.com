@@ -127,13 +127,37 @@ class WishProductModel {
 			$sql .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
 		}
 		$_REQUEST['order'] = $_REQUEST['order'] === 'desc' ? 'asc' : 'desc';
-		$query	= self::$dbConn->query($sql);
-		$ret	= self::$dbConn->fetch_array_all($query);
-		return array('data' => $ret, 'order' => $_REQUEST['order']);
+		$query			= self::$dbConn->query($sql);
+		$ret			= self::$dbConn->fetch_array_all($query);
+		$statisticInfo	= self::statisticProduct();
+		return array('data' => $ret, 'order' => $_REQUEST['order'], 'statisticInfo' => $statisticInfo);
 	}
 
 	/**
 	 * 功能: 统计产品各种状态的数量
 	 */
-	
+	public function statisticProduct() {
+		self::initDB();
+
+		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product GROUP BY reviewStatus';
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+		$data	= array();
+		foreach($ret as $k => $v) {
+			$data['count'] += $v['counts'];
+			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'approved') {
+				$data['approved']	= $v['reviewStatus'] === 'approved' ? $v['counts'] : 0;
+			}
+			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'pending') {
+				$data['pending']	= $v['reviewStatus'] === 'pending' ? $v['counts'] : 0;
+			}
+		}
+
+		$sql	= 'SELECT SUM(`numSold`) AS countSold, SUM(`saveSold`) AS countSave FROM ws_product';
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+		$data['countSold']	= $ret[0]['countSold'];
+		$data['countSave']	= $ret[0]['countSave'];
+		return $data;
+	}
 }

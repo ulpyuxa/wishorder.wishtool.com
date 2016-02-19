@@ -21,12 +21,13 @@
 					  <a href="##" class="list-group-item active">
 						商品管理
 					  </a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>商品数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>收藏数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>购买数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>在线数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>下架数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">14</span>仿品数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.pending}</span>待审核数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved}</span>在线数量</a>
+					  <a href="##" class="list-group-item"><span class="badge"></span>下架数量</a>
+					  <a href="##" class="list-group-item"><span class="badge"></span>仿品数量</a>
 					</div>
 				</div>
 				<div class="col-md-10">
