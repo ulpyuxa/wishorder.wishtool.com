@@ -55,7 +55,7 @@
 							<div class="table-responsive">
 								<table class="table table-hover table-bordered">
 									<thead>
-										<tr class="info">
+										<tr class="success">
 											<th width="5%">图片</th>
 											<th width="20%">标题</th>
 											<th width="5%">SKU</th>

@@ -56,7 +56,7 @@
 						  <div class="panel-body">
 								<table class="table table-hover table-bordered">
 									<thead>
-										<tr>
+										<tr class="success">
 											<th>图片</th>
 											<th>商品标题</th>
 											<th>料号</th>
