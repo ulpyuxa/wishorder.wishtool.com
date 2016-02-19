@@ -35,6 +35,7 @@ class Log {
     static function record($message,$level=self::ERR,$record=false) {
         if($record || strpos(C('LOG_LEVEL'),$level)) {
             $now = date(self::$format);
+			$_SERVER['REQUEST_URI']	= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
             self::$log[] =   "{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n";
         }
     }
@@ -101,6 +102,7 @@ class Log {
 		if(!is_dir(dirname($destination))) {
 			mkdir(dirname($destination), 0777, 1);
 		}
+		$_SERVER['REQUEST_URI'] = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
         error_log("{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n", $type,$destination,$extra );
 		//echo "{$now} ".$_SERVER['REQUEST_URI']." | {$level}: {$message}\r\n";
     }
