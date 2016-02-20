@@ -60,9 +60,9 @@
 											<th>图片</th>
 											<th>商品标题</th>
 											<th>料号</th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
-											<th><a href="http://{$smarty.server.SERVER_NAME}/index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+											<th><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
+											<th><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
+											<th><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
 										</tr>
 									</thead>
 									<tbody>
