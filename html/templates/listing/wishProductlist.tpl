@@ -8,7 +8,6 @@
 		<title>商品管理</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../public/css/main.css" rel="stylesheet">
 	</head>
 	<body>
 		<div class="container-fluid">

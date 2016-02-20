@@ -8,8 +8,6 @@
 		<title>订单管理</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../public/css/main.css" rel="stylesheet">
-		<link href="../public/tokenfield/css/bootstrap-tokenfield.min.css" rel="stylesheet">
 		<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 	</head>
 	<body>
@@ -93,11 +91,5 @@
 		</div>
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
-		<script src="../public/js/order.js"></script>
-		<script src="../public/tokenfield/bootstrap-tokenfield.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
-		<script type="text/javascript">
-			$(".js-example-basic-multiple").select2();
-		</script>
 	</body>
 </html>
