@@ -1,7 +1,7 @@
 <?php
 class WishBase {
 	public static $token	= '';
-	public static $url		= 'https://merchant.wish.com/api/v1/order/multi-get?key=';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
+	public static $url		= 'https://china-merchant.wish.com/api/v1/order/multi-get?key=';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
 
 	/**
 	 * 功能: 初使化
