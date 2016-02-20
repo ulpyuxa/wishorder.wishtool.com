@@ -54,6 +54,7 @@
 							<h3 class="panel-title">商品列表</h3>
 						  </div>
 						  <div class="panel-body">
+							<div class="table-responsive">
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr class="success">
@@ -80,6 +81,7 @@
 									<tfoot>
 									</tfoot>
 								</table>
+							</div>
 						  </div>
 						  {$productData.pagination}
 						</div>
