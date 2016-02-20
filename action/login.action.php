@@ -23,6 +23,7 @@ class LoginAct extends CommonAct {
 		if(!empty($userInfo)) {
 			$hostInfo = explode('.', $_SERVER['HTTP_HOST']);
 			unset($hostInfo[0]);
+			echo ".".implode('.', $hostInfo);exit;
 			setcookie('USERINFO', json_encode($userInfo), time()+1800, "/", ".".implode('.', $hostInfo));
 			header('Location: /index.php?mod=wishProduct&act=wishProductList');
 			return true;
