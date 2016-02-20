@@ -21,6 +21,7 @@ class LoginAct extends CommonAct {
 		}
 		$userInfo = UserModel::login();
 		if(!empty($userInfo)) {
+			print_r($_SERVER);exit;
 			$hostInfo = explode('.', $_SERVER['HTTP_HOST']);
 			unset($hostInfo[0]);
 			echo ".".implode('.', $hostInfo);exit;
