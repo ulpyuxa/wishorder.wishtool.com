@@ -21,10 +21,8 @@ class LoginAct extends CommonAct {
 		}
 		$userInfo = UserModel::login();
 		if(!empty($userInfo)) {
-			print_r($_SERVER);exit;
-			$hostInfo = explode('.', $_SERVER['HTTP_HOST']);
+			$hostInfo = explode('.', $_SERVER['SERVER_NAME']);
 			unset($hostInfo[0]);
-			echo ".".implode('.', $hostInfo);exit;
 			setcookie('USERINFO', json_encode($userInfo), time()+1800, "/", ".".implode('.', $hostInfo));
 			header('Location: /index.php?mod=wishProduct&act=wishProductList');
 			return true;
