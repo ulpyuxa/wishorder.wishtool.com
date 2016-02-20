@@ -78,6 +78,7 @@ class WishOrderModel {
 				unset($orderData[0]['data'][$k]);
 			}
 		}
+		print_r($oldOrder);
 		self::updateOrderInfo($oldOrder);
 		if(!isset($orderData[0]['data']) || empty($orderData[0]['data'])) {
 			self::$errCode	= '1001';
