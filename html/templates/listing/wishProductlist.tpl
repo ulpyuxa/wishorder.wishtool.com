@@ -68,7 +68,7 @@
 									<tbody>
 										{foreach $productData.data as $k => $v}
 											<tr>
-												<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx30.jpg" alt="{$v.spu}" class="img-circle img-thumbnail"></td>
+												<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
 												<td>{$v.title}</td>
 												<td>{$v.spu}</td>
 												<td>{$v.saveSold}</td>

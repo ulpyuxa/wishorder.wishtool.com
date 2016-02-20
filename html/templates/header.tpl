@@ -31,6 +31,7 @@
 					  </ul>
 					</li>
 				  </ul>
+				  <p class="navbar-text navbar-right">Signed in as <a href="##" class="navbar-link">User</a></p>
 				</div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
