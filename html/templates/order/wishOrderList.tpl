@@ -62,6 +62,7 @@
 											<th width="10%">订单<br />地址</th>
 											<th width="5%">订单<br />运费</th>
 											<th width="5%">订单<br />数量</th>
+											<th width="5%">下单<br />时间</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -75,6 +76,7 @@
 											<td>{$val.ShippingDetail_country}<br />{$val.ShippingDetail_state}<br />{$val.ShippingDetail_city}</td>
 											<td>{$val.shipping_cost}</td>
 											<td>{$val.quantity}</td>
+											<td>{$val.order_time|date_format:"%D %T"}</td>
 										</tr>
 										{/foreach}
 									</tbody>

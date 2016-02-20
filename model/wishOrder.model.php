@@ -23,7 +23,7 @@ class WishOrderModel {
 		if (isset($_REQUEST['state']) && $_REQUEST['state'] !== 'ALL') {
 			$where .= ' and state="'.$_REQUEST['state'].'"';
 		}
-		
+		$where .= ' order by order_time desc';
 		//读取表的记录数量
 		$sql		= 'SELECT count(*) as counts FROM `ws_order`'.$where;
 		$query		= self::$dbConn->query($sql);
