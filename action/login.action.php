@@ -8,7 +8,7 @@ class LoginAct extends CommonAct {
 	 * 登陆页展示
 	 */
 	public function act_index() {
-		if(isset($_COOKIE['USERINFO']) || isset($_COOKIE['USERINFO1'])) {
+		if(isset($_COOKIE['USERINFO'])) {
 			header('Location: /index.php?mod=wishProduct&act=wishProductList');
 			return true;
 		}
@@ -16,13 +16,13 @@ class LoginAct extends CommonAct {
 	}
 
 	public function act_login() {
-		if(isset($_COOKIE['USERINFO']) || isset($_COOKIE['USERINFO1'])) {
+		if(isset($_COOKIE['USERINFO'])) {
 			header('Location: /index.php?mod=wishProduct&act=wishProductList');
 		}
 		$userInfo = UserModel::login();
+		print_r($_SERVER);exit;
 		if(!empty($userInfo)) {
 			setcookie('USERINFO', json_encode($userInfo), time()+1800, "/", ".wishtool.cn");
-			setcookie('USERINFO1', json_encode($userInfo), time()+1800, "/", ".gicp.net");
 			header('Location: /index.php?mod=wishProduct&act=wishProductList');
 			return true;
 		}
