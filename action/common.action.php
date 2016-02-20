@@ -11,6 +11,7 @@ class CommonAct {
 	 * 功能: 检测是否登录
 	 */
 	public function _checkLogin() {
+		var_dump($_COOKIE);exit;
 		if(!isset($_COOKIE['USERINFO']) || isset($_COOKIE['USERINFO1'])) {
 			if(strtolower($_REQUEST['act']) != 'index' && strtolower($_REQUEST['mod']) != 'login') {
 				//echo $_REQUEST['act'], '    ', $_REQUEST['mod'];exit;
