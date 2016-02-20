@@ -50,7 +50,7 @@ class Pagination {
 	 * @access protected 
 	 */
 	protected $_variables = array('classes' => array('clearfix', 'pagination','pager'),
-		'crumbs' => 5,
+		'crumbs' => 10,
 		'rpp' => 30,
 		'key' => 'page',
 		'target' => '',
