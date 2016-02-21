@@ -49,13 +49,13 @@ class Pagination {
 	 * @var array 
 	 * @access protected 
 	 */
-	protected $_variables = array('classes' => array('clearfix', 'pagination','pager'),
+	protected $_variables = array('classes' => array('pagination','pager'),//'clearfix', 'pagination',
 		'crumbs' => 10,
 		'rpp' => 30,
 		'key' => 'page',
 		'target' => '',
-		'next' => 'Next &raquo;',
-		'previous' => '&laquo; Previous',
+		'next' => 'Next &rarr;',
+		'previous' => '&larr; Previous',
 		'alwaysShowPagination' => false,
 		'clean' => false
 	);

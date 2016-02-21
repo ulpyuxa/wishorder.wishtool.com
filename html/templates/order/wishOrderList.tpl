@@ -55,11 +55,11 @@
 									<thead>
 										<tr class="success">
 											<th width="5%">图片</th>
-											<th width="20%">标题</th>
-											<th width="5%">SKU</th>
+											<th width="40%">标题</th>
+											<th width="10%">SKU</th>
 											<th width="5%">订单<br />价格</th>
 											<th width="5%">订单<br />状态</th>
-											<th width="10%">订单<br />地址</th>
+											<th width="20%">订单<br />地址</th>
 											<th width="5%">订单<br />运费</th>
 											<th width="5%">订单<br />数量</th>
 											<th width="5%">下单<br />时间</th>
@@ -68,7 +68,7 @@
 									<tbody>
 										{foreach $orderData.data as $key => $val}
 										<tr>
-											<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="100px" class="img-thumbnail"></td>
+											<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="40px" class="img-thumbnail"></td>
 											<td>{$val.product_name}  [{$val.order_id}]</td>
 											<td>{$val.trueSku}</td>
 											<td>{$val.order_total}</td>
