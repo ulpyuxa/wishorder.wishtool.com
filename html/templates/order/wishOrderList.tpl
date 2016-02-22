@@ -56,13 +56,14 @@
 										<tr class="success">
 											<th width="5%">图片</th>
 											<th width="10%">SKU</th>
-											<th width="40%">标题</th>
+											<th width="35%">标题</th>
 											<th width="5%">订单<br />价格</th>
 											<th width="5%">订单<br />状态</th>
-											<th width="20%">订单<br />地址</th>
+											<th width="15%">订单<br />地址</th>
 											<th width="5%">订单<br />运费</th>
 											<th width="5%">订单<br />数量</th>
 											<th width="5%">下单<br />时间</th>
+											<th width="10%">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -77,6 +78,12 @@
 											<td>{$val.shipping_cost}</td>
 											<td>{$val.quantity}</td>
 											<td>{$val.order_time|date_format:"%D %T"}</td>
+											<td>
+												<select class="form-control">
+													<option>请选择...</option>
+													<option value="uploadTrackNumber">上传跟踪号</option>
+												</select>
+											</td>
 										</tr>
 										{/foreach}
 									</tbody>
