@@ -58,8 +58,8 @@
 									<thead>
 										<tr class="success">
 											<th width="5%">图片</th>
-											<th width="20%">料号</th>
-											<th width="55%">商品标题</th>
+											<th width="10%">料号</th>
+											<th width="64%">商品标题</th>
 											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
 											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
 											<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
