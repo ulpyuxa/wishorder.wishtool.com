@@ -73,7 +73,7 @@
 											<td>{$val.product_name}  [{$val.order_id}]</td>
 											<td>{$val.order_total}</td>
 											<td>{$val.stateZH}</td>
-											<td>{$val.ShippingDetail_country}<br />{$val.ShippingDetail_state}<br />{$val.ShippingDetail_city}</td>
+											<td>国家：{$val.ShippingDetail_country}<br />省：{$val.ShippingDetail_state}<br />市/区：{$val.ShippingDetail_city}</td>
 											<td>{$val.shipping_cost}</td>
 											<td>{$val.quantity}</td>
 											<td>{$val.order_time|date_format:"%D %T"}</td>
