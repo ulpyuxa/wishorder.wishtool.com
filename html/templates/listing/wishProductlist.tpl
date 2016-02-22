@@ -57,9 +57,9 @@
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr class="success">
+											<th width="20%">料号</th>
 											<th width="5%">图片</th>
 											<th width="55%">商品标题</th>
-											<th width="20%">料号</th>
 											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
 											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
 											<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
@@ -68,9 +68,9 @@
 									<tbody>
 										{foreach $productData.data as $k => $v}
 											<tr>
+												<td>{$v.spu}</td>
 												<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
 												<td>{$v.title}</td>
-												<td>{$v.spu}</td>
 												<td>{$v.saveSold}</td>
 												<td>{$v.numSold}</td>
 												<td>{$v.reviewStatus}</td>
