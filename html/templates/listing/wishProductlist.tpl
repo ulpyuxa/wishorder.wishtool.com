@@ -38,11 +38,11 @@
 								<form class="form-inline">
 									<div class="form-group">
 										<label for="templateName" class="control-label">商品ID: </label>
-										<input type="text" name="productId" value="" class="form-control" />
+										<input type="text" name="productId" value="{$smarty.get.productId}" class="form-control" />
 									</div>
 									<div class="form-group">
 										<label for="templateName" class="control-label">主料号: </label>
-										<input type="text" name="spu" value="" class="form-control" required />
+										<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" required />
 										<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 										<input type="hidden" name="act" value="{$smarty.get.act}" />
 										<input type="hidden" name="mod" value="{$smarty.get.mod}" />
@@ -74,7 +74,7 @@
 										<tr>
 											<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
 											<td>{$v.spu}</td>
-											<td>{$v.title}</td>
+											<td><a href="https://www.wish.com/c/{$v.productId}" target="_blank">{$v.title}</a></td>
 											<td>{$v.saveSold}</td>
 											<td>{$v.numSold}</td>
 											<td>{$v.reviewStatus}</td>

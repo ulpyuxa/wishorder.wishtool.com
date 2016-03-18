@@ -25,4 +25,12 @@ class WishProductAct extends CommonAct{
 		$this->smarty->assign('productData', $productData);
 		$this->smarty->display('wishProductlist.tpl');
 	}
+
+	/**
+	 * 功能：上架或下架一个商品
+	 */
+	public function act_operateProduct() {
+		$operate = WishProductModel::perateProduct();
+		return $operate;
+	}
 }

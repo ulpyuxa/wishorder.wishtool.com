@@ -124,16 +124,23 @@ class WishProductModel {
 
 		$page = isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
 
-		$where = '';
-		if(isset($_REQUEST['spu'])) {
-			$where .= ' spu = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'"';
+		$where = array();
+		if(isset($_REQUEST['spu']) && !empty($_REQUEST['spu'])) {
+			$where[] = ' spu = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'"';
+		}
+		if(isset($_REQUEST['productId']) && !empty($_REQUEST['productId'])) {
+			$where[] = ' productId = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['productId']).'"';
 		}
 		$limit	= ' limit '.(($page - 1)*30).', 30';
-		$order	= !isset($_REQUEST['order']) ? ' order by numSold desc ' : '';
-		if(isset($_REQUEST['order'])) {
-			$order .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+		$order	= array();
+		if(!isset($_REQUEST['order'])) {
+			$order[] = ' numSold desc';
 		}
-		$where = strlen($where) > 0 ? ' where '.$where : '';
+		if(isset($_REQUEST['order'])) {
+			$order[] = ' '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+		}
+		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
+		$order = count($order) > 0 ? ' order by '.implode(',', $order).',spu asc' : '';
 		//统计数据库中的数量
 		$sql		.= 'select count(*) as count from ws_product '.(strlen($where) > 0 ? $where : '').$order;
 		$query		= self::$dbConn->query($sql);
@@ -165,15 +172,15 @@ class WishProductModel {
 		$ret	= self::$dbConn->fetch_array_all($query);
 		$data	= array();
 		foreach($ret as $k => $v) {
-			$data['count'] += $v['counts'];
+			$data['count'] += $v['reviewStatus'] != 'rejected' ? $v['counts'] : 0;
 			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'approved') {
-				$data['approved']	= $v['reviewStatus'] === 'approved' ? $v['counts'] : 0;
+				$data['approved'] = $v['reviewStatus'] === 'approved' ? $v['counts'] : 0;
 			}
 			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'pending') {
-				$data['pending']	= $v['reviewStatus'] === 'pending' ? $v['counts'] : 0;
+				$data['pending'] = $v['reviewStatus'] === 'pending' ? $v['counts'] : 0;
 			}
 			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'rejected') {
-				$data['rejected']	= $v['reviewStatus'] === 'rejected' ? $v['counts'] : 0;
+				$data['rejected'] = $v['reviewStatus'] === 'rejected' ? $v['counts'] : 0;
 			}
 		}
 
@@ -183,5 +190,12 @@ class WishProductModel {
 		$data['countSold']	= $ret[0]['countSold'];
 		$data['countSave']	= $ret[0]['countSave'];
 		return $data;
+	}
+
+	/**
+	 * 功能：上下架一个商品
+	 */
+	public function perateProduct(){
+		$productId = $_REQUEST['productId'];
 	}
 }
