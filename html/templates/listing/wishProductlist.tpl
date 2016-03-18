@@ -26,65 +26,68 @@
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.pending}</span>待审核数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved}</span>在线数量</a>
 					  <a href="##" class="list-group-item"><span class="badge"></span>下架数量</a>
-					  <a href="##" class="list-group-item"><span class="badge"></span>仿品数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
 					</div>
 				</div>
 				<div class="col-md-10">
-					<form class="form-inline">
 						<div class="panel panel-primary">
 						  <div class="panel-heading">
 							<h3 class="panel-title">商品查询</h3>
 						  </div>
 						  <div class="panel-body">
-								<div class="form-group">
-									<label for="templateName" class="control-label">商品ID: </label>
-									<input type="text" name="productId" value="" class="form-control" required />
-								</div>
-								<div class="form-group">
-									<label for="templateName" class="control-label">主料号: </label>
-									<input type="text" name="spu" value="" class="form-control" required />
-									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
-									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
-								</div>
+								<form class="form-inline">
+									<div class="form-group">
+										<label for="templateName" class="control-label">商品ID: </label>
+										<input type="text" name="productId" value="" class="form-control" />
+									</div>
+									<div class="form-group">
+										<label for="templateName" class="control-label">主料号: </label>
+										<input type="text" name="spu" value="" class="form-control" required />
+										<input type="submit" name="search" value="搜索" class="btn btn-warning" />
+										<input type="hidden" name="act" value="{$smarty.get.act}" />
+										<input type="hidden" name="mod" value="{$smarty.get.mod}" />
+										<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
+									</div>
+								</form>
 						  </div>
 						</div>
-						<div class="panel panel-primary">
-						  <div class="panel-heading">
-							<h3 class="panel-title">商品列表</h3>
-						  </div>
-						  <div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-hover table-bordered">
-									<thead>
-										<tr class="success">
-											<th width="5%">图片</th>
-											<th width="10%">料号</th>
-											<th width="64%">商品标题</th>
-											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
-											<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
-											<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+					
+					<div class="panel panel-primary">
+					  <div class="panel-heading">
+						<h3 class="panel-title">商品列表</h3>
+					  </div>
+					  <div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr class="success">
+										<th width="5%">图片</th>
+										<th width="10%">料号</th>
+										<th width="64%">商品标题</th>
+										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
+										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
+										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+									</tr>
+								</thead>
+								<tbody>
+									{foreach $productData.data as $k => $v}
+										<tr>
+											<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
+											<td>{$v.spu}</td>
+											<td>{$v.title}</td>
+											<td>{$v.saveSold}</td>
+											<td>{$v.numSold}</td>
+											<td>{$v.reviewStatus}</td>
 										</tr>
-									</thead>
-									<tbody>
-										{foreach $productData.data as $k => $v}
-											<tr>
-												<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
-												<td>{$v.spu}</td>
-												<td>{$v.title}</td>
-												<td>{$v.saveSold}</td>
-												<td>{$v.numSold}</td>
-												<td>{$v.reviewStatus}</td>
-											</tr>
-										{/foreach}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
-							</div>
-						  </div>
-						  {$productData.pagination}
+									{/foreach}
+								</tbody>
+								<tfoot>
+								</tfoot>
+							</table>
 						</div>
-					</form>
+					  </div>
+					  {$productData.pagination}
+					</div>
 				</div>
 			</div>
 		</div>

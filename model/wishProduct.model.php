@@ -122,20 +122,25 @@ class WishProductModel {
 	public function productList() {
 		self::initDB();
 
-		$page = isset($_GET['page']) ? ((int) $_GET['page']) : 1;
+		$page = isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
 
-		$limit	= ' limit '.(($page - 1)*30).', 30';
-		$where	= !isset($_REQUEST['order']) ? ' order by numSold desc ' : '';
-		if(isset($_REQUEST['order'])) {
-			$where .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+		$where = '';
+		if(isset($_REQUEST['spu'])) {
+			$where .= ' spu = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'"';
 		}
+		$limit	= ' limit '.(($page - 1)*30).', 30';
+		$order	= !isset($_REQUEST['order']) ? ' order by numSold desc ' : '';
+		if(isset($_REQUEST['order'])) {
+			$order .= ' order by '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
+		}
+		$where = strlen($where) > 0 ? ' where '.$where : '';
 		//统计数据库中的数量
-		$sql		.= 'select count(*) as count from ws_product '.$where;
+		$sql		.= 'select count(*) as count from ws_product '.(strlen($where) > 0 ? $where : '').$order;
 		$query		= self::$dbConn->query($sql);
 		$countRet	= self::$dbConn->fetch_array_all($query);
 
 		//查询数据库的数据
-		$sql	= 'select * from ws_product '.$where.$limit;
+		$sql	= 'select * from ws_product '.(strlen($where) > 0 ? $where : '').$order.$limit;
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 
@@ -166,6 +171,9 @@ class WishProductModel {
 			}
 			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'pending') {
 				$data['pending']	= $v['reviewStatus'] === 'pending' ? $v['counts'] : 0;
+			}
+			if(isset($v['reviewStatus']) && $v['reviewStatus'] === 'rejected') {
+				$data['rejected']	= $v['reviewStatus'] === 'rejected' ? $v['counts'] : 0;
 			}
 		}
 

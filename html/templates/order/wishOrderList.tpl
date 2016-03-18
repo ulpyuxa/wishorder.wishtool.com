@@ -83,6 +83,7 @@
 													<option>请选择...</option>
 													<option value="uploadTrackNumber">上传跟踪号</option>
 												</select>
+												<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">上传跟踪号<button>
 											</td>
 										</tr>
 										{/foreach}
@@ -98,6 +99,26 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal fade">
+		  <div class="modal-dialog">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">上传跟踪号</h4>
+			  </div>
+			  <div class="modal-body">
+				<p>订单号：</p>
+				<p>运输方式：</p>
+				<p>跟踪号：</p>
+				<p>跟踪号：</p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			  </div>
+			</div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 	</body>

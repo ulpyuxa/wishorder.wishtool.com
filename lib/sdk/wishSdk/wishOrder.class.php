@@ -17,4 +17,15 @@ class WishOrderApi extends WishBase {
 		$ret = $this->sendHttpRequest($para);	//获取单个url
 		return $ret;
 	}
+
+	public function fulFillOrder($orderId, $trackingProvider, $trackingNumber, $shipNote) {
+		parent::$url	= 'https://china-merchant.wish.com/api/v2/order/fulfill-one?key=';
+		$para	= array(
+			'id'				=> $orderId,
+			'tracking_provider'	=> $trackingProvider,
+			'tracking_number'	=> $trackingNumber,
+			'ship_note'			=> $shipNote
+		);
+		$ret	= $this->sendHttpRequest($para);
+	}
 }
