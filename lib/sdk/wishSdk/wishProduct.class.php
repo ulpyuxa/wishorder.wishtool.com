@@ -11,7 +11,7 @@ class WishProductApi extends WishBase {
 	}
 
 	public function getAllProduct($start = 0, $count = 500) {
-		$this->$act = 'multi-get';
+		$this->act = 'multi-get';
 		$para = array(
 			'start'	=> $start,
 			'count'	=> $count,
