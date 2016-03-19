@@ -1,7 +1,7 @@
 <?php
 /**
  * 功能: 处理商品信息的model
- * max errCode: 1501
+ * max errCode: 1502
  */
 class WishProductModel {
 	public static $dbConn;
@@ -139,7 +139,7 @@ class WishProductModel {
 		if(isset($_REQUEST['order'])) {
 			$order[] = ' '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
 		}
-		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
+		$where = count($where) > 0 ? ' where isOnline="online" and '.implode(' and ', $where) : ' where isOnline="online" ';
 		$order = count($order) > 0 ? ' order by '.implode(',', $order).',spu asc' : '';
 		//统计数据库中的数量
 		$sql		.= 'select count(*) as count from ws_product '.(strlen($where) > 0 ? $where : '').$order;
@@ -183,19 +183,72 @@ class WishProductModel {
 				$data['rejected'] = $v['reviewStatus'] === 'rejected' ? $v['counts'] : 0;
 			}
 		}
-
+		//统计订单数，收藏数
 		$sql	= 'SELECT SUM(`numSold`) AS countSold, SUM(`saveSold`) AS countSave FROM ws_product';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
+
+		//统计上下架数量
+		$sql		= 'SELECT COUNT(`isOnline`) AS isOnlineCount FROM ws_product where isOnline="offline"';
+		$query		= self::$dbConn->query($sql);
+		$onlineRet	= self::$dbConn->fetch_array_all($query);
+		$count	= $data['count'] - $data['rejected'];
+		$data['onlineCount'] = $count - $onlineRet[0]['isOnlineCount'];
+		$data['offlineCount'] = $onlineRet[0]['isOnlineCount'];
+
 		$data['countSold']	= $ret[0]['countSold'];
 		$data['countSave']	= $ret[0]['countSave'];
+		//print_r($data);exit;
 		return $data;
+	}
+
+	/**
+	 * 功能：根据productId查询listing信息
+	 */
+	public function getInfoByProductId($productId) {
+		self::initDB();
+
+		$sql	= 'SELECT spu, productId FROM ws_product WHERE productId = "'.$productId.'"';
+		$query	= self::$dbConn->query($sql);
+		return self::$dbConn->fetch_array_all($query);
 	}
 
 	/**
 	 * 功能：上下架一个商品
 	 */
-	public function perateProduct(){
-		$productId = $_REQUEST['productId'];
+	public function operateProduct($action = '') {
+		self::initDB();
+
+		$productId		= $_REQUEST['productId'];
+		if(empty($productId)) {
+			self::$errCode	= '1502';
+			self::$errMsg	= '产品ID不正确！';
+			return false;			
+		}
+		$action			= isset($_REQUEST['action']) ? $_REQUEST['action'] : $action;
+		$productInfo	= self::getInfoByProductId($productId);
+		$wishProduct = new WishProductApi('geshan0728', 1);
+		if(strtolower($action) === 'offline') {
+			$operate = $wishProduct->disableProduct($productId, $productInfo[0]['spu']);
+		} elseif(strtolower($action) === 'online') {
+			$operate = $wishProduct->enabledProduct($productId, $productInfo[0]['spu']);
+		} else {
+			self::$errCode	= '1503';
+			self::$errMsg	= '请选择需要的操作...';
+			return false;			
+		}
+		if(isset($operate[0]['code']) && empty($operate[0]['code'])) {
+			$sql	= 'UPDATE ws_product SET isOnline="'.strtolower($action).'" WHERE productId="'.$productId.'"';
+			$query	= self::$dbConn->query($sql);
+			if(!$query) {
+				self::$errCode	= '1505';
+				self::$errMsg	= '更新数据库失败，请重试！';
+				return false;
+			}
+			return true;
+		}
+		self::$errCode	= '1504';
+		self::$errMsg	= $operate['code'].':'.$operate['message'];
+		return false;
 	}
 }

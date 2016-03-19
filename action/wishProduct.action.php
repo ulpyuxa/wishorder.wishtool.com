@@ -30,7 +30,7 @@ class WishProductAct extends CommonAct{
 	 * 功能：上架或下架一个商品
 	 */
 	public function act_operateProduct() {
-		$operate = WishProductModel::perateProduct();
+		$operate = WishProductModel::operateProduct();
 		return $operate;
 	}
 }

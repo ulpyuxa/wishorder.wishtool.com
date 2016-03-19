@@ -21,11 +21,12 @@
 						商品管理
 					  </a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount}</span>在线商品</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.offlineCount}</span>下架商品</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.pending}</span>待审核数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved}</span>在线数量</a>
-					  <a href="##" class="list-group-item"><span class="badge"></span>下架数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
 					</div>
 				</div>
@@ -63,10 +64,11 @@
 									<tr class="success">
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
-										<th width="64%">商品标题</th>
+										<th width="54%">商品标题</th>
 										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
 										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
 										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+										<th width="10%">操作</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -78,6 +80,13 @@
 											<td>{$v.saveSold}</td>
 											<td>{$v.numSold}</td>
 											<td>{$v.reviewStatus}</td>
+											<td>
+												<select name="operateProduct" class="form-control" productId="{$v.productId}">
+													<option value="">请选择...</option>
+													<option value="online">上架</option>
+													<option value="offline">下架</option>
+												</select>
+											</td>
 										</tr>
 									{/foreach}
 								</tbody>
