@@ -31,33 +31,37 @@
 					</div>
 				</div>
 				<div class="col-md-10">
-						<div class="panel panel-primary">
-						  <div class="panel-heading">
-							<h3 class="panel-title">商品查询</h3>
-						  </div>
-						  <div class="panel-body">
-								<form class="form-inline">
-									<div class="form-group">
-										<label for="templateName" class="control-label">商品ID: </label>
-										<input type="text" name="productId" value="{$smarty.get.productId}" class="form-control" />
-									</div>
-									<div class="form-group">
-										<label for="templateName" class="control-label">主料号: </label>
-										<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" required />
-										<input type="submit" name="search" value="搜索" class="btn btn-warning" />
-										<input type="hidden" name="act" value="{$smarty.get.act}" />
-										<input type="hidden" name="mod" value="{$smarty.get.mod}" />
-										<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
-									</div>
-								</form>
-						  </div>
-						</div>
+					<div class="panel panel-primary">
+					  <div class="panel-heading">
+						<h3 class="panel-title">商品查询</h3>
+					  </div>
+					  <div class="panel-body">
+							<form class="form-inline">
+								<div class="form-group">
+									<label for="templateName" class="control-label">商品ID: </label>
+									<input type="text" name="productId" value="{$smarty.get.productId}" class="form-control" />
+								</div>
+								<div class="form-group">
+									<label for="templateName" class="control-label">主料号: </label>
+									<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" required />
+									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
+									<input type="hidden" name="act" value="{$smarty.get.act}" />
+									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
+									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
+								</div>
+							</form>
+					  </div>
+					</div>
 					
 					<div class="panel panel-primary">
 					  <div class="panel-heading">
 						<h3 class="panel-title">商品列表</h3>
 					  </div>
 					  <div class="panel-body">
+						<ul class="nav nav-tabs">
+						  <li role="presentation" class="active"><a href="#">在线Listing</a></li>
+						  <li role="presentation"><a href="#">下线listing</a></li>
+						</ul>
 						<div class="table-responsive">
 							<table class="table table-hover table-bordered">
 								<thead>
@@ -79,7 +83,7 @@
 											<td><a href="https://www.wish.com/c/{$v.productId}" target="_blank">{$v.title}</a></td>
 											<td>{$v.saveSold}</td>
 											<td>{$v.numSold}</td>
-											<td>{$v.reviewStatus}</td>
+											<td>{if $v.reviewStatus == 'approved'}<font color="green">已批准</font>{else if $v.reviewStatus == 'pending'}<font color="red">待审核</font>{/if}</td>
 											<td>
 												<select name="operateProduct" class="form-control" productId="{$v.productId}">
 													<option value="">请选择...</option>
