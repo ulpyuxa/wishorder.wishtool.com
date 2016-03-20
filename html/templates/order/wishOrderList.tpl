@@ -35,8 +35,12 @@
 					  <div class="panel-body">
 						<form class="form-inline">
 							<div class="form-group">
-								<label class="control-label">料号：</label>
-								<input type="text" name="sku" class="form-control" required />
+								<label class="control-label">子料号：</label>
+								<input type="text" name="sku" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label class="control-label">主料号：</label>
+								<input type="text" name="spu" class="form-control" required />
 							</div>
 							<div class="form-group">
 								<input type="submit" name="search" value="搜索" class="btn btn-warning" />

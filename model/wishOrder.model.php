@@ -30,6 +30,9 @@ class WishOrderModel {
 		if (isset($_REQUEST['sku']) && !empty(trim($_REQUEST['sku']))) {
 			$where[] = ' trueSku="'.trim($_REQUEST['sku']).'"';
 		}
+		if (isset($_REQUEST['spu']) && !empty(trim($_REQUEST['spu']))) {
+			$where[] = ' trueSpu="'.trim($_REQUEST['spu']).'"';
+		}
 		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
 		$order = ' order by order_time desc';
 		//读取表的记录数量
