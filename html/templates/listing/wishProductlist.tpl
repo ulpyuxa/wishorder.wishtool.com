@@ -45,6 +45,7 @@
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 									<input type="hidden" name="act" value="{$smarty.get.act}" />
 									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
+									<input type="hidden" name="isOnline" value="{$smarty.get.isOnline}" />
 									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
 								</div>
 							</form>
@@ -57,8 +58,8 @@
 					  </div>
 					  <div class="panel-body">
 						<ul class="nav nav-tabs">
-						  <li role="presentation" class="active"><a href="#">在线Listing</a></li>
-						  <li role="presentation"><a href="#">下线listing</a></li>
+						  <li role="presentation" {if $smarty.get.isOnline == 'online'}class="active"{/if}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online"">在线Listing</a></li>
+						  <li role="presentation" {if $smarty.get.isOnline == 'offline'}class="active"{/if}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=offline">下线listing</a></li>
 						</ul>
 						<div class="table-responsive">
 							<table class="table table-hover table-bordered">
@@ -67,9 +68,9 @@
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
 										<th width="53%">商品标题</th>
-										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&order={$productData.order}">收藏数量</a></th>
-										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&order={$productData.order}">订单数量</a></th>
-										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&order={$productData.order}">状态</a></th>
+										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&isOnline=online&order={$productData.order}">收藏数量</a></th>
+										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&isOnline=online&order={$productData.order}">订单数量</a></th>
+										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&isOnline=online&order={$productData.order}">状态</a></th>
 										<th width="10%">操作</th>
 									</tr>
 								</thead>

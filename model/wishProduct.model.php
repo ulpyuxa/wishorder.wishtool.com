@@ -139,7 +139,12 @@ class WishProductModel {
 		if(isset($_REQUEST['order'])) {
 			$order[] = ' '.$_REQUEST['orderBy'].' '.$_REQUEST['order'];
 		}
-		$where = count($where) > 0 ? ' where isOnline="online" and '.implode(' and ', $where) : ' where isOnline="online" ';
+		if(!isset($_REQUEST['isOnline'])) {
+			$where = count($where) > 0 ? ' where isOnline="online" and '.implode(' and ', $where) : ' where isOnline="online" ';
+		} else {
+			$where[] = ' isOnline = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['isOnline']).'"';
+			$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
+		}
 		$order = count($order) > 0 ? ' order by '.implode(',', $order).',spu asc' : '';
 		//统计数据库中的数量
 		$sql		.= 'select count(*) as count from ws_product '.(strlen($where) > 0 ? $where : '').$order;
