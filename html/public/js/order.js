@@ -15,7 +15,7 @@ $(document).on("click", '#updateOrderInfo', function(){
 });
 
 $(document).on('change', "select[name='operate']", function(){
-	if($(this).val() === '') {
+	if($(this).val() == '') {
 		return false;
 	}
 	$('#myModal').modal({
