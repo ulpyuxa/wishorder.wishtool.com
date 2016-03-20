@@ -23,11 +23,15 @@ class WishOrderModel {
 		$page	= isset($_GET['page']) ? ((int) $_GET['page']) : 1;
 		$limit	= ' limit '.(($page - 1)*30).', 30';
 
-		$where = ' where 1 ';
+		$where = array();
 		if (isset($_REQUEST['state']) && $_REQUEST['state'] !== 'ALL') {
-			$where .= ' and state="'.$_REQUEST['state'].'"';
+			$where[] = ' state="'.$_REQUEST['state'].'"';
 		}
-		$where .= ' order by order_time desc';
+		if (isset($_REQUEST['sku']) && !empty(trim($_REQUEST['sku']))) {
+			$where[] = ' trueSku="'.trim($_REQUEST['sku']).'"';
+		}
+		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
+		$order = ' order by order_time desc';
 		//读取表的记录数量
 		$sql		= 'SELECT count(*) as counts FROM `ws_order`'.$where;
 		$query		= self::$dbConn->query($sql);
@@ -82,7 +86,6 @@ class WishOrderModel {
 				unset($orderData[0]['data'][$k]);
 			}
 		}
-		print_r($oldOrder);
 		self::updateOrderInfo($oldOrder);
 		if(!isset($orderData[0]['data']) || empty($orderData[0]['data'])) {
 			self::$errCode	= '1001';
@@ -94,6 +97,8 @@ class WishOrderModel {
 		foreach($orderData[0]['data'] as $k => $v) {
 			$skuInfo		= explode('#', $v['Order']['sku']);
 			$trueSku		= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
+			$trueSkuArr		= explode("_", $trueSku);
+			$trueSpu		= $trueSkuArr[0];
 			$orderInfo[] = array(
 				'order_id'							=> $v['Order']['order_id'],
 				'ShippingDetail_city'				=> $v['Order']['ShippingDetail']['city'],
@@ -122,6 +127,7 @@ class WishOrderModel {
 				'transaction_id'					=> $v['Order']['transaction_id'],
 				'variant_id'						=> $v['Order']['variant_id'],
 				'trueSku'							=> $trueSku,
+				'trueSpu'							=> $trueSpu,
 			);
 			$insertSql[] = '("'.implode('","', end($orderInfo)).'")';
 		}

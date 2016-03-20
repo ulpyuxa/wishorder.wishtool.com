@@ -28,74 +28,74 @@
 					</div>
 				</div>
 				<div class="col-md-10">
-					<form class="form-horizontal">
-						<div class="panel panel-primary">
-						  <div class="panel-heading">
-							<h3 class="panel-title">操作</h3>
-						  </div>
-						  <div class="panel-body">
-								<div class="form-inline">
-									<!-- <input type="button" class="btn btn-success" value="更新订单信息" id="updateOrderInfo" />
-									<select class="form-control js-example-basic-multiple" multiple="multiple">
-									  <option value="AL">Alabama</option>
-									  <option value="WY">Wyoming</option>
-									</select> -->
-								</div>
-								<div class="form-group">
-								</div>
-						  </div>
-						</div>
-						<div class="panel panel-primary">
-						  <div class="panel-heading">
-							<h3 class="panel-title">订单信息</h3>
-						  </div>
-						  <div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-hover table-bordered">
-									<thead>
-										<tr class="success">
-											<th width="5%">图片</th>
-											<th width="10%">SKU</th>
-											<th width="35%">标题</th>
-											<th width="5%">订单<br />价格</th>
-											<th width="5%">订单<br />状态</th>
-											<th width="15%">订单<br />地址</th>
-											<th width="5%">订单<br />运费</th>
-											<th width="5%">订单<br />数量</th>
-											<th width="5%">下单<br />时间</th>
-											<th width="10%">操作</th>
-										</tr>
-									</thead>
-									<tbody>
-										{foreach $orderData.data as $key => $val}
-										<tr>
-											<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="40px" class="img-thumbnail"></td>
-											<td>{$val.trueSku}</td>
-											<td>{$val.product_name}  [{$val.order_id}]</td>
-											<td>{$val.order_total}</td>
-											<td>{$val.stateZH}</td>
-											<td>国家：{$val.ShippingDetail_country}<br />省：{$val.ShippingDetail_state}<br />市/区：{$val.ShippingDetail_city}</td>
-											<td>{$val.shipping_cost}</td>
-											<td>{$val.quantity}</td>
-											<td>{$val.order_time|date_format:"%D %T"}</td>
-											<td>
-												<select class="form-control" name="operate" orderId="{$val.order_id}">
-													<option value="">请选择...</option>
-													<option value="uploadTrackNumber">上传跟踪号</option>
-													<!-- <option value="disableOrder">取消订单</option> -->
-												</select>
-											</td>
-										</tr>
-										{/foreach}
-									</tbody>
-									<tfoot>
-									</tfoot>
-								</table>
+					<div class="panel panel-primary">
+					  <div class="panel-heading">
+						<h3 class="panel-title">操作</h3>
+					  </div>
+					  <div class="panel-body">
+						<form class="form-inline">
+							<div class="form-group">
+								<label class="control-label">料号：</label>
+								<input type="text" name="sku" class="form-control" required />
 							</div>
-							{$orderData.pageHtml}
-						  </div>
+							<div class="form-group">
+								<input type="submit" name="search" value="搜索" class="btn btn-warning" />
+								<input type="hidden" name="act" value="{$smarty.get.act}" />
+								<input type="hidden" name="mod" value="{$smarty.get.mod}" />
+							</div>
+						</form>
+					  </div>
+					</div>
+					<div class="panel panel-primary">
+					  <div class="panel-heading">
+						<h3 class="panel-title">订单信息</h3>
+					  </div>
+					  <div class="panel-body">
+						<div class="table-responsive">
+							<table class="table table-hover table-bordered">
+								<thead>
+									<tr class="success">
+										<th width="5%">图片</th>
+										<th width="10%">SKU</th>
+										<th width="35%">标题</th>
+										<th width="5%">订单<br />价格</th>
+										<th width="5%">订单<br />状态</th>
+										<th width="15%">订单<br />地址</th>
+										<th width="5%">订单<br />运费</th>
+										<th width="5%">订单<br />数量</th>
+										<th width="5%">下单<br />时间</th>
+										<th width="10%">操作</th>
+									</tr>
+								</thead>
+								<tbody>
+									{foreach $orderData.data as $key => $val}
+									<tr>
+										<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="40px" class="img-thumbnail"></td>
+										<td>{$val.trueSku}</td>
+										<td>{$val.product_name}  [{$val.order_id}]</td>
+										<td>{$val.order_total}</td>
+										<td>{$val.stateZH}</td>
+										<td>国家：{$val.ShippingDetail_country}<br />省：{$val.ShippingDetail_state}<br />市/区：{$val.ShippingDetail_city}</td>
+										<td>{$val.shipping_cost}</td>
+										<td>{$val.quantity}</td>
+										<td>{$val.order_time|date_format:"%D %T"}</td>
+										<td>
+											<select class="form-control" name="operate" orderId="{$val.order_id}">
+												<option value="">请选择...</option>
+												<option value="uploadTrackNumber">上传跟踪号</option>
+												<!-- <option value="disableOrder">取消订单</option> -->
+											</select>
+										</td>
+									</tr>
+									{/foreach}
+								</tbody>
+								<tfoot>
+								</tfoot>
+							</table>
 						</div>
-					</form>
+						{$orderData.pageHtml}
+					  </div>
+					</div>
 				</div>
 			</div>
 		</div>

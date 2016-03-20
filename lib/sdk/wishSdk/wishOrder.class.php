@@ -23,7 +23,7 @@ class WishOrderApi extends WishBase {
 	 *功能：上传跟踪号
 	 */
 	public function fulFillOrder($orderId, $trackingProvider, $trackingNumber, $shipNote="") {
-		$this->act = 'fulfill-one'
+		$this->act = 'fulfill-one';
 		$para	= array(
 			'id'				=> $orderId,
 			'tracking_provider'	=> $trackingProvider,
