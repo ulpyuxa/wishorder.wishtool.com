@@ -1,4 +1,8 @@
 <?php
+/**
+ * 功能：订单相关操作
+ * errorCode: 1104
+ */
 class WishOrderModel {
 	public static $dbConn;
 	static $errCode	=	0;
@@ -158,5 +162,71 @@ class WishOrderModel {
 			self::$dbConn->commit();
 		}
 		return true;
+	}
+
+	/**
+	 * 功能: 获取平台所有的运输方式，
+	 */
+	public function getPostList() {
+		self::initDB();
+
+		$sql	= 'SELECT * FROM `ws_post_method` ORDER BY isCommon ASC,post_en ASC';
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+		return $ret;
+	}
+
+	public function checkTrackingInfo($data) {
+		$errStr = '';
+		if(empty($data['orderId'])) {
+			$errStr = '订单号输入错误！';
+		}
+		if(empty($data['transport'])) {
+			$errStr = '运输方式输入错误！';
+		}
+		if(empty($data['trackNumber'])) {
+			$errStr = '跟踪号输入错误！';
+		}
+		if(!empty($errStr)) {
+			self::$errCode	= '1102';
+			self::$errMsg	= $errStr;
+			return false;
+		}		
+	}
+	/**
+	 * 功能: 上传跟踪号
+	 */
+	public function fulfillOrder() {
+		$orderApi		= new WishOrderApi('geshan0728', 1);
+		$errStr			= $this->checkTrackingInfo($_REQUEST);
+		if(!$errStr) {
+			return false;
+		}
+		$uploadStatus	= $orderApi->fulFillOrder($_REQUEST['orderId'], $_REQUEST['transport'], $_REQUEST['trackNumber'], $_REQUEST['shipNote']);
+		if(isset($uploadStatus[0]['code']) && empty($uploadStatus[0]['code'])) {
+			//跟踪号上传成功
+			return $uploadStatus;
+		}
+		self::$errCode	= '1103';
+		self::$errMsg	= '未知错误，新增订单跟踪号上传失败';
+		return false;
+	}
+	/**
+	 * 功能: 修改跟踪号
+	 */
+	public function modifyTracking() {
+		$orderApi		= new WishOrderApi('geshan0728', 1);
+		$errStr			= $this->checkTrackingInfo($_REQUEST);
+		if(!$errStr) {
+			return false;
+		}
+		$uploadStatus	= $orderApi->modifyTracking($_REQUEST['orderId'], $_REQUEST['transport'], $_REQUEST['trackNumber'], $_REQUEST['shipNote']);
+		if(isset($uploadStatus[0]['code']) && empty($uploadStatus[0]['code'])) {
+			//跟踪号上传成功
+			return $uploadStatus;
+		}
+		self::$errCode	= '1104';
+		self::$errMsg	= '未知错误，修改订单跟踪号上传失败';
+		return false;
 	}
 }

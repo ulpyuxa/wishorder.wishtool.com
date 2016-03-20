@@ -29,8 +29,18 @@ class WishOrderAct extends CommonAct{
 	public function act_wishOrderList() {
 		$orderData	= WishOrderModel::getOrderData();
 		$orderCount	= WishOrderModel::orderCount();
+		$postMethod	= WishOrderModel::getPostList();
 		$this->smarty->assign('orderData', $orderData);
 		$this->smarty->assign('orderCount', $orderCount);
+		$this->smarty->assign('postMethod', $postMethod);
 		$this->smarty->display('wishOrderList.tpl');
+	}
+
+	/**
+	 * 功能：上传跟踪号
+	 */
+	public function act_fulfillOrder() {
+		$uploadStatus	= WishOrderModel::fulfillOrder();
+		return $uploadStatus;
 	}
 }

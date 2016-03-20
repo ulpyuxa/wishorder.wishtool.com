@@ -189,12 +189,12 @@ class WishProductModel {
 		$ret	= self::$dbConn->fetch_array_all($query);
 
 		//统计上下架数量
-		$sql		= 'SELECT COUNT(`isOnline`) AS isOnlineCount FROM ws_product where isOnline="offline"';
+		$sql		= 'SELECT COUNT(`isOnline`) AS isOfflineCount FROM ws_product where isOnline="offline"';
 		$query		= self::$dbConn->query($sql);
-		$onlineRet	= self::$dbConn->fetch_array_all($query);
-		$count	= $data['count'] - $data['rejected'];
-		$data['onlineCount'] = $count - $onlineRet[0]['isOnlineCount'];
-		$data['offlineCount'] = $onlineRet[0]['isOnlineCount'];
+		$offlineRet	= self::$dbConn->fetch_array_all($query);
+		$count		= $data['count'] - $data['rejected'];
+		$data['onlineCount']	= $count - $offlineRet[0]['isOfflineCount'];
+		$data['offlineCount']	= $offlineRet[0]['isOfflineCount'];
 
 		$data['countSold']	= $ret[0]['countSold'];
 		$data['countSave']	= $ret[0]['countSave'];

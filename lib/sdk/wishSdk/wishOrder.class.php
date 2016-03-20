@@ -19,14 +19,35 @@ class WishOrderApi extends WishBase {
 		return $ret;
 	}
 
-	public function fulFillOrder($orderId, $trackingProvider, $trackingNumber, $shipNote) {
-		parent::$url	= 'https://china-merchant.wish.com/api/v2/order/fulfill-one?key=';
+	/**
+	 *功能：上传跟踪号
+	 */
+	public function fulFillOrder($orderId, $trackingProvider, $trackingNumber, $shipNote="") {
+		$this->act = 'fulfill-one'
 		$para	= array(
 			'id'				=> $orderId,
 			'tracking_provider'	=> $trackingProvider,
-			'tracking_number'	=> $trackingNumber,
-			'ship_note'			=> $shipNote
+			'tracking_number'	=> $trackingNumber
 		);
-		$ret	= $this->sendHttpRequest($para);
+		if(!empty($shipNote)) {
+			$para['ship_note'] = $shipNote;
+		}
+		return $ret	= $this->sendHttpRequest($para);
+	}
+
+	/**
+	 * 功能：修改订单的跟踪号
+	 */
+	public function modifyTracking($orderId, $trackingProvider, $trackingNumber, $shipNote="") {
+		$this->act = 'modify-tracking';
+		$para	= array(
+			'id'				=> $orderId,
+			'tracking_provider'	=> $trackingProvider,
+			'tracking_number'	=> $trackingNumber
+		);
+		if(!empty($shipNote)) {
+			$para['ship_note'] = $shipNote;
+		}
+		return $ret	= $this->sendHttpRequest($para);
 	}
 }
