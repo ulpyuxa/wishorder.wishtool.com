@@ -14,15 +14,12 @@ $(document).on("click", '#updateOrderInfo', function(){
 	});
 });
 
-
-
 $(document).on('change', "select[name='operate']", function(){
+	if($(this).val() === '') {
+		return false;
+	}
 	$('#myModal').modal({
 		backdrop: 'static'
 	});
 	$("input[name='orderId']").val($(this).attr('orderId'));
-});
-
-$("button[name='submitBtn']").on("click", function(){
-	$("form[name='tracknumberForm']").submit();
 });

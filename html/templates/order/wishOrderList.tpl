@@ -82,7 +82,7 @@
 												<select class="form-control" name="operate" orderId="{$val.order_id}">
 													<option>请选择...</option>
 													<option value="uploadTrackNumber">上传跟踪号</option>
-													<option value="disableOrder">取消订单</option>
+													<!-- <option value="disableOrder">取消订单</option> -->
 												</select>
 											</td>
 										</tr>
