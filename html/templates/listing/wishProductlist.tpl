@@ -21,12 +21,10 @@
 						商品管理
 					  </a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount}</span>在线商品</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.offlineCount}</span>下架商品</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount} & {$productData.statisticInfo.offlineCount}</span>在线&下架商品</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.pending}</span>待审核数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved}</span>在线数量</a>
+					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved} &	{$productData.statisticInfo.pending}</span>已&待审核数量</a>
 					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
 					</div>
 				</div>
