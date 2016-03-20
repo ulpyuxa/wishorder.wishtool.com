@@ -79,11 +79,11 @@
 											<td>{$val.quantity}</td>
 											<td>{$val.order_time|date_format:"%D %T"}</td>
 											<td>
-												<select class="form-control">
+												<select class="form-control" name="operate" orderId="{$val.order_id}">
 													<option>请选择...</option>
 													<option value="uploadTrackNumber">上传跟踪号</option>
+													<option value="disableOrder">取消订单</option>
 												</select>
-												<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">上传跟踪号<button>
 											</td>
 										</tr>
 										{/foreach}
@@ -99,27 +99,49 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade">
-		  <div class="modal-dialog">
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
 			<div class="modal-content">
-			  <div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title">上传跟踪号</h4>
-			  </div>
-			  <div class="modal-body">
-				<p>订单号：</p>
-				<p>运输方式：</p>
-				<p>跟踪号：</p>
-				<p>跟踪号：</p>
-			  </div>
-			  <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			  </div>
-			</div><!-- /.modal-content -->
-		  </div><!-- /.modal-dialog -->
-		</div><!-- /.modal -->
+			  <form name="tracknumberForm" action="/index.php?mod=wishOrder&act=fulfillOrder" method="POST">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">上传快递单号</h4>
+				  </div>
+				  <div class="modal-body">
+					<div class="form-group form-inline">
+						<label for="orderId" class="col-sm-3 control-label">订单号：</label>
+						<input class="form-control" name="orderId" required readonly/>
+					</div>
+					<div class="form-group form-inline">
+						<label for="transport" class="col-sm-3 control-label">运输方式：</label>
+						<select class="form-control" name="transport" required>
+							<option value="">请选择运输方式...</option>
+							{foreach $postMethod as $key => $val}
+								<option value="{$val.post_en}">{if empty($val.post_zh)}{$val.post_en}{else}{$val.post_zh}[{$val.post_en}]{/if}</option>
+							{/foreach}
+						</select>
+					</div>
+					<div class="form-group form-inline">
+						<label for="trackNumber" class="col-sm-3 control-label">跟踪号：</label>
+						<input class="form-control" name="trackNumber" required/>
+					</div>
+					<div class="form-group">
+						<label for="shipNote" class="col-sm-3 control-label">买家须知：</label>
+						<textarea class="form-control" name="shipNote" required></textarea>
+					</div>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="submit" class="btn btn-primary">开始上传</button>
+				  </div>
+			  </form>
+			</div>
+		  </div>
+		</div>
+		<!-- End Modal-->
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
+		<script src="../public/js/order.js"></script>
 	</body>
 </html>
