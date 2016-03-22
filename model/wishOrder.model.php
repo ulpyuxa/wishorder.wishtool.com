@@ -34,7 +34,7 @@ class WishOrderModel {
 			$where[] = ' trueSpu="'.trim($_REQUEST['spu']).'"';
 		}
 		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
-		$order = ' order by order_time desc';
+		$order = ' order by order_time desc, sku ASC';
 		//读取表的记录数量
 		$sql		= 'SELECT count(*) as counts FROM `ws_order`'.$where;
 		$query		= self::$dbConn->query($sql);
