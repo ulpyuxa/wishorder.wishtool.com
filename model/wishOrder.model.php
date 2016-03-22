@@ -1,7 +1,7 @@
 <?php
 /**
  * 功能：订单相关操作
- * errorCode: 1104
+ * errorCode: 1105
  */
 class WishOrderModel {
 	public static $dbConn;
@@ -206,15 +206,28 @@ class WishOrderModel {
 	 * 功能: 上传跟踪号
 	 */
 	public function fulfillOrder() {
+		self::initDB();
 		$orderApi		= new WishOrderApi('geshan0728', 1);
-		$errStr			= $this->checkTrackingInfo($_REQUEST);
-		if(!$errStr) {
+		$errStr			= self::checkTrackingInfo($_REQUEST);
+		if(strlen($errStr) > 0) {
 			return false;
 		}
 		$uploadStatus	= $orderApi->fulFillOrder($_REQUEST['orderId'], $_REQUEST['transport'], $_REQUEST['trackNumber'], $_REQUEST['shipNote']);
+		var_dump($uploadStatus);
 		if(isset($uploadStatus[0]['code']) && empty($uploadStatus[0]['code'])) {
 			//跟踪号上传成功
-			return $uploadStatus;
+			$sql	= 'update ws_order set state="SHIPPED",shippingMethod="'.$_REQUEST['transport'].'",
+											tranknumber="'.$_REQUEST['trackNumber'].'",
+											shipNote="'.$_REQUEST['shipNote'].'" 
+						where order_id="'.$_REQUEST['orderId'].'"';
+			echo $sql;
+			$query	= self::$dbConn->query($sql);
+			if(!$query) {
+				self::$errCode	= '1105';
+				self::$errMsg	= '数据库添加运单号失败！请重试';
+				return false;
+			}
+			return true;
 		}
 		self::$errCode	= '1103';
 		self::$errMsg	= '未知错误，新增订单跟踪号上传失败';
@@ -225,8 +238,8 @@ class WishOrderModel {
 	 */
 	public function modifyTracking() {
 		$orderApi		= new WishOrderApi('geshan0728', 1);
-		$errStr			= $this->checkTrackingInfo($_REQUEST);
-		if(!$errStr) {
+		$errStr			= self::checkTrackingInfo($_REQUEST);
+		if(strlen($errStr) > 0) {
 			return false;
 		}
 		$uploadStatus	= $orderApi->modifyTracking($_REQUEST['orderId'], $_REQUEST['transport'], $_REQUEST['trackNumber'], $_REQUEST['shipNote']);

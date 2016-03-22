@@ -74,7 +74,7 @@
 								<tbody>
 									{foreach $orderData.data as $key => $val}
 									<tr>
-										<td><img src="{$val.product_image_url}" alt="{$val.trueSku}" width="40px" class="img-thumbnail"></td>
+										<td><img src="http://thumb.valsun.cn/{$val.trueSku}-Gx100.jpg" alt="{$val.trueSku}" width="40px" class="img-thumbnail"></td>
 										<td>{$val.trueSku}</td>
 										<td>{$val.product_name}  [{$val.order_id}]</td>
 										<td>{$val.order_total}</td>
@@ -132,7 +132,7 @@
 					</div>
 					<div class="form-group">
 						<label for="shipNote" class="col-sm-3 control-label">买家须知：</label>
-						<textarea class="form-control" name="shipNote" required></textarea>
+						<textarea class="form-control" name="shipNote"></textarea>
 					</div>
 				  </div>
 				  <div class="modal-footer">
