@@ -45,7 +45,7 @@ class WishOrderModel {
 		$pageHtml	= $pagination->parse();
 
 		//分页读取记录
-		$sql		= 'SELECT * FROM `ws_order`'.$where.$limit;
+		$sql		= 'SELECT * FROM `ws_order`'.$where.$order.$limit;
 		$query		= self::$dbConn->query($sql);
 		$ret		= self::$dbConn->fetch_array_all($query);
 		$orderStat	= C('ORDERSTAT');
