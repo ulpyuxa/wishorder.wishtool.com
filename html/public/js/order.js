@@ -32,7 +32,7 @@ $(document).on('change', "select[name='transport']", function(){
 	}
 });
 
-$(document).on('change', "button[name='submitBtn']", function(){
+$(document).on('click', "button[name='submitBtn']", function(){
 	$.ajax({
 		type	: "POST",
 		async	: true,
