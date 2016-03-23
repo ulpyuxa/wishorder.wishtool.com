@@ -40,7 +40,6 @@ class WishBase {
 	 */
 	public function sendHttpRequest ($para) {
 		$url	= self::$url.$this->api.'/'.$this->act.'?key='.self::$token.'&'.http_build_query($para);
-		echo $url;
 		$ret	= $this->curlResult(array($url));
 		return $ret;
 	}

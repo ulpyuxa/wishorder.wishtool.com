@@ -213,7 +213,6 @@ class WishOrderModel {
 			return false;
 		}
 		$uploadStatus	= $orderApi->fulFillOrder($_REQUEST['orderId'], $_REQUEST['transport'], $_REQUEST['trackNumber'], $_REQUEST['shipNote']);
-		var_dump($uploadStatus);
 		if(isset($uploadStatus[0]['code']) && empty($uploadStatus[0]['code'])) {
 			//跟踪号上传成功
 			$sql	= 'update ws_order set state="SHIPPED",shippingMethod="'.$_REQUEST['transport'].'",
