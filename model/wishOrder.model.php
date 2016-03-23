@@ -217,7 +217,7 @@ class WishOrderModel {
 		if(isset($uploadStatus[0]['code']) && empty($uploadStatus[0]['code'])) {
 			//跟踪号上传成功
 			$sql	= 'update ws_order set state="SHIPPED",shippingMethod="'.$_REQUEST['transport'].'",
-											tranknumber="'.$_REQUEST['trackNumber'].'",
+											tracknumber="'.$_REQUEST['trackNumber'].'",
 											shipNote="'.$_REQUEST['shipNote'].'" 
 						where order_id="'.$_REQUEST['orderId'].'"';
 			echo $sql;

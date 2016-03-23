@@ -61,8 +61,9 @@
 									<tr class="success">
 										<th width="5%">图片</th>
 										<th width="10%">SKU</th>
-										<th width="35%">标题</th>
+										<th width="30%">标题</th>
 										<th width="5%">订单<br />价格</th>
+										<th width="5%">运输<br />方式</th>
 										<th width="5%">订单<br />状态</th>
 										<th width="15%">订单<br />地址</th>
 										<th width="5%">订单<br />运费</th>
@@ -78,6 +79,7 @@
 										<td>{$val.trueSku}</td>
 										<td>{$val.product_name}  [{$val.order_id}]</td>
 										<td>{$val.order_total}</td>
+										<td>{$val.shippingMethod}<br/>{$val.tracknumber}</td>
 										<td>{$val.stateZH}</td>
 										<td>国家：{$val.ShippingDetail_country}<br />省：{$val.ShippingDetail_state}<br />市/区：{$val.ShippingDetail_city}</td>
 										<td>{$val.shipping_cost}</td>
@@ -122,7 +124,7 @@
 						<select class="form-control" name="transport" required>
 							<option value="">请选择运输方式...</option>
 							{foreach $postMethod as $key => $val}
-								<option value="{$val.post_en}">{if empty($val.post_zh)}{$val.post_en}{else}{$val.post_zh}[{$val.post_en}]{/if}</option>
+								<option value="{$val.post_en}" postUrl="{$val.postUrl}">{if empty($val.post_zh)}{$val.post_en}{else}{$val.post_zh}[{$val.post_en}]{/if}</option>
 							{/foreach}
 						</select>
 					</div>

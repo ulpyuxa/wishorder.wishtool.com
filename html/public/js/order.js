@@ -23,3 +23,11 @@ $(document).on('change', "select[name='operate']", function(){
 	});
 	$("input[name='orderId']").val($(this).attr('orderId'));
 });
+
+$(document).on('change', "select[name='transport']", function(){
+	var postUrl = $(this).find("option:selected").attr("postUrl");
+	$("input[name='trackNumber']").next().remove();		//删除链接
+	if($.trim(postUrl).length > 0) {
+		$("input[name='trackNumber']").after('<a id="postLink" href="'+postUrl+'" target="_blank">单号查询网址</a>');
+	}
+});
