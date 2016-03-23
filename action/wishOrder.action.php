@@ -41,6 +41,11 @@ class WishOrderAct extends CommonAct{
 	 */
 	public function act_fulfillOrder() {
 		$uploadStatus	= WishOrderModel::fulfillOrder();
+		if(!$uploadStatus) {
+			self::$errCode	= WishOrderModel::$errCode;
+			self::$errMsg	= WishOrderModel::$errMsg;
+			return false;
+		}
 		return $uploadStatus;
 	}
 }

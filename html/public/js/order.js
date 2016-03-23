@@ -31,3 +31,22 @@ $(document).on('change', "select[name='transport']", function(){
 		$("input[name='trackNumber']").after('<a id="postLink" href="'+postUrl+'" target="_blank">单号查询网址</a>');
 	}
 });
+
+$(document).on('change', "button[name='submitBtn']", function(){
+	$.ajax({
+		type	: "POST",
+		async	: true,
+		url		: './json.php?mod=wishOrder&act=fulfillOrder&jsonp=1',
+		data	: $("form[name='tracknumberForm']").serialize(),
+		dataType: "json",
+		success : function (ret) {
+			if(ret.data !== true) {
+				alert(ret.errCode + ':' + ret.errMsg);
+				$('#myModal').hide();
+				$("form[name='tracknumberForm']").reset();
+				return false;
+			}
+			alert('恭喜，跟踪号上传成功!');
+		}
+	});
+});

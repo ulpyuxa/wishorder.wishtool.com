@@ -219,7 +219,6 @@ class WishOrderModel {
 											tracknumber="'.$_REQUEST['trackNumber'].'",
 											shipNote="'.$_REQUEST['shipNote'].'" 
 						where order_id="'.$_REQUEST['orderId'].'"';
-			echo $sql;
 			$query	= self::$dbConn->query($sql);
 			if(!$query) {
 				self::$errCode	= '1105';
