@@ -20,7 +20,11 @@ $(document).on('change', 'select[name="operateProduct"]', function(){
 	if(action === '') {
 		return false;
 	}
-	if(!confirm('确定要'+(action === 'online' ? '上架' : '下架')+'此商品吗？')) {
+	var errStr	= '';
+	if($(this).attr('isPromoted') === 'true') {
+		errStr += '这是带钻商品！';
+	}
+	if(!confirm(errStr+'确定要'+(action === 'online' ? '上架' : '下架')+'此商品吗？')) {
 		return false;
 	}
 	$.ajax({

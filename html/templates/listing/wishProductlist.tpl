@@ -13,8 +13,9 @@
 				background:transparent url('../public/images/golden_diamond.png') no-repeat;
 			}
 			img.logo {
-				filter:alpha(opacity=75);
-				opacity:.75;
+				filter:alpha(opacity=70);
+				moz-opacity:.70;
+				opacity:.70;
 			}
 		</style>
 	</head>
@@ -101,7 +102,7 @@
 											<td>{$v.numSold}</td>
 											<td>{if $v.reviewStatus == 'approved'}<font color="green">已批准</font>{else if $v.reviewStatus == 'pending'}<font color="red">待审核</font>{/if}</td>
 											<td>
-												<select name="operateProduct" class="form-control" productId="{$v.productId}">
+												<select name="operateProduct" class="form-control" productId="{$v.productId}" isPromoted="{$v.isPromoted}">
 													<option value="">请选择...</option>
 													<option value="online">上架</option>
 													<option value="offline">下架</option>
