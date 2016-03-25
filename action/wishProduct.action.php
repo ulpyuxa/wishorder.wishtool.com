@@ -33,4 +33,21 @@ class WishProductAct extends CommonAct{
 		$operate = WishProductModel::operateProduct();
 		return $operate;
 	}
+
+	/**
+	 * 功能：抓虫获取wish平台上其他商家的tags字段
+	 */
+	public function act_getWishTags() {
+		if(isset($_REQUEST['productUrl'])) {
+			$data = WishProductModel::getItemDetail($_REQUEST['productUrl']);
+			var_dump($data);exit;
+			if(!$data) {
+				self::$errCode	= WishProductModel::$errCode;
+				self::$errMsg	= WishProductModel::$errMsg;
+				return false;
+			}
+			return true;
+		}
+		$this->smarty->display('wishOtherProduct.tpl');
+	}
 }

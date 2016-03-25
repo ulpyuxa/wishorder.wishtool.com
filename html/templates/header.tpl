@@ -20,6 +20,8 @@
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">商品管理 <span class="caret"></span></a>
 					  <ul class="dropdown-menu">
 						<li><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online">商品列表</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="/index.php?mod=wishProduct&act=getWishTags">wish tags</a></li>
 						<!-- <li role="separator" class="divider"></li>
 						<li><a href="##">One more separated link</a></li> -->
 					  </ul>

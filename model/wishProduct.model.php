@@ -1,7 +1,7 @@
 <?php
 /**
  * 功能: 处理商品信息的model
- * max errCode: 1502
+ * max errCode: 1506
  */
 class WishProductModel {
 	public static $dbConn;
@@ -69,6 +69,7 @@ class WishProductModel {
 				'reviewStatus'	=> $v['Product']['review_status'],
 				'title'			=> $v['Product']['name'],
 				'isOnline'		=> 'Yes',
+				'isPromoted'	=> $v['Product']['is_promoted'],
 			);
 			$ids[] = $v['Product']['id'];
 			$sql[$v['Product']['id']] = '("'.implode('","', end($data)).'")';
@@ -109,7 +110,8 @@ class WishProductModel {
 		foreach($data as $k => $v) {
 			$sql = 'update ws_product set numSold="'.$v['numSold'].'",
 						saveSold = "'.$v['saveSold'].'",
-						reviewStatus = "'.$v['reviewStatus'].'"
+						reviewStatus = "'.$v['reviewStatus'].'",
+						isPromoted = "'.$v['isPromoted'].'"
 						where productId = "'.$v['productId'].'"';
 			$query = self::$dbConn->query($sql);
 		}
@@ -255,5 +257,42 @@ class WishProductModel {
 		self::$errCode	= '1504';
 		self::$errMsg	= $operate['code'].':'.$operate['message'];
 		return false;
+	}
+
+	/**
+	 * 功能：根据url地址，拉取wish平台的关键字标题和描述 
+	 */
+	public function getItemDetail($url) {
+		set_time_limit(0);
+		ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
+		$opts = array( 
+			'http' => array (
+				'method'	=> "GET",
+				'timeout'	=> 3,
+			)
+		);
+		$data		= @file_get_contents($url, false, stream_context_create($opts));
+		$request	= json_decode($data,true);
+		if(empty($request)) {
+			for($i = 0; $i < 3; $i++) {
+				sleep(5);
+				$data		= @file_get_contents($url, false, stream_context_create($opts));
+				$request	= json_decode($data,true);
+				if(!empty($request)) {
+					break;
+				}
+			}
+		}
+		if(strlen($request) < 1) {
+			self::$errCode	= '1506';
+			self::$errMsg	= '拉取listing详情失败';
+			return false;
+		}
+		$start	= stripos($request, "pageParams['mainContestObj']");
+		$end	= stripos($request, ";", $start);
+		$str1	= substr($request, $start, ($end - $start));
+		$str2	= substr($str1, 31, strlen($str1));
+		$data	= json_decode($str2, true);
+		return array('merchant_tags' => $data['merchant_tags'], $data['description'], $data['name'], $data['extra_photo_urls']);
 	}
 }

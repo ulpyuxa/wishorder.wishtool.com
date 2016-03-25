@@ -8,6 +8,15 @@
 		<title>商品管理</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<style type=text/css>
+			.watermark {
+				background:transparent url('../public/images/golden_diamond.png') no-repeat;
+			}
+			img.logo {
+				filter:alpha(opacity=75);
+				opacity:.75;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -77,7 +86,15 @@
 								<tbody>
 									{foreach $productData.data as $k => $v}
 										<tr>
-											<td><img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail"></td>
+											<td>
+												{if $v.isPromoted === 'true'}
+													<div class="watermark">
+														<img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail logo">
+													</div>	
+												{else}
+												<img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail">
+												{/if}
+											</td>
 											<td>{$v.spu}</td>
 											<td><a href="https://www.wish.com/c/{$v.productId}" target="_blank">{$v.title}</a></td>
 											<td>{$v.saveSold}</td>

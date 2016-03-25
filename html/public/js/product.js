@@ -38,3 +38,21 @@ $(document).on('change', 'select[name="operateProduct"]', function(){
 		}
 	});
 });
+
+$(document).on('click', "button[name='submitBtn']", function(){
+	$.ajax({
+		type	: "POST",
+		async	: true,
+		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1',
+		data	: $("form[name='urlForm']").serialize(),
+		dataType: "json",
+		success : function (ret) {
+			console.log(ret);
+			if(ret.data !== true) {
+				alert(ret.errCode + ':' + ret.errMsg);
+				return false;
+			}
+			alert('商品'+(action === 'online' ? '上架' : '下架')+'成功!');
+		}
+	});
+});
