@@ -174,7 +174,7 @@ class WishProductModel {
 	public function statisticProduct() {
 		self::initDB();
 
-		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product GROUP BY reviewStatus';
+		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product WHERE isOnline="online" GROUP BY reviewStatus';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 		$data	= array();
