@@ -100,7 +100,7 @@
 											<td><a href="https://www.wish.com/c/{$v.productId}" target="_blank">{$v.title}</a></td>
 											<td>{$v.saveSold}</td>
 											<td>{$v.numSold}</td>
-											<td>{if $v.reviewStatus == 'approved'}<font color="green">已批准</font>{else if $v.reviewStatus == 'pending'}<font color="red">待审核</font>{/if}</td>
+											<td>{if $v.reviewStatus == 'approved'}<font color="green">已批准</font>{else if $v.reviewStatus == 'pending'}<font color="red">待审核</font>{else}已拒绝{/if}</td>
 											<td>
 												<select name="operateProduct" class="form-control" productId="{$v.productId}" isPromoted="{$v.isPromoted}">
 													<option value="">请选择...</option>
