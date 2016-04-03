@@ -22,6 +22,7 @@ class WishProductModel {
 	public function getWishProduct($start = 0, $count = 50) {
 		$wishProduct	= new WishProductApi('geshan0728', 1);
 		$products		= $wishProduct->getAllProduct($start, $count);
+		print_r($products);exit;
 		if(!empty($products[0]['data'])) {	//开始插入数据到数据库
 			self::insertProductInfo($products[0]['data']);
 		} else {	//如果没有数据则退出递归方法
@@ -68,7 +69,7 @@ class WishProductModel {
 				'isVariants'	=> count($v['Product']['variants']) > 1 ? 'Yes' : 'No',
 				'reviewStatus'	=> $v['Product']['review_status'],
 				'title'			=> $v['Product']['name'],
-				'isOnline'		=> 'Yes',
+				'isOnline'		=> 'online',
 				'isPromoted'	=> $v['Product']['is_promoted'],
 			);
 			$ids[] = $v['Product']['id'];
