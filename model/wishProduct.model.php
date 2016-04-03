@@ -58,8 +58,25 @@ class WishProductModel {
 		$ids	= array();
 		$data	= array();
 		foreach($ret as $k => $v) {
-			$skuInfo		= explode('#', $v['Product']['parent_sku']);
-			$trueSpu		= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
+			$skuInfo	= explode('#', $v['Product']['parent_sku']);
+			$trueSpu	= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
+			//判断上下架
+			$isOnline	= 'offline';
+			$count		= count($v['Product']['variants']);
+			if($count === 1 && $v['Product']['variants'][0]['Variant']['enabled'] === 'True') {
+				$isOnline = 'online';
+			}
+			if($count > 1) {
+				$offlineCount	= 0;
+				foreach($v['Product']['variants'] as $varKey => $varVal){
+					if($varVal['Variant']['enabled'] === 'False') {
+						$offlineCount++;
+					}
+				}
+				if($count > $offlineCount) {
+					$isOnline = 'online';
+				}
+			}
 			$data[$v['Product']['id']] = array(
 				'productId'		=> $v['Product']['id'],
 				'spu'			=> $trueSpu,
@@ -68,7 +85,7 @@ class WishProductModel {
 				'isVariants'	=> count($v['Product']['variants']) > 1 ? 'Yes' : 'No',
 				'reviewStatus'	=> $v['Product']['review_status'],
 				'title'			=> $v['Product']['name'],
-				'isOnline'		=> 'online',
+				'isOnline'		=> $isOnline,
 				'isPromoted'	=> $v['Product']['is_promoted'],
 			);
 			$ids[] = $v['Product']['id'];
@@ -79,7 +96,7 @@ class WishProductModel {
 			self::$errMsg	= '没有拉取到数据';
 			return false;
 		}
-		$idsSql	= 'select productId from ws_product where productId in("'.implode('","', $ids).'")';
+		$idsSql	= 'select productId,spu from ws_product where productId in("'.implode('","', $ids).'")';
 		$query		= self::$dbConn->query($idsSql);
 		$ret		= self::$dbConn->fetch_array_all($query);
 		$updateInfo	= array();
@@ -111,7 +128,8 @@ class WishProductModel {
 			$sql = 'update ws_product set numSold="'.$v['numSold'].'",
 						saveSold = "'.$v['saveSold'].'",
 						reviewStatus = "'.$v['reviewStatus'].'",
-						isPromoted = "'.$v['isPromoted'].'"
+						isPromoted = "'.$v['isPromoted'].'",
+						isOnline	= "'.$v['isOnline'].'"
 						where productId = "'.$v['productId'].'"';
 			$query = self::$dbConn->query($sql);
 		}
@@ -199,8 +217,7 @@ class WishProductModel {
 		$sql		= 'SELECT COUNT(`isOnline`) AS isOfflineCount FROM ws_product where isOnline="offline"';
 		$query		= self::$dbConn->query($sql);
 		$offlineRet	= self::$dbConn->fetch_array_all($query);
-		$count		= $data['count'] - $data['rejected'];
-		$data['onlineCount']	= $count - $offlineRet[0]['isOfflineCount'];
+		$data['onlineCount']	= $data['count'];
 		$data['offlineCount']	= $offlineRet[0]['isOfflineCount'];
 
 		$data['countSold']	= $ret[0]['countSold'];
