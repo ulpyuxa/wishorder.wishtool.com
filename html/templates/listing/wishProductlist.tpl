@@ -55,7 +55,7 @@
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 									<input type="hidden" name="act" value="{$smarty.get.act}" />
 									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
-									<input type="hidden" name="isOnline" value="{$smarty.get.isOnline}" />
+									<input type="hidden" name="isOnline" value="{if isset($smarty.get.isOnline)}{$smarty.get.isOnline}{else}online{/if}" />
 									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
 								</div>
 							</form>
