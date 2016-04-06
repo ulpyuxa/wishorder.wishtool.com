@@ -89,9 +89,12 @@
 										<tr>
 											<td>
 												{if $v.isPromoted === 'true'}
-													<div class="watermark">
-														<img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail logo">
-													</div>	
+													<div style="position: relative;">
+													  <div style="position: absolute;">
+														<img src="../public/images/golden_diamond.png"/>
+													  </div>  
+													  <img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg"/>
+													</div>  
 												{else}
 												<img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail">
 												{/if}
