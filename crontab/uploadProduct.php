@@ -87,7 +87,7 @@ foreach($files as $fileKey => $fileVal) {
 		var_dump($skuStatus);
 	}
 	$time	= rand(5, 20);
-	echo $spuSku, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
+	echo $spuSn, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
 	try {
 		rename($logPath.$fileVal, $newDir.$spuSn.'.log');
 	} catch (Exception $e) {
