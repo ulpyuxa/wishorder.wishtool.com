@@ -49,12 +49,12 @@ foreach($dirDat['data'] as $k => $v) {
 			continue;
 		}
 		unset($skuInfo['key']);
-		$price			= priceEdit($skuInfo['price'], $skuInfo['shipping']);
-		$skuInfo['price'] = $price['price'];
-		$skuInfo['shipping'] = $price['shipping'];
-		$skuInfo['sku'] = $sku[0].'#P28d';
-		$parentSku		= explode("#", $skuInfo['parent_sku']);
-		$skuInfo['parent_sku'] = $parentSku[0].'#P28d';
+		$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
+		$skuInfo['price']		= $price['price'];
+		$skuInfo['shipping']	= $price['shipping'];
+		$skuInfo['sku']			= $sku[0].'#P28d';
+		$parentSku				= explode("#", $skuInfo['parent_sku']);
+		$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
 		$skuData[$sku[0]] = $skuInfo;
 	}
 	$spuData['upc']			= '';
@@ -66,18 +66,13 @@ foreach($dirDat['data'] as $k => $v) {
 	$spuData['price']		= $spuPrice['price'];
 	$spuData['shipping']	= $spuPrice['shipping'];
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
-	$spuData['name']	= $nameInfo[0].'#P28d';
-	$spuStatus = $wishProductApi->createProductSpu($spuData);
+	$spuData['name']		= $nameInfo[0].'#P28d';
+	$spuStatus				= $wishProductApi->createProductSpu($spuData);
 	echo $spuSn; var_dump($spuStatus);
-	//if($spuStatus) {
-		//print_r($skuData);exit;
-		foreach($skuData as $skuKey => $skuVal) {
-			//print_r($skuVal);
-			$skuStatus = $wishProductApi->createProductSku($skuVal);
-			var_dump($skuStatus);
-		}
-		//var_dump($skuStatus);
-	//}
+	foreach($skuData as $skuKey => $skuVal) {
+		$skuStatus = $wishProductApi->createProductSku($skuVal);
+		var_dump($skuStatus);
+	}
 }
 
 function priceEdit($price, $shipping) {
