@@ -26,6 +26,12 @@ $dirDat	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=
 $dirDat	= json_decode($dirDat, true);
 foreach($dirDat['data'] as $k => $v) {
 	$spuSn			= substr($v, 0, stripos($v, '.'));
+	if(preg_match('/^\d+&/', $spuSn) && (strlen($spuSn) <= 8 || strlen($spuSn) >= 7)) {
+		continue;
+	}
+	if(preg_match('/^(OS|AM|TT|MT|CB|DZ|WH)/i', $spuSn)) {
+		continue;
+	}
 	$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
 	file_put_contents($logPath.$spuSn.'.log', $productInfo, FILE_APPEND);	//将数据写入日志备用
 	$data			= json_decode($productInfo, true);
