@@ -38,6 +38,8 @@ if(!is_dir($newDir)) {
 $wishProductApi	= new WishProductApi('geshan0728', 1);
 $num	= 0;
 foreach($files as $fileKey => $fileVal) {
+	$spuInfo		= explode('.', $fileVal);
+	$spuSn			= $spuInfo[0];
 	$productInfo	= file_get_contents($logPath.$fileVal);
 	if(empty($productInfo)) {
 		continue;
@@ -85,9 +87,9 @@ foreach($files as $fileKey => $fileVal) {
 		var_dump($skuStatus);
 	}
 	$time	= rand(5, 20);
-	echo $spuSn, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
+	echo $spuSku, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
 	try {
-		rename($logPath.$fileVal, $newDir.$spu.'.log');
+		rename($logPath.$fileVal, $newDir.$spuSn.'.log');
 	} catch (Exception $e) {
 		echo '建立目录失败!';
 	}
