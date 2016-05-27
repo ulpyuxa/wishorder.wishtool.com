@@ -36,45 +36,45 @@ foreach($dirDat['data'] as $k => $v) {
 	file_put_contents($logPath.$spuSn.'.log', $productInfo, FILE_APPEND);	//将数据写入日志备用
 	continue;//只将数据拉取回来再进行操作。
 	
-	$data			= json_decode($productInfo, true);
-	$data			= explode("\n", $data['data']);
-	$spuData		= json_decode($data[0], true);
-	unset($data[0], $spuData['key']);
-	array_pop($data);
-	$skuData		= array();
-	$price			= 0;
-	$shipping		= 0;
-	foreach($data as $dataKey => $dataVal) {
-		$skuInfo	= json_decode($dataVal, true);
-		$sku		= explode('#', $skuInfo['sku']);
-		if(isset($skuData[$sku[0]])) {
-			continue;
-		}
-		unset($skuInfo['key']);
-		$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
-		$skuInfo['price']		= $price['price'];
-		$skuInfo['shipping']	= $price['shipping'];
-		$skuInfo['sku']			= $sku[0].'#P28d';
-		$parentSku				= explode("#", $skuInfo['parent_sku']);
-		$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
-		$skuData[$sku[0]] = $skuInfo;
-	}
-	$spuData['upc']			= '';
-	$spuSku					= explode("#", $spuData['sku']);
-	$spuParentSku			= explode("#", $spuData['parent_sku']);
-	$nameInfo				= explode("#", $spuData['name']);
-	$spuData['sku']			= $spuSku[0].'#P28d';
-	$spuPrice				= priceEdit($spuData['price'], $spuData['shipping']);
-	$spuData['price']		= $spuPrice['price'];
-	$spuData['shipping']	= $spuPrice['shipping'];
-	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
-	$spuData['name']		= $nameInfo[0].'#P28d';
-	$spuStatus				= $wishProductApi->createProductSpu($spuData);
-	echo $spuSn; var_dump($spuStatus);
-	foreach($skuData as $skuKey => $skuVal) {
-		$skuStatus = $wishProductApi->createProductSku($skuVal);
-		var_dump($skuStatus);
-	}
+//	$data			= json_decode($productInfo, true);
+//	$data			= explode("\n", $data['data']);
+//	$spuData		= json_decode($data[0], true);
+//	unset($data[0], $spuData['key']);
+//	array_pop($data);
+//	$skuData		= array();
+//	$price			= 0;
+//	$shipping		= 0;
+//	foreach($data as $dataKey => $dataVal) {
+//		$skuInfo	= json_decode($dataVal, true);
+//		$sku		= explode('#', $skuInfo['sku']);
+//		if(isset($skuData[$sku[0]])) {
+//			continue;
+//		}
+//		unset($skuInfo['key']);
+//		$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
+//		$skuInfo['price']		= $price['price'];
+//		$skuInfo['shipping']	= $price['shipping'];
+//		$skuInfo['sku']			= $sku[0].'#P28d';
+//		$parentSku				= explode("#", $skuInfo['parent_sku']);
+//		$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
+//		$skuData[$sku[0]] = $skuInfo;
+//	}
+//	$spuData['upc']			= '';
+//	$spuSku					= explode("#", $spuData['sku']);
+//	$spuParentSku			= explode("#", $spuData['parent_sku']);
+//	$nameInfo				= explode("#", $spuData['name']);
+//	$spuData['sku']			= $spuSku[0].'#P28d';
+//	$spuPrice				= priceEdit($spuData['price'], $spuData['shipping']);
+//	$spuData['price']		= $spuPrice['price'];
+//	$spuData['shipping']	= $spuPrice['shipping'];
+//	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
+//	$spuData['name']		= $nameInfo[0].'#P28d';
+//	$spuStatus				= $wishProductApi->createProductSpu($spuData);
+//	echo $spuSn; var_dump($spuStatus);
+//	foreach($skuData as $skuKey => $skuVal) {
+//		$skuStatus = $wishProductApi->createProductSku($skuVal);
+//		var_dump($skuStatus);
+//	}
 }
 
 function priceEdit($price, $shipping) {
@@ -82,4 +82,4 @@ function priceEdit($price, $shipping) {
 	return array('price' => $skuPrice, 'shipping' => 1);
 }
 
-echo '全部listing上传完成！';
+echo '全部listing拉取完成！';
