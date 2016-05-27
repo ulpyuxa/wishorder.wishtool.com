@@ -14,6 +14,7 @@ set_time_limit(0);
 include substr(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), 0, stripos(__DIR__, 'crontab')) . "framework.php";
 Core :: getInstance();
 global $dbConn;
+$date = date('Y_m_d');
 
 $logPath	= WEB_PATH.'log/productInfo/';
 $files = array();
@@ -87,7 +88,9 @@ foreach($files as $fileKey => $fileVal) {
 		var_dump($skuStatus);
 	}
 	$time	= rand(5, 20);
-	echo $spuSn, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
+	$msg = $spuSn.'上传完成，现在开始休息!,时长：'.$time;
+	echo $msg, PHP_EOL;
+	errorLog($msg, 'tip');
 	try {
 		rename($logPath.$fileVal, $newDir.$spuSn.'.log');
 	} catch (Exception $e) {
@@ -97,8 +100,27 @@ foreach($files as $fileKey => $fileVal) {
 	$num++;
 }
 
+echo '所有商品全部上传完成，本次上传产品数量为：'.$num;
+
+
 function priceEdit($price, $shipping) {
 	$skuPrice	= round(($price + $shipping - 1), 2);
 	return array('price' => $skuPrice, 'shipping' => 1);
 }
-echo '所有商品全部上传完成，本次上传产品数量为：'.$num;
+
+/**
+ * 错误日志
+ */
+function errorLog($message,$type) {
+	global $date;
+	
+	$path	= WEB_PATH.'log/uploadLog/'.date('Y-m').'/'.date('d').'/';	//$root.'/log/';
+	if(!is_dir($path)) {
+		$mkdir = mkdir($path,0777,true);
+		if(!$mkdir) {
+			exit('不能建立日志文件');
+		}
+	}
+	$status = error_log(date("Y-m-d H:i:s")." {$message}\r\n",3,$path.$date.'_'.$type.'_success.log');
+	return $status;
+}
