@@ -28,6 +28,14 @@ while (false !== ($entry = $d->read())) {
 }
 $d->close();
 
+$newDir			= WEB_PATH.'log/productInfo/'.date('Y/m-d').'/';
+if(!is_dir($newDir)) {
+	mkdir($newDir, 0777, true);
+	if(!is_dir($newDir)) {
+		exit('不能建立目录!');
+	}
+}
+$wishProductApi	= new WishProductApi('geshan0728', 1);
 $num	= 0;
 foreach($files as $fileKey => $fileVal) {
 	$productInfo	= file_get_contents($logPath.$fileVal);
@@ -78,6 +86,11 @@ foreach($files as $fileKey => $fileVal) {
 	}
 	$time	= rand(5, 20);
 	echo $spuSn, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
+	try {
+		rename($logPath.$fileVal, $newDir.$spu.'.log');
+	} catch (Exception $e) {
+		echo '建立目录失败!';
+	}
 	sleep($time);
 	$num++;
 }
