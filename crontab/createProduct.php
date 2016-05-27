@@ -17,7 +17,7 @@ global $dbConn;
 
 $wishProductApi	= new WishProductApi('geshan0728', 1);
 
-$logPath	= WEB_PATH.'log/productInfo/'.date('Y/m-d').'/';
+$logPath	= WEB_PATH.'log/productInfo/';
 if(!is_dir($logPath)) {
 	mkdir($logPath, 0777, true);
 }
