@@ -43,6 +43,9 @@ foreach($dirDat['data'] as $k => $v) {
 			continue;
 		}
 		unset($skuInfo['key']);
+		$price			= priceEdit($skuInfo['price'], $skuInfo['shipping']);
+		$skuInfo['price'] = $price['price'];
+		$skuInfo['shipping'] = $price['shipping'];
 		$skuInfo['sku'] = $sku[0].'#P28d';
 		$parentSku		= explode("#", $skuInfo['parent_sku']);
 		$skuInfo['parent_sku'] = $parentSku[0].'#P28d';
@@ -52,8 +55,10 @@ foreach($dirDat['data'] as $k => $v) {
 	$spuSku					= explode("#", $spuData['sku']);
 	$spuParentSku			= explode("#", $spuData['parent_sku']);
 	$spuData['sku']			= $spuSku[0].'#P28d';
+	$spuPrice				= priceEdit($spuData['price'], $spuData['shipping']);
+	$spuData['price']		= $spuPrice['price'];
+	$spuData['shipping']	= $spuPrice['shipping'];
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
-	//print_r($spuData);
 	$spuStatus = $wishProductApi->createProductSpu($spuData);
 	var_dump($spuStatus);
 	//if($spuStatus) {
@@ -65,6 +70,11 @@ foreach($dirDat['data'] as $k => $v) {
 		}
 		//var_dump($skuStatus);
 	//}
+}
+
+function priceEdit($price, $shipping) {
+	$skuPrice	= round(($price + $shipping - 1), 2);
+	return array('price' => $skuPrice, 'shipping' => 1);
 }
 
 echo '全部listing上传完成！';
