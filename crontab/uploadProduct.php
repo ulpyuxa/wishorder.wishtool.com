@@ -76,8 +76,8 @@ foreach($files as $fileKey => $fileVal) {
 		$skuStatus = $wishProductApi->createProductSku($skuVal);
 		var_dump($skuStatus);
 	}
-	echo $spuSn, '上传完成，现在开始休息!', PHP_EOL;
 	$time	= rand(5, 20);
+	echo $spuSn, '上传完成，现在开始休息!,时长：',$time, PHP_EOL;
 	sleep($time);
 	$num++;
 }
