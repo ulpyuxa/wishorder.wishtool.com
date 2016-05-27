@@ -60,11 +60,13 @@ foreach($dirDat['data'] as $k => $v) {
 	$spuData['upc']			= '';
 	$spuSku					= explode("#", $spuData['sku']);
 	$spuParentSku			= explode("#", $spuData['parent_sku']);
+	$nameInfo				= explode("#", $spuData['name']);
 	$spuData['sku']			= $spuSku[0].'#P28d';
 	$spuPrice				= priceEdit($spuData['price'], $spuData['shipping']);
 	$spuData['price']		= $spuPrice['price'];
 	$spuData['shipping']	= $spuPrice['shipping'];
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
+	$spuData['name']	= $nameInfo[0].'#P28d';
 	$spuStatus = $wishProductApi->createProductSpu($spuData);
 	echo $spuSn; var_dump($spuStatus);
 	//if($spuStatus) {
