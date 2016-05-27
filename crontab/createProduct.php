@@ -4,7 +4,7 @@
 author: zxh
  * 日期: 2016/1/23 23:04
  */
-exec('ps aux|grep '.WEB_PATH.'crontab/'.basename(__FILE__).'|grep -v grep',$ps);
+exec('ps aux|grep '.basename(__FILE__).'|grep -v grep',$ps);
 if(count($ps)>1){
  	exit();
 }
