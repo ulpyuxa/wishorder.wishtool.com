@@ -34,6 +34,8 @@ foreach($dirDat['data'] as $k => $v) {
 	}
 	$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
 	file_put_contents($logPath.$spuSn.'.log', $productInfo, FILE_APPEND);	//将数据写入日志备用
+	continue;//只将数据拉取回来再进行操作。
+	
 	$data			= json_decode($productInfo, true);
 	$data			= explode("\n", $data['data']);
 	$spuData		= json_decode($data[0], true);
