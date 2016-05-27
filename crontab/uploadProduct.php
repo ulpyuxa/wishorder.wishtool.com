@@ -76,7 +76,7 @@ foreach($files as $fileKey => $fileVal) {
 		$skuStatus = $wishProductApi->createProductSku($skuVal);
 		var_dump($skuStatus);
 	}
-	exit;
+	echo $spuSn, '上传完成', PHP_EOL;
 	$num++;
 }
 
