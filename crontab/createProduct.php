@@ -60,7 +60,7 @@ foreach($dirDat['data'] as $k => $v) {
 	$spuData['shipping']	= $spuPrice['shipping'];
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
 	$spuStatus = $wishProductApi->createProductSpu($spuData);
-	var_dump($spuStatus);
+	echo $spuSn; var_dump($spuStatus);
 	//if($spuStatus) {
 		//print_r($skuData);exit;
 		foreach($skuData as $skuKey => $skuVal) {
