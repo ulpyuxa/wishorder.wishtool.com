@@ -22,64 +22,35 @@ if(!is_dir($logPath)) {
 	mkdir($logPath, 0777, true);
 }
 
+$newDir = WEB_PATH.'log/productInfo/'.date('Y/m-d').'/';
+if(!is_dir($newDir)) {
+	mkdir($newDir, 0777, true);
+	if(!is_dir($newDir)) {
+		exit('不能建立目录!');
+	}
+}
+
 $dirDat	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&dir=1');
 $dirDat	= json_decode($dirDat, true);
 foreach($dirDat['data'] as $k => $v) {
 	$spuSn			= substr($v, 0, stripos($v, '.'));
+	$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
 	if(preg_match('/^\d+&/', $spuSn) && (strlen($spuSn) <= 8 || strlen($spuSn) >= 7)) {
 		continue;
 	}
 	if(preg_match('/^(OS|AM|TT|MT|CB|DZ|WH)/i', $spuSn)) {
 		continue;
 	}
-	$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
+	$sql			= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
+	$query			= $dbConn->query($sql);
+	$ret			= $dbConn->fetch_array_all($query);
+	if(!empty($ret)) {	//已经上传过此商品
+		echo $spuSn, ', 此料号已经上传过了，将跳过上传！', PHP_EOL;
+		rename($logPath.$v, $newDir.$spuSn.'.log');
+		continue;
+	}
 	file_put_contents($logPath.$spuSn.'.log', $productInfo, FILE_APPEND);	//将数据写入日志备用
 	continue;//只将数据拉取回来再进行操作。
-	
-//	$data			= json_decode($productInfo, true);
-//	$data			= explode("\n", $data['data']);
-//	$spuData		= json_decode($data[0], true);
-//	unset($data[0], $spuData['key']);
-//	array_pop($data);
-//	$skuData		= array();
-//	$price			= 0;
-//	$shipping		= 0;
-//	foreach($data as $dataKey => $dataVal) {
-//		$skuInfo	= json_decode($dataVal, true);
-//		$sku		= explode('#', $skuInfo['sku']);
-//		if(isset($skuData[$sku[0]])) {
-//			continue;
-//		}
-//		unset($skuInfo['key']);
-//		$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
-//		$skuInfo['price']		= $price['price'];
-//		$skuInfo['shipping']	= $price['shipping'];
-//		$skuInfo['sku']			= $sku[0].'#P28d';
-//		$parentSku				= explode("#", $skuInfo['parent_sku']);
-//		$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
-//		$skuData[$sku[0]] = $skuInfo;
-//	}
-//	$spuData['upc']			= '';
-//	$spuSku					= explode("#", $spuData['sku']);
-//	$spuParentSku			= explode("#", $spuData['parent_sku']);
-//	$nameInfo				= explode("#", $spuData['name']);
-//	$spuData['sku']			= $spuSku[0].'#P28d';
-//	$spuPrice				= priceEdit($spuData['price'], $spuData['shipping']);
-//	$spuData['price']		= $spuPrice['price'];
-//	$spuData['shipping']	= $spuPrice['shipping'];
-//	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
-//	$spuData['name']		= $nameInfo[0].'#P28d';
-//	$spuStatus				= $wishProductApi->createProductSpu($spuData);
-//	echo $spuSn; var_dump($spuStatus);
-//	foreach($skuData as $skuKey => $skuVal) {
-//		$skuStatus = $wishProductApi->createProductSku($skuVal);
-//		var_dump($skuStatus);
-//	}
-}
-
-function priceEdit($price, $shipping) {
-	$skuPrice	= round(($price + $shipping - 1), 2);
-	return array('price' => $skuPrice, 'shipping' => 1);
 }
 
 echo '全部listing拉取完成！';
