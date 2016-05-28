@@ -46,10 +46,10 @@ foreach($dirDat['data'] as $k => $v) {
 	$ret			= $dbConn->fetch_array_all($query);
 	if(!empty($ret)) {	//已经上传过此商品
 		echo $spuSn, ', 此料号已经上传过了，将跳过上传！', PHP_EOL;
-		rename($logPath.$v, $newDir.$spuSn.'.log');
+		file_put_contents($newDir.$v, $productInfo, FILE_APPEND);
 		continue;
 	}
-	file_put_contents($logPath.$spuSn.'.log', $productInfo, FILE_APPEND);	//将数据写入日志备用
+	file_put_contents($logPath.$v, $productInfo, FILE_APPEND);	//将数据写入日志备用
 	continue;//只将数据拉取回来再进行操作。
 }
 
