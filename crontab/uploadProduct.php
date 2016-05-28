@@ -41,6 +41,15 @@ $num	= 0;
 foreach($files as $fileKey => $fileVal) {
 	$spuInfo		= explode('.', $fileVal);
 	$spuSn			= $spuInfo[0];
+	$sql			= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
+	$query			= $dbConn->query($sql);
+	$ret			= $dbConn->fetch_array_all($query);
+	if(!empty($ret)) {	//已经上传过此商品
+		echo $spuSn, ', 此料号已经上传过了，将跳过上传！', PHP_EOL;
+		rename($logPath.$fileVal, $newDir.$spuSn.'.log');
+		continue;
+	}
+	//spuPrice($spuSn);exit;
 	$productInfo	= file_get_contents($logPath.$fileVal);
 	if(empty($productInfo)) {
 		continue;
@@ -53,23 +62,26 @@ foreach($files as $fileKey => $fileVal) {
 	$spuData		= json_decode($data[0], true);
 	unset($data[0], $spuData['key']);
 	array_pop($data);
-	$skuData		= array();
-	$price			= 0;
-	$shipping		= 0;
-	foreach($data as $dataKey => $dataVal) {
-		$skuInfo	= json_decode($dataVal, true);
-		$sku		= explode('#', $skuInfo['sku']);
-		if(isset($skuData[$sku[0]])) {
-			continue;
+	$skuData	= array();
+	$price		= 0;
+	$shipping	= 0;
+	$skuInfo	= array();
+	if(!empty($data)) {		//单料号没有子料号信息，所以不用进来
+		foreach($data as $dataKey => $dataVal) {
+			$skuInfo	= json_decode($dataVal, true);
+			$sku		= explode('#', $skuInfo['sku']);
+			if(isset($skuData[$sku[0]])) {
+				continue;
+			}
+			unset($skuInfo['key']);
+			$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
+			$skuInfo['price']		= $price['price'];
+			$skuInfo['shipping']	= $price['shipping'];
+			$skuInfo['sku']			= $sku[0].'#P28d';
+			$parentSku				= explode("#", $skuInfo['parent_sku']);
+			$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
+			$skuData[$sku[0]] = $skuInfo;
 		}
-		unset($skuInfo['key']);
-		$price					= priceEdit($skuInfo['price'], $skuInfo['shipping']);
-		$skuInfo['price']		= $price['price'];
-		$skuInfo['shipping']	= $price['shipping'];
-		$skuInfo['sku']			= $sku[0].'#P28d';
-		$parentSku				= explode("#", $skuInfo['parent_sku']);
-		$skuInfo['parent_sku']	= $parentSku[0].'#P28d';
-		$skuData[$sku[0]] = $skuInfo;
 	}
 	$spuData['upc']			= '';
 	$spuSku					= explode("#", $spuData['sku']);
@@ -83,9 +95,11 @@ foreach($files as $fileKey => $fileVal) {
 	$spuData['name']		= $nameInfo[0].'#P28d';
 	$spuStatus				= $wishProductApi->createProductSpu($spuData);
 	echo $spuSn; var_dump($spuStatus);
-	foreach($skuData as $skuKey => $skuVal) {
-		$skuStatus = $wishProductApi->createProductSku($skuVal);
-		var_dump($skuStatus);
+	if(!empty($skuData)) {		//单料号没有子料号，所以不用进来
+		foreach($skuData as $skuKey => $skuVal) {
+			$skuStatus = $wishProductApi->createProductSku($skuVal);
+			var_dump($skuStatus);
+		}
 	}
 	$time	= rand(5, 20);
 	$msg = $spuSn.'上传完成，现在开始休息!,时长：'.$time;
@@ -106,6 +120,14 @@ echo '所有商品全部上传完成，本次上传产品数量为：'.$num;
 function priceEdit($price, $shipping) {
 	$skuPrice	= round(($price + $shipping - 1), 2);
 	return array('price' => $skuPrice, 'shipping' => 1);
+}
+
+function spuPrice($spuSn) {
+	$spu	= json_encode(array(array('spu'=>$spuSn,"country"=>"Russian Federation","type"=>"1",'platform'=>'wish')));
+	$url	= "http://price.valsun.cn/api.php?mod=distributorPrice&act=productPrice&spu=".$spu."&platform=wish&profit=0.0001&company_name=葛珊";
+	$data	= file_get_contents($url);
+	$data	= json_decode($data, true);
+	print_r($data);exit;
 }
 
 /**
