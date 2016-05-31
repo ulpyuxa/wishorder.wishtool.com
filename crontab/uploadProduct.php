@@ -29,7 +29,14 @@ while (false !== ($entry = $d->read())) {
 }
 $d->close();
 
-$newDir			= WEB_PATH.'log/productInfo/'.date('Y/m-d').'/';
+$newDir = WEB_PATH.'log/productInfo/'.date('Y/m-d').'/';
+if(!is_dir($newDir)) {
+	mkdir($newDir, 0777, true);
+	if(!is_dir($newDir)) {
+		exit('不能建立目录!');
+	}
+}
+$errorDir = WEB_PATH.'log/productInfo/'.date('Y/m-d').'/errorProduct/';
 if(!is_dir($newDir)) {
 	mkdir($newDir, 0777, true);
 	if(!is_dir($newDir)) {
@@ -38,23 +45,27 @@ if(!is_dir($newDir)) {
 }
 $wishProductApi	= new WishProductApi('geshan0728', 1);
 $num	= 0;
+$uploadNum	= rand(15, 30);
 foreach($files as $fileKey => $fileVal) {
 	$spuInfo		= explode('.', $fileVal);
 	$spuSn			= $spuInfo[0];
+	errorLog('开始上传,'.$spuSn, 'tip');
 	$sql			= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
 	$query			= $dbConn->query($sql);
 	$ret			= $dbConn->fetch_array_all($query);
 	if(!empty($ret)) {	//已经上传过此商品
 		echo $spuSn, ', 此料号已经上传过了，将跳过上传！', PHP_EOL;
-		rename($logPath.$fileVal, $newDir.$spuSn.'.log');
+		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
 	$price = spuPrice($spuSn);
 	if($price <= 0.1) {		//如果料号的价格小于1，则跳过数据
+		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
 	$productInfo	= file_get_contents($logPath.$fileVal);
 	if(empty($productInfo)) {
+		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
 	if($num > 15) {	//每天上传100个
@@ -63,6 +74,10 @@ foreach($files as $fileKey => $fileVal) {
 	$data			= json_decode($productInfo, true);
 	$data			= explode("\n", $data['data']);
 	$spuData		= json_decode($data[0], true);
+	$tags			= explode(',' $spuData['tags']);
+	if(count($tags) < $uploadNum) {		//如果tags数量小于5个，则不上传
+		continue;
+	}
 	unset($data[0], $spuData['key']);
 	array_pop($data);
 	$skuData	= array();
@@ -116,6 +131,7 @@ foreach($files as $fileKey => $fileVal) {
 }
 
 echo '所有商品全部上传完成，本次上传产品数量为：'.$num, PHP_EOL;
+errorLog('所有商品全部上传完成，本次上传产品数量为：'.$num, 'finish');
 
 function spuPrice($spuSn) {
 	$spu	= json_encode(array(array('spu'=>$spuSn,"country"=>"Russian Federation","type"=>"1",'platform'=>'wish')));
