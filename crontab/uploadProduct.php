@@ -60,22 +60,25 @@ foreach($files as $fileKey => $fileVal) {
 	}
 	$price = spuPrice($spuSn);
 	if($price <= 0.1) {		//如果料号的价格小于1，则跳过数据
+		echo '价格小于0.1', PHP_EOL;
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
 	$productInfo	= file_get_contents($logPath.$fileVal);
 	if(empty($productInfo)) {
+		echo '没有数据', PHP_EOL;
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
-	if($num > 15) {	//每天上传100个
+	if($num > $uploadNum) {	//每天上传100个
 		break;
 	}
 	$data			= json_decode($productInfo, true);
 	$data			= explode("\n", $data['data']);
 	$spuData		= json_decode($data[0], true);
 	$tags			= explode(',',$spuData['tags']);
-	if(count($tags) < $uploadNum) {		//如果tags数量小于5个，则不上传
+	if(count($tags) < 5) {		//如果tags数量小于5个，则不上传
+		echo 'tags数量小于5个', PHP_EOL;
 		continue;
 	}
 	unset($data[0], $spuData['key']);
