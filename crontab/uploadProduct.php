@@ -117,7 +117,7 @@ foreach($files as $fileKey => $fileVal) {
 			var_dump($skuStatus);
 		}
 	}
-	$time	= rand(5, 20);
+	$time	= rand(10, 30);
 	$msg	= $spuSn.'上传完成，现在开始休息!,时长：'.$time;
 	echo $msg, PHP_EOL;
 	errorLog($msg, 'tip');
