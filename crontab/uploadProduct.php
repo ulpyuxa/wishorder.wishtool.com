@@ -74,7 +74,7 @@ foreach($files as $fileKey => $fileVal) {
 	$data			= json_decode($productInfo, true);
 	$data			= explode("\n", $data['data']);
 	$spuData		= json_decode($data[0], true);
-	$tags			= explode(',' $spuData['tags']);
+	$tags			= explode(',',$spuData['tags']);
 	if(count($tags) < $uploadNum) {		//如果tags数量小于5个，则不上传
 		continue;
 	}
