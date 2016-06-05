@@ -109,7 +109,7 @@ foreach($files as $fileKey => $fileVal) {
 	$spuData['price']		= $price;
 	$spuData['shipping']	= 1;	//默认运费是$1
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
-	$spuData['name']		= $nameInfo[0].'#P28d';
+	$spuData['name']		= trim($nameInfo[0]).' P28d';
 	$spuStatus				= $wishProductApi->createProductSpu($spuData);
 	echo $spuSn;
 	print_r($spuData);
