@@ -19,11 +19,12 @@ class WishProductModel {
 	/**
 	 * 获取wish服务器的商品信息，递归方式拉取
 	 */
-	public function getWishProduct($start = 0, $count = 50) {
-		$wishProduct	= new WishProductApi('geshan0728', 1);
-		$products		= $wishProduct->getAllProduct($start, $count);
+	public function getWishProduct($start = 0, $count = 50, $since="") {
+		$account		= 'geshan0728';
+		$wishProduct	= new WishProductApi($account, 1);
+		$products		= $wishProduct->getAllProduct($start, $count, $since);
 		if(!empty($products[0]['data'])) {	//开始插入数据到数据库
-			self::insertProductInfo($products[0]['data']);
+			self::insertProductInfo($products[0]['data'], $account);
 		} else {	//如果没有数据则退出递归方法
 			return true;
 		}
@@ -47,16 +48,18 @@ class WishProductModel {
 			}
 			self::getWishProduct($start+50, 50);
 		}
+		return true;
 	}
 
 	/**
 	 * 同步线上的listing并将listing数据写入数据库
 	 */
-	public function insertProductInfo($ret) {
+	public function insertProductInfo($ret, $account) {
 		self::initDB();
 		$sql	= array();
 		$ids	= array();
 		$data	= array();
+		$maxData= array();
 		foreach($ret as $k => $v) {
 			$skuInfo	= explode('#', $v['Product']['parent_sku']);
 			$trueSpu	= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
@@ -78,6 +81,7 @@ class WishProductModel {
 				}
 			}
 			$data[$v['Product']['id']] = array(
+				'account'		=> $account,
 				'productId'		=> $v['Product']['id'],
 				'spu'			=> $trueSpu,
 				'numSold'		=> $v['Product']['number_sold'],
@@ -88,6 +92,25 @@ class WishProductModel {
 				'isOnline'		=> $isOnline,
 				'isPromoted'	=> $v['Product']['is_promoted'],
 			);
+			foreach($v['Product']['variants'] as $variantKey => $variantVal) {
+				$maxData[$v['Product']['id']]['variantsSku']	= array(
+					'account'				=> $account,
+					'productId'				=> $v['Product']['id'],
+					'spu'					=> $trueSpu,
+					'variantsSku'			=> $variantVal['Variant']['sku'],
+					'variantsColor'			=> $variantVal['Variant']['color'],
+					'variantsPrice'			=> $variantVal['Variant']['price'],
+					'variantsEnable'		=> $variantVal['Variant']['enabled'],
+					'variantsShipping'		=> $variantVal['Variant']['shipping'],
+					'variantsAll_images'	=> $variantVal['Variant']['all_images'],
+					'variantsInventory'		=> $variantVal['Variant']['inventory'],
+					'variantsShipping_time'	=> $variantVal['Variant']['shipping_time'],
+					'variantsMsrp'			=> $variantVal['Variant']['msrp'],
+					'variantsSize'			=> $variantVal['Variant']['size'],
+
+				);
+				$maxSql[$v['Product']['id'].$variantVal['Variant']['sku']] = '("'.implode('","', end($maxData)).'")';
+			}
 			$ids[] = $v['Product']['id'];
 			$sql[$v['Product']['id']] = '("'.implode('","', end($data)).'")';
 		}
@@ -99,6 +122,7 @@ class WishProductModel {
 		$idsSql	= 'select productId,spu from ws_product where productId in("'.implode('","', $ids).'")';
 		$query		= self::$dbConn->query($idsSql);
 		$ret		= self::$dbConn->fetch_array_all($query);
+		//更新主表
 		$updateInfo	= array();
 		foreach($ret as $k => $v) {		//过滤重复的listing
 			if(isset($data[$v['productId']])) {
@@ -115,11 +139,51 @@ class WishProductModel {
 		//插入Listing
 		$sql	= 'insert ws_product (`'.implode('`,`', array_keys(end($data))).'`) values '.implode(',', $sql);
 		$query	= self::$dbConn->query($sql);
+		//更新分表
+		$num		= substr(md5($trueSpu), 0, 1);
+		$updateData	= array();
+		print_r($maxData);exit;
+		foreach($maxData as $maxKey => $maxVal) {
+			$sql	= 'select * from ws_product_'.$num.' where product="'.$maxVal['productId'].'" and variantsSku="'.$maxVal['variantsSku'].'"';
+			$query	= self::$dbConn->query($sql);
+			$ret	= self::$dbConn->fetch_array_all($query);
+			if(!empty($ret)) {
+				$updateData[] = $maxVal;
+				unset($maxSql[$maxVal['productId'].$maxSql['variantsSku']], $maxData[$maxKey]);
+				continue;
+			}
+		}
+		if(!empty($maxData)) {	//插入分表数据
+			$sql = 'insert into ws_product_'.$num.'(`'.implode('`,`', array_keys(end($maxData))).'`) values'.implode(',', $maxSql);
+			$query	= self::$dbConn->query($sql);
+		}
+		if(!empty($updateData)) {
+			self::updateProductSub($updateData);
+		}
 		return $query;
 	}
 
 	/**
-	 * 更新数据库中的商品信息
+	 * 功能: 更新商品分表的数据
+	 */
+	public function updateProductSub($data, $num) {
+		self::initDB();
+
+		self::$dbConn->autocommit(FALSE);
+		foreach($data as $key => $val) {
+			$updateKey	= array_keys($val);
+			$setData	= array();
+			foreach($updateKey as $updateKey => $updateVal) {
+				$setData[] = $updateVal.'="'.$val[$updateVal].'"';
+			}
+			$sql	= 'update ws_product_'.$num.' set '.implode(',', $setData).' where productId="'.$val['productId'].'" and variantsSku="'.$val['variantsSku'].'"';
+			$query	= self::$dbConn->query($sql);
+		}
+		return self::$dbConn->commit();		
+	}
+
+	/**
+	 * 更新数据库中主表的商品信息
 	 */
 	public function updateProductInfo($data) {
 		self::initDB();
@@ -281,7 +345,7 @@ class WishProductModel {
 	 */
 	public function getItemDetail($url) {
 		set_time_limit(0);
-		ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
+		/*ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
 		$opts = array( 
 			'http' => array (
 				'method'	=> "GET",
@@ -299,7 +363,8 @@ class WishProductModel {
 					break;
 				}
 			}
-		}
+		}*/
+		$request = file_get_contents($url);
 		if(strlen($request) < 1) {
 			self::$errCode	= '1506';
 			self::$errMsg	= '拉取listing详情失败';
