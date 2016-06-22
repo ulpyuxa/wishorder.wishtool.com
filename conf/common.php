@@ -22,7 +22,7 @@ return  array(
 	//mysql db	配置
 	"DB_CONFIG"		=>	array(
 		//"master1"	=>	array('HOST' => 'localhost', 'USER' => 'zxh', 'PASS' => 'pdcxaje127', 'PORT' => '3306', 'DBNAME' => 'wish_order'),			//主DB
-		"master1"	=>	array('HOST' => 'pi-order.wishtool.cn', 'USER' => 'zxh', 'PASS' => 'pdcxaje127', 'PORT' => '3306', 'DBNAME' => 'wish_order'),	
+		"master1"	=>	array('HOST' => 'order.wishtool.cn', 'USER' => 'zxh', 'PASS' => 'pdcxaje127', 'PORT' => '3306', 'DBNAME' => 'wish_order'),	
 		//"master1"	=>	array('HOST' => SAE_MYSQL_HOST_M, 'USER' => SAE_MYSQL_USER, 'PASS' => SAE_MYSQL_PASS, 'PORT' => SAE_MYSQL_PORT, 'DBNAME' => SAE_MYSQL_DB)			//主DB
 		//"slave1"	=>	array("localhost","root","","3306")		//从DB
 	),
