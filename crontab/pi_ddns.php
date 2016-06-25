@@ -76,7 +76,7 @@ $domianId	= $domainInfo['domains'][0]['id'];
 $records = domainList($domainInfo['domains'][0]['id']);
 $myIp	= getIp();
 foreach($records['records'] as $k => $v) {
-	if(in_array($v['name'],array('phpmyadmin','order', 'www')) && $v['value'] !== $myIp) {
+	if(in_array($v['name'],array('phpmyadmin','pi-order', 'www')) && $v['value'] !== $myIp) {
 		$para = array(
 			'domain_id'		=> $domainInfo['domains'][0]['id'],
 			'record_id'		=> $v['id'],
@@ -89,7 +89,7 @@ foreach($records['records'] as $k => $v) {
 		if(intval($status['status']['code']) === 1) {
 			echo $v['name']. '修改成功! 原因:ip不一致原始绑定IP:'.$v['value'].', 当前服务器IP:'.$myIp, PHP_EOL;
 		}
-	} else if(in_array($v['name'],array('phpmyadmin','order', 'www')) && $v['value'] === $myIp) {
+	} else if(in_array($v['name'],array('phpmyadmin','pi-order', 'www')) && $v['value'] === $myIp) {
 		echo '子域名：'.$v['name'].'不需要进行修改！', PHP_EOL;
 	}
 }
