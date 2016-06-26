@@ -17,27 +17,25 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-md-6 col-md-offset-4">
-					<form name="urlForm">
-						<div class="form-inline">
-							<label for="productUrl" class="control-label">商品URL地址: </label>
-							<input type="text" name="productUrl" id="productUrl" value="" class="form-control" />
-							<button type="button" name="submitBtn" class="btn btn-primary">提交</button>
-						</div>
-					</form>
-				</div>
 				<div id="content" class="col-md-6 col-md-offset-4">
 					<div class="form-horizontal">
 					  <div class="form-group">
+						<label for="wishTags" class="col-sm-3 control-label">商品URL地址:</label>
+						<div class="col-sm-9">
+						  <input type="text" name="productUrl" id="productUrl" value="" class="form-control" />
+						  <button type="button" name="submitBtn" class="btn btn-primary">提交</button>
+						</div>
+					  </div>
+					  <div class="form-group">
 						<label for="wishTags" class="col-sm-3 control-label">wish给的标签</label>
 						<div class="col-sm-9">
-						  <input type="text" class="form-control" id="wishTags" placeholder="wishTags">
+						  <textarea id="wishTags" class="form-control"></textarea>
 						</div>
 					  </div>
 					  <div class="form-group">
 						<label for="itemTags" class="col-sm-3 control-label">listing的标签</label>
 						<div class="col-sm-9">
-						  <input type="text" class="form-control" id="itemTags" placeholder="itemTags">
+						  <textarea id="itemTags" class="form-control"></textarea>
 						</div>
 					  </div>
 					</div>
