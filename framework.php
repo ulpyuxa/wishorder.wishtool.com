@@ -32,14 +32,14 @@ class Core {
 		//加载全局配置信息
 		C(include WEB_PATH.(defined('ENV') ? 'conf/common_'.ENV.'.php' : "conf/common.php"));
 		include	WEB_PATH."conf/constant.php";
-		include	WEB_PATH."lib/auth.php";	//鉴权
+		//include	WEB_PATH."lib/auth.php";	//鉴权
 		include	WEB_PATH."lib/Pagination.class.php";	//鉴权
 		//Auth::setAccess(include WEB_PATH.'conf/access.php');
 		
 
 		//加载数据接口层及所需支撑
 		include	WEB_PATH."lib/cache/cache.php";	//cache
-		include	WEB_PATH."lib/service/http.php";	//网络接口	
+		//include	WEB_PATH."lib/service/http.php";	//网络接口	
 		include	WEB_PATH."lib/functions.php";
 		if(C("DATAGATE") == "db"){
 			$db	=	C("DB_TYPE");

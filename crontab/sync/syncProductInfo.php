@@ -11,5 +11,11 @@ include substr(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), 0, stripos(__DIR_
 Core::getInstance();
 global $dbConn;
 
-$data	= WishProductModel::getWishProduct();
+$since				= '';
+$_REQUEST['page']	= 1;
+$ret	= WishProductModel::productList();
+if(!empty($ret)) {
+	$since = date('Y-m-d', strtotime('-2 days'));
+}
+$data	= WishProductModel::getWishProduct(0, 50, $since);
 var_dump($data);

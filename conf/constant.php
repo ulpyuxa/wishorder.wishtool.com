@@ -36,6 +36,9 @@ if(!defined("THINKIMAGE_GD")){
 	define('THINKIMAGE_WATER_SOUTH',     8); //常量，标识下居中水印
 	define('THINKIMAGE_WATER_SOUTHEAST', 9); //常量，标识右下角水印
 }
+if(!defined('CURRENT_DATE')) {
+	define('CURRENT_DATE', date('Ymd'));
+}
 //日志及debug信息记录配置
 /*
 return  array(

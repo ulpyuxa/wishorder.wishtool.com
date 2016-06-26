@@ -16,9 +16,10 @@ $data	= array(
 	'grant_type'	=> 'authorization_code',
 	'redirect_uri'	=> 'https://order.wishtool.cn/ssl.php',
 );
-print_r($data);
-$ret	= curl($url, http_build_query($data));
-print_r($ret);exit;
+$ret		= curl($url, http_build_query($data));
+$dat		= json_decode($ret, true);
+$keyFile	= WEB_PATH.'conf/key/1/geshan0728_wishtool.cn.key';
+file_put_contents($keyFile, json_encode($dat['data']), FILE_APPEND);
 
 /*
 *方法功能：远程传输数据

@@ -1,7 +1,8 @@
 <?php
 class WishBase {
 	public static $token	= '';
-	public static $url		= 'https://china-merchant.wish.com/api/v1/';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
+	public static $url		= 'https://china-merchant.wish.com/api/v2/';	//JHBia2RmMiQxMDAka2ZMZW14T0NNRVpvVGVtOWQyNnR0USRwT0tvc0Q4ejBaMC9YaHg5UjQ4NWsxTDdzb1E=&start=0&count=50
+	public static $access_token	= '';
 	var $act = 'multi-get';
 	var $api = 'order';
 
@@ -9,8 +10,9 @@ class WishBase {
 	 * 功能: 初使化
 	 */
 	public function __construct($account, $companyId) {
-		$accountCfg		= include WEB_PATH.'conf/key/'.$companyId.'/'.$account.'.php';
-		self::$token	= $accountCfg['token'];
+		$tokenInfo			= file_get_contents(WEB_PATH.'conf/key/1/geshan0728_wishtool.cn.key');
+		$tokenInfo			= json_decode($tokenInfo, true);
+		self::$access_token	= $tokenInfo['access_token'];
 	}
 
 	/**
@@ -39,7 +41,8 @@ class WishBase {
 	 * 功能: 单个请求
 	 */
 	public function sendHttpRequest ($para) {
-		$url	= self::$url.$this->api.'/'.$this->act.'?key='.self::$token.'&'.http_build_query($para);
+		$url	= self::$url.$this->api.'/'.$this->act.'?access_token='.self::$access_token.'&'.http_build_query($para);
+		//echo $url;exit;
 		$ret	= $this->curlResult(array($url));
 		return $ret;
 	}

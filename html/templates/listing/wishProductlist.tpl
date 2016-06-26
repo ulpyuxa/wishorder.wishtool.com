@@ -24,6 +24,8 @@
 			<div id = 'nav'>
 				{include file='../header.tpl'}
 			</div>
+		</div>
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-2">
 					<div class="list-group">
@@ -51,25 +53,13 @@
 								</div>
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
-									<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" required />
+									<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" />
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 									<input type="hidden" name="act" value="{$smarty.get.act}" />
 									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
 									<input type="hidden" name="isOnline" value="{if isset($smarty.get.isOnline)}{$smarty.get.isOnline}{else}online{/if}" />
 									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
 								</div>
-<div class="btn-group">
-  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu">
-    <li><a href="#">Action</a></li>
-    <li><a href="#">Another action</a></li>
-    <li><a href="#">Something else here</a></li>
-    <li role="separator" class="divider"></li>
-    <li><a href="#">Separated link</a></li>
-  </ul>
-</div>
 							</form>
 					  </div>
 					</div>
@@ -119,6 +109,7 @@
 											<td>
 												<select name="operateProduct" class="form-control" productId="{$v.productId}" isPromoted="{$v.isPromoted}">
 													<option value="">请选择...</option>
+													<option value="edit">上架</option>
 													<option value="online">上架</option>
 													<option value="offline">下架</option>
 												</select>
@@ -136,6 +127,37 @@
 				</div>
 			</div>
 		</div>
+<!-- <div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div> -->
+<!-- Modal -->
+		<div class="modal fade bs-example-modal-lg" id="editProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			  </div>
+			  <div class="modal-body">
+				...
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+<!-- Modal -->
 		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 		<script src="../public/js/product.js"></script>

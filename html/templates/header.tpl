@@ -30,6 +30,7 @@
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">订单管理 <span class="caret"></span></a>
 					  <ul class="dropdown-menu">
 						<li><a href="/index.php?mod=wishOrder&act=wishOrderList">订单列表</a></li>
+						<li><a href="/index.php?mod=wishOrder&act=shipNode">发货提醒模板</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown">
@@ -44,7 +45,7 @@
 			  </div><!-- /.container-fluid -->
 			</nav>
 			<!--路径导航-->
-			<ol class="breadcrumb">
+			<ol class="breadcrumb" style="float:left;">
 			  <li><a href="#">Home</a></li>
 			  <li><a href="#">Library</a></li>
 			  <li class="active">Data</li>

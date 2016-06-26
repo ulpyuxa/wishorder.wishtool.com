@@ -33,6 +33,7 @@ return  array(
 		'SHIPPED'	=> '已发货',
 		'REFUNDED'	=> '已退款',
 	),
+	'WISHPROFIT'	=> 15,	//这里表示百分之15
 );
 
 ?>

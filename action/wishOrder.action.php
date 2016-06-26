@@ -14,6 +14,7 @@ class WishOrderAct extends CommonAct{
 	public function act_wishOrderSync($start = 0, $count = 50) {
 		$wishOrderApi	= new WishOrderApi('geshan0728', 1);
 		$ret			= $wishOrderApi->getAllorder($start, $count);
+		print_r($ret);exit;
 		$insert			= WishOrderModel::addOrder($ret);
 		if(!$insert) {
 			self::$errCode	= WishOrderModel::$errCode;
@@ -47,5 +48,12 @@ class WishOrderAct extends CommonAct{
 			return false;
 		}
 		return $uploadStatus;
+	}
+
+	/**
+	 * 功能: 发货提醒模板列表
+	 */
+	public function act_shipNodeList() {
+		
 	}
 }

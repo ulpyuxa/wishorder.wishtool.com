@@ -15,6 +15,8 @@
 			<div id = 'nav'>
 				{include file='../header.tpl'}
 			</div>
+		</div>
+		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-2">
 					<div class="list-group">

@@ -6,16 +6,20 @@ class WishProductApi extends WishBase {
 	 */
 	public function __construct($account, $companyId) {
 		parent::__construct($account, $companyId);
-		$this->api = 'product';
+		$this->api	= 'product';
+
 		//parent::$url = 'https://merchant.wish.com/api/v1/product/'.$act.'?key=';
 	}
 
-	public function getAllProduct($start = 0, $count = 500) {
+	public function getAllProduct($start = 0, $count = 500, $since = '') {
 		$this->act = 'multi-get';
 		$para = array(
-			'start'	=> $start,
-			'count'	=> $count,
+			'start'			=> $start,
+			'count'			=> $count,
 		);
+		if(!empty($since)) {
+			$para['since'] = $since;
+		}
 		$ret = $this->sendHttpRequest($para);	//获取单个url
 		return $ret;
 	}

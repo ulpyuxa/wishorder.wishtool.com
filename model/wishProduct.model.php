@@ -20,6 +20,7 @@ class WishProductModel {
 	 * 获取wish服务器的商品信息，递归方式拉取
 	 */
 	public function getWishProduct($start = 0, $count = 50, $since="") {
+		echo $start, ' ---- ', $count, PHP_EOL;
 		$account		= 'geshan0728';
 		$wishProduct	= new WishProductApi($account, 1);
 		$products		= $wishProduct->getAllProduct($start, $count, $since);
@@ -375,6 +376,6 @@ class WishProductModel {
 		$str1	= substr($request, $start, ($end - $start));
 		$str2	= substr($str1, 31, strlen($str1));
 		$data	= json_decode($str2, true);
-		return array('merchant_tags' => $data['merchant_tags'], $data['description'], $data['name'], $data['extra_photo_urls']);
+		return array('tags' => $data['tags'], 'merchant_tags' => $data['merchant_tags'], $data['description'], $data['name'], $data['extra_photo_urls']);
 	}
 }
