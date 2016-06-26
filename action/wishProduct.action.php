@@ -45,9 +45,8 @@ class WishProductAct extends CommonAct{
 				self::$errMsg	= WishProductModel::$errMsg;
 				return false;
 			}
-			return true;
+			return $data;
 		}
-		$this->smarty->assign('data', $data);
 		$this->smarty->display('wishOtherProduct.tpl');
 	}
 }
