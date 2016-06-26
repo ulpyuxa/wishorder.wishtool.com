@@ -29,13 +29,13 @@
 					  <div class="form-group">
 						<label for="wishTags" class="col-sm-3 control-label">wish给的标签</label>
 						<div class="col-sm-9">
-						  <textarea id="wishTags" class="form-control"></textarea>
+						  <textarea id="wishTags" class="form-control" rows="5"></textarea>
 						</div>
 					  </div>
 					  <div class="form-group">
 						<label for="itemTags" class="col-sm-3 control-label">listing的标签</label>
 						<div class="col-sm-9">
-						  <textarea id="itemTags" class="form-control"></textarea>
+						  <textarea id="itemTags" class="form-control" rows="5"></textarea>
 						</div>
 					  </div>
 					</div>
