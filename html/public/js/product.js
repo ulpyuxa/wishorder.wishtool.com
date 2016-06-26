@@ -48,7 +48,7 @@ $(document).on('click', "button[name='submitBtn']", function(){
 	$.ajax({
 		type	: "POST",
 		async	: true,
-		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1&productUrl='.url,
+		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1',
 		data	: {'productUrl':url},
 		dataType: "json",
 		success : function (ret) {

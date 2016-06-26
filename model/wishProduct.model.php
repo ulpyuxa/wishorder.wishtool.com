@@ -385,6 +385,6 @@ class WishProductModel {
 		foreach($data['merchant_tags'] as $key => $val) {
 			$merchantTags[] = $val['name'];
 		}
-		return array('tags' => $tags, 'merchant_tags' => $merchantTags, $data['description'], $data['name'], $data['extra_photo_urls']);
+		return array('tags' => $tags, 'merchant_tags' => $merchantTags);	//, $data['description'], $data['name'], $data['extra_photo_urls']
 	}
 }
