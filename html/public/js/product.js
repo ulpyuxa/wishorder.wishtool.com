@@ -44,11 +44,12 @@ $(document).on('change', 'select[name="operateProduct"]', function(){
 });
 
 $(document).on('click', "button[name='submitBtn']", function(){
+	var url = $("input[name='productUrl']").val();
 	$.ajax({
 		type	: "POST",
 		async	: true,
-		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1',
-		data	: $("form[name='urlForm']").serialize(),
+		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1&productUrl='.url,
+		data	: {'productUrl':url},
 		dataType: "json",
 		success : function (ret) {
 			$("#wishTags").val(ret.data.tags.join(','));
