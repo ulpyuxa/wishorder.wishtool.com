@@ -40,7 +40,6 @@ class WishProductAct extends CommonAct{
 	public function act_getWishTags() {
 		if(isset($_REQUEST['productUrl'])) {
 			$data = WishProductModel::getItemDetail($_REQUEST['productUrl']);
-			var_dump($data);exit;
 			if(!$data) {
 				self::$errCode	= WishProductModel::$errCode;
 				self::$errMsg	= WishProductModel::$errMsg;
@@ -48,6 +47,7 @@ class WishProductAct extends CommonAct{
 			}
 			return true;
 		}
+		$this->smarty->assign('data', $data);
 		$this->smarty->display('wishOtherProduct.tpl');
 	}
 }
