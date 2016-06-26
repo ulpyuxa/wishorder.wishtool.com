@@ -27,7 +27,20 @@
 					</form>
 				</div>
 				<div id="content" class="col-md-6 col-md-offset-4">
-
+					<div class="form-horizontal">
+					  <div class="form-group">
+						<label for="wishTags" class="col-sm-2 control-label">wish给的标签</label>
+						<div class="col-sm-10">
+						  <input type="email" class="form-control" id="wishTags" placeholder="Email">
+						</div>
+					  </div>
+					  <div class="form-group">
+						<label for="itemTags" class="col-sm-2 control-label">listing的标签</label>
+						<div class="col-sm-10">
+						  <input type="email" class="form-control" id="itemTags" placeholder="Email">
+						</div>
+					  </div>
+					</div>
 				</div>
 			</div>
 		</div>

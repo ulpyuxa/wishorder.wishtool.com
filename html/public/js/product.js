@@ -51,12 +51,8 @@ $(document).on('click', "button[name='submitBtn']", function(){
 		data	: $("form[name='urlForm']").serialize(),
 		dataType: "json",
 		success : function (ret) {
-			console.log(ret);
-			if(ret.data !== true) {
-				alert(ret.errCode + ':' + ret.errMsg);
-				return false;
-			}
-			alert('商品'+(action === 'online' ? '上架' : '下架')+'成功!');
+			$("#wishTags").val(ret.data.tags.join(','));
+			$("#itemTags").val(ret.data.merchant_tags.join(','));
 		}
 	});
 });
