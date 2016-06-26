@@ -376,6 +376,15 @@ class WishProductModel {
 		$str1	= substr($request, $start, ($end - $start));
 		$str2	= substr($str1, 31, strlen($str1));
 		$data	= json_decode($str2, true);
-		return array('tags' => $data['tags'], 'merchant_tags' => $data['merchant_tags'], $data['description'], $data['name'], $data['extra_photo_urls']);
+
+		$tags			= array();
+		$merchantTags	= array();
+		foreach($data['tags'] as $key => $val) {
+			$tags[] = $val['name'];
+		}
+		foreach($data['merchant_tags'] as $key => $val) {
+			$merchantTags[] = $val['name'];
+		}
+		return array('tags' => $tags, 'merchant_tags' => $merchantTags, $data['description'], $data['name'], $data['extra_photo_urls']);
 	}
 }
