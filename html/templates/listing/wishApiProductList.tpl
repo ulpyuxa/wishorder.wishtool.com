@@ -27,7 +27,6 @@
 					<input type="hidden" name="act" value="{$smarty.get.act}"/>
 				  </div>
 				  <button type="submit" class="btn btn-default">搜索产品</button>
-				  <button type="button" id="loadBtn">搜索</button>
 				</div>
 			</form>
 			
