@@ -8,16 +8,6 @@
 		<title>商品管理</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<style type=text/css>
-			.watermark {
-				background:transparent url('../public/images/golden_diamond.png') no-repeat;
-			}
-			img.logo {
-				filter:alpha(opacity=70);
-				moz-opacity:.70;
-				opacity:.70;
-			}
-		</style>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -29,15 +19,15 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="list-group">
-					  <a href="##" class="list-group-item active">
+					  <a href="javascript:void(0)" class="list-group-item active">
 						商品管理
 					  </a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount} & {$productData.statisticInfo.offlineCount}</span>在线&下架</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved} &	{$productData.statisticInfo.pending}</span>已批准&待审核</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
-					  <a href="##" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount} & {$productData.statisticInfo.offlineCount}</span>在线&下架</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved} &	{$productData.statisticInfo.pending}</span>已批准&待审核</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -109,7 +99,7 @@
 											<td>
 												<select name="operateProduct" class="form-control" productId="{$v.productId}" isPromoted="{$v.isPromoted}">
 													<option value="">请选择...</option>
-													<option value="edit">上架</option>
+													<option value="edit">编辑Listing</option>
 													<option value="online">上架</option>
 													<option value="offline">下架</option>
 												</select>

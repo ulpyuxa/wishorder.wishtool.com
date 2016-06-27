@@ -8,7 +8,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				  <a class="navbar-brand" href="##">Wish看板</a>
+				  <a class="navbar-brand" href="javascript:void(0)">Wish看板</a>
 				</div>
 
 				<!-- Collect the nav links, forms, and other content for toggling -->
@@ -22,8 +22,8 @@
 						<li><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online">商品列表</a></li>
 						<li role="separator" class="divider"></li>
 						<li><a href="/index.php?mod=wishProduct&act=getWishTags">wish tags</a></li>
-						<!-- <li role="separator" class="divider"></li>
-						<li><a href="##">One more separated link</a></li> -->
+						<li role="separator" class="divider"></li>
+						<li><a href="javascript:void(0)">商品上传列表</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown">
@@ -40,14 +40,14 @@
 					  </ul>
 					</li>
 				  </ul>
-				  <p class="navbar-text navbar-right">Signed in as <a href="##" class="navbar-link">User</a></p>
+				  <p class="navbar-text navbar-right">Signed in as <a href="javascript:void(0)" class="navbar-link">User</a></p>
 				</div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
 			<!--路径导航-->
-			<ol class="breadcrumb" style="float:left;">
+			<!-- <ol class="breadcrumb" style="float:left;">
 			  <li><a href="#">Home</a></li>
 			  <li><a href="#">Library</a></li>
 			  <li class="active">Data</li>
-			</ol>
+			</ol> -->
 			<!--路径导航-->

@@ -20,7 +20,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<div class="list-group">
-					  <a href="##" class="list-group-item active">
+					  <a href="javascript:void(0)" class="list-group-item active">
 						订单管理
 					  </a>
 					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=ALL" class="list-group-item"><span class="badge">{$orderCount.sum}</span>全部订单</a>
