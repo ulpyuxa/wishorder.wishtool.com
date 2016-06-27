@@ -45,6 +45,8 @@ $(document).on('change', 'select[name="operateProduct"]', function(){
 
 $(document).on('click', "button[name='submitBtn']", function(){
 	var url = $("input[name='productUrl']").val();
+	$("#wishTags").val("");
+	$("#itemTags").val("");
 	$.ajax({
 		type	: "POST",
 		async	: true,
