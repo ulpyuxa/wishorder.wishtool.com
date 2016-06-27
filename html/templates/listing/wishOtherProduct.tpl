@@ -17,7 +17,7 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row">
-				<div id="content" class="col-md-6 col-md-offset-4">
+				<div id="content" class="col-md-6 col-md-offset-3">
 					<div class="form-horizontal">
 					  <div class="form-group">
 						<label for="wishTags" class="col-sm-3 control-label">商品URL地址:</label>
