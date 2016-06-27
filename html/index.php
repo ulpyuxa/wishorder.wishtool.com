@@ -10,7 +10,7 @@ $mod	=	isset($_REQUEST['mod']) ? $_REQUEST['mod']: "";
 $act	=	isset($_REQUEST['act']) ? $_REQUEST['act']: "";
 
 if(empty($mod) || empty($act))
-{echo 'fff';exit;
+{
 	header('Location:/index.php?mod=login&act=index');
 }
 $modName	=	ucfirst($mod."Act");
