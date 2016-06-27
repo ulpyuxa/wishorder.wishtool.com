@@ -77,31 +77,12 @@ function getTags(id) {
 		data	: {'productUrl':url},
 		dataType: "json",
 		success : function (ret) {
-			alertify.alert(id+'的标签', ret.data.tags.join(', '));
-		}
-	});
-}
-
-function getTagsNew() {
-	var url	= 'https://www.wish.com/api/search?start=0&query=Heart%20Pendant&transform=1&count=2';
-	$.ajax({
-		type	: "GET",
-		async	: true,
-		url		: url,
-		dataType: "jsonp",
-		success : function (ret) {
-			consold.log(ret);
-			alert(ret.code);
-			//alertify.alert(id+'的标签', ret.data.tags.join(', '));
-		},
-		error	: function (XMLHttpRequest, textStatus, errorThrown) {
-			alert(XMLHttpRequest.responseText);
-			
+			alertify.alert('平台标签', ret.data.tags.join(', '));
 		}
 	});
 }
 
 function showTags(obj) {
 	var tags = $(obj).parent('p').parent('.caption').children("#tags").val();
-	alertify.alert('标签显示', tags);
+	alertify.alert('商家标签', tags);
 }
