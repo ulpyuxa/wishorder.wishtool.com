@@ -39,6 +39,12 @@
 						<li><a href="/index.php?mod=wishTicket&act=wishTicketList">ticket列表</a></li>
 					  </ul>
 					</li>
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">wish平台商品 <span class="caret"></span></a>
+					  <ul class="dropdown-menu">
+						<li><a href="/index.php?mod=wishProduct&act=apiProductList">商品搜索</a></li>
+					  </ul>
+					</li>
 				  </ul>
 				  <p class="navbar-text navbar-right">Signed in as <a href="javascript:void(0)" class="navbar-link">User</a></p>
 				</div><!-- /.navbar-collapse -->

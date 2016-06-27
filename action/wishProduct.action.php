@@ -49,4 +49,23 @@ class WishProductAct extends CommonAct{
 		}
 		$this->smarty->display('wishOtherProduct.tpl');
 	}
+
+	/**
+	 * 功能：按条件拉取wish的列表数据
+	 * 接口名：https://www.wish.com/api/search?start=0&query=clothing&transform=true
+	 */
+	public function act_apiProductList() {
+		set_time_limit(0);
+		if(isset($_REQUEST['tags'])) {
+			$para	= array(
+				'start'		=> 0,
+				'query'		=> $_REQUEST['tags'],
+				'transform'	=> true,
+			);
+			$data	= file_get_contents('https://www.wish.com/api/search?'.http_build_query($para));
+			$data	= json_decode($data, true);
+			$this->smarty->assign('data', $data['data']['results']);
+		}
+		$this->smarty->display('wishApiProductList.tpl');
+	}
 }

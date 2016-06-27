@@ -59,3 +59,30 @@ $(document).on('click', "button[name='submitBtn']", function(){
 		}
 	});
 });
+
+$(document).ready(function() {
+	var maxHeight = 0;          
+	$(".equalize").each(function(){
+		if ($(this).height() > maxHeight) { maxHeight = $(this).height(); }
+	});         
+	$(".equalize").height(maxHeight);
+}); 
+
+function getTags(id) {
+	var url	= 'https://www.wish.com/c/'+id;
+	$.ajax({
+		type	: "POST",
+		async	: true,
+		url		: './json.php?mod=wishProduct&act=getWishTags&jsonp=1',
+		data	: {'productUrl':url},
+		dataType: "json",
+		success : function (ret) {
+			alertify.alert(id+'的标签', ret.data.tags.join(', '));
+		}
+	});
+}
+
+function showTags(obj) {
+	var tags = $(obj).parent('p').parent('.caption').children("#tags").val();
+	alertify.alert('标签显示', tags);
+}
