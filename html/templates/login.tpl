@@ -66,8 +66,11 @@
 			  </div>
 			</div>
 		  </div>
+		  {include file='footer.tpl'}
 		</div>
 		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
+		
 	</body>
+	
 </html>
