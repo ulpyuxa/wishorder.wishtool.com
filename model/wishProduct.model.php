@@ -372,11 +372,11 @@ class WishProductModel {
 			return false;
 		}
 		$start	= stripos($request, "pageParams['mainContestObj']");
-		$end	= stripos($request, ";", $start);
+		$end	= stripos($request, "pageParams['suggested_friends']");
 		$str1	= substr($request, $start, ($end - $start));
-		$str2	= substr($str1, 31, strlen($str1));
+		$end	= strrpos($str1, ';');
+		$str2	= substr($str1, 31, $end - 31);
 		$data	= json_decode($str2, true);
-
 		$tags			= array();
 		$merchantTags	= array();
 		foreach($data['tags'] as $key => $val) {
