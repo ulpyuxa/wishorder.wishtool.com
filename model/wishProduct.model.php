@@ -211,7 +211,7 @@ class WishProductModel {
 
 		$where = array();
 		if(isset($_REQUEST['spu']) && !empty($_REQUEST['spu'])) {
-			$where[] = ' spu = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'"';
+			$where[] = ' spu like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'%"';
 		}
 		if(isset($_REQUEST['productId']) && !empty($_REQUEST['productId'])) {
 			$where[] = ' productId = "'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['productId']).'"';
