@@ -16,7 +16,7 @@ Core :: getInstance();
 global $dbConn;
 $date = date('Y_m_d');
 
-$spuArr	= isset($argv[1]) ? implode(',', $argv[1]) : array();
+$spuArr	= isset($argv[1]) ? explode(',', $argv[1]) : array();
 
 $logPath	= WEB_PATH.'log/productInfo/';
 $files = array();
