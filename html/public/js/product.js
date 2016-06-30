@@ -101,7 +101,7 @@ function getTags(id) {
 				tagsEn.push(key);
 				tagsZh.push(val);
 			});
-			var html = '<textarea rows="20">'+tagsEn.join("\n")+'</textarea><textarea rows="20">'+tagsZh.join("\n")+'</textarea>"'
+			var html = '<textarea rows="20">'+tagsEn.join(",\n")+'</textarea><textarea rows="20">'+tagsZh.join("\n")+'</textarea>"'
 			alertify.alert('平台标签', html);
 		}
 	});
