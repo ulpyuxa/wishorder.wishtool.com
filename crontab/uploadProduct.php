@@ -16,6 +16,8 @@ Core :: getInstance();
 global $dbConn;
 $date = date('Y_m_d');
 
+$spuArr	= isset($argv[1]) ? implode(',', $argv[1]) : array();
+
 $logPath	= WEB_PATH.'log/productInfo/';
 $files = array();
 $d = dir($logPath);
@@ -49,6 +51,11 @@ $uploadNum	= rand(15, 30);
 foreach($files as $fileKey => $fileVal) {
 	$spuInfo		= explode('.', $fileVal);
 	$spuSn			= $spuInfo[0];
+	if(!empty($spuArr)) {
+		if(!in_array($spuSn, $spuArr)) {
+			continue;
+		}
+	}
 	errorLog('开始上传,'.$spuSn, 'tip');
 	$sql			= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
 	$query			= $dbConn->query($sql);

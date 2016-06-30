@@ -52,6 +52,7 @@
 				</div>
 			</div>
 		</div>
+		<img src="../public/images/loading.gif" id="loading-indicator" style="display:none" />
 		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../public/alertifyjs/alertify.min.js"></script>

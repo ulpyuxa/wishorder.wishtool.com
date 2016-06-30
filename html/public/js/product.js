@@ -47,6 +47,7 @@ $(document).on('click', "button[name='submitBtn']", function(){
 	var url = $("input[name='productUrl']").val();
 	$("#wishTags").val("");
 	$("#itemTags").val("");
+	$("#loading-indicator").show();
 	$.ajax({
 		type	: "POST",
 		async	: true,
@@ -54,6 +55,7 @@ $(document).on('click', "button[name='submitBtn']", function(){
 		data	: {'productUrl':url},
 		dataType: "json",
 		success : function (ret) {
+			$("#loading-indicator").hide();
 			$("#wishTags").val(ret.data.tags.join(','));
 			$("#itemTags").val(ret.data.merchant_tags.join(','));
 		}
@@ -70,6 +72,7 @@ $(document).ready(function() {
 
 function getTags(id) {
 	var url	= 'https://www.wish.com/c/'+id;
+	$("#loading-indicator").show();
 	$.ajax({
 		type	: "POST",
 		async	: true,
@@ -77,6 +80,7 @@ function getTags(id) {
 		data	: {'productUrl':url},
 		dataType: "json",
 		success : function (ret) {
+			$("#loading-indicator").hide();
 			alertify.alert('平台标签', ret.data.tags.join(', '));
 		}
 	});
