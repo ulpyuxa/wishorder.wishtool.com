@@ -68,9 +68,9 @@ $(document).on('click', "button[name='submitBtn']", function(){
 				itemTags.push(key);
 				itemTagsZh.push(val);
 			});
-			$("#wishTags").val(wishTags.join("\n"));
+			$("#wishTags").val(wishTags.join(",\n"));
 			$("#wishTagsZh").val(wishTagsZh.join("\n"));
-			$("#itemTags").val(itemTags.join("\n"));
+			$("#itemTags").val(itemTags.join(",\n"));
 			$("#itemTagsZh").val(itemTagsZh.join("\n"));
 		}
 	});
