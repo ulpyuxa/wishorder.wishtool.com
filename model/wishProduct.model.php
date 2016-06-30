@@ -138,7 +138,7 @@ class WishProductModel {
 			return true;
 		}
 		//插入Listing
-		$sql	= 'insert ws_product (`'.implode('`,`', array_keys(end($data))).'`) values '.implode(',', $sql);
+		$sql	= 'insert into ws_product (`'.implode('`,`', array_keys(end($data))).'`) values '.implode(',', $sql);
 		$query	= self::$dbConn->query($sql);
 		//更新分表
 		$num		= substr(md5($trueSpu), 0, 1);
@@ -380,10 +380,10 @@ class WishProductModel {
 		$tags			= array();
 		$merchantTags	= array();
 		foreach($data['tags'] as $key => $val) {
-			$tags[] = $val['name'];
+			$tags[$val['name']] = $val['name'];
 		}
 		foreach($data['merchant_tags'] as $key => $val) {
-			$merchantTags[] = $val['name'];
+			$merchantTags[$val['name']] = $val['name'];
 		}
 		return array('tags' => $tags, 'merchant_tags' => $merchantTags);	//, $data['description'], $data['name'], $data['extra_photo_urls']
 	}

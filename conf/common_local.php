@@ -34,6 +34,9 @@ return  array(
 		'REFUNDED'	=> '已退款',
 	),
 	'WISHPROFIT'	=> 15,	//这里表示百分之15
+	'TRANSLATE_TOKEN' => array(
+		'0' => 'BKqC2hIKr8foem2E1qiRvB5ttBQJK8objH8kZE/WJVs=',
+	),
 );
 
 ?>

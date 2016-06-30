@@ -56,8 +56,22 @@ $(document).on('click', "button[name='submitBtn']", function(){
 		dataType: "json",
 		success : function (ret) {
 			$("#loading-indicator").hide();
-			$("#wishTags").val(ret.data.tags.join(','));
-			$("#itemTags").val(ret.data.merchant_tags.join(','));
+			var wishTags	= new Array();
+			var wishTagsZh	= new Array();
+			var itemTags	= new Array();
+			var itemTagsZh	= new Array();
+			$.each(ret.data.tags, function(key, val){
+				wishTags.push(key);
+				wishTagsZh.push(val);
+			});
+			$.each(ret.data.merchant_tags, function(key, val){
+				itemTags.push(key);
+				itemTagsZh.push(val);
+			});
+			$("#wishTags").val(wishTags.join("\n"));
+			$("#wishTagsZh").val(wishTagsZh.join("\n"));
+			$("#itemTags").val(itemTags.join("\n"));
+			$("#itemTagsZh").val(itemTagsZh.join("\n"));
 		}
 	});
 });
@@ -81,7 +95,14 @@ function getTags(id) {
 		dataType: "json",
 		success : function (ret) {
 			$("#loading-indicator").hide();
-			alertify.alert('平台标签', ret.data.tags.join(', '));
+			var tagsEn	= new Array();
+			var tagsZh	= new Array();
+			$.each(ret.data.tags, function(key, val){
+				tagsEn.push(key);
+				tagsZh.push(val);
+			});
+			var html = '<textarea rows="20">'+tagsEn.join("\n")+'</textarea><textarea rows="20">'+tagsZh.join("\n")+'</textarea>"'
+			alertify.alert('平台标签', html);
 		}
 	});
 }

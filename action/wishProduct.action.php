@@ -45,6 +45,16 @@ class WishProductAct extends CommonAct{
 				self::$errMsg	= WishProductModel::$errMsg;
 				return false;
 			}
+			//========开始翻译===========
+			foreach($data['merchant_tags'] as $k => $v) {
+				$merchantTagsNew[$k] = TranslateModel::translator($k);
+			}
+			foreach($data['tags'] as $k => $v) {
+				$tags[$k] = TranslateModel::translator($k);
+			}
+			$data['tags'] = $tags;
+			$data['merchant_tags'] = $merchantTagsNew;
+			//========结束翻译===========
 			return $data;
 		}
 		$this->smarty->display('wishOtherProduct.tpl');

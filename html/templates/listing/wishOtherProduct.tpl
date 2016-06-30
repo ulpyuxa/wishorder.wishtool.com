@@ -28,14 +28,16 @@
 					  </div>
 					  <div class="form-group">
 						<label for="wishTags" class="col-sm-3 control-label">wish给的标签</label>
-						<div class="col-sm-9">
-						  <textarea id="wishTags" class="form-control" rows="5"></textarea>
+						<div class="col-sm-9 form-inline">
+						  <textarea id="wishTags" class="form-control" rows="20" cols="25"></textarea>
+						  <textarea id="wishTagsZh" class="form-control" rows="20" cols="25"></textarea>
 						</div>
 					  </div>
 					  <div class="form-group">
 						<label for="itemTags" class="col-sm-3 control-label">listing的标签</label>
-						<div class="col-sm-9">
-						  <textarea id="itemTags" class="form-control" rows="5"></textarea>
+						<div class="col-sm-9 form-inline">
+						  <textarea id="itemTags" class="form-control" rows="10" cols="25"></textarea>
+						  <textarea id="itemTagsZh" class="form-control" rows="10" cols="25"></textarea>
 						</div>
 					  </div>
 					</div>
