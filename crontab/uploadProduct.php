@@ -172,20 +172,3 @@ function getPrice($priceInfo, $skuData) {
 	}
 	return $price;
 }
-
-/**
- * 错误日志
- */
-function errorLog($message,$type) {
-	global $date;
-	
-	$path	= WEB_PATH.'log/uploadLog/'.date('Y-m').'/'.date('d').'/';	//$root.'/log/';
-	if(!is_dir($path)) {
-		$mkdir = mkdir($path,0777,true);
-		if(!$mkdir) {
-			exit('不能建立日志文件');
-		}
-	}
-	$status = error_log(date("Y-m-d H:i:s")." {$message}\r\n",3,$path.$date.'_'.$type.'_success.log');
-	return $status;
-}
