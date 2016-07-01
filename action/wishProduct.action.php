@@ -46,14 +46,14 @@ class WishProductAct extends CommonAct{
 				return false;
 			}
 			//========开始翻译===========
-			foreach($data['merchant_tags'] as $k => $v) {
+			/*foreach($data['merchant_tags'] as $k => $v) {
 				$merchantTagsNew[$k] = TranslateModel::translator($k);
 			}
 			foreach($data['tags'] as $k => $v) {
 				$tags[$k] = TranslateModel::translator($k);
 			}
 			$data['tags'] = $tags;
-			$data['merchant_tags'] = $merchantTagsNew;
+			$data['merchant_tags'] = $merchantTagsNew;*/
 			//========结束翻译===========
 			return $data;
 		}
