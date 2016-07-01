@@ -39,15 +39,15 @@ if(!is_dir($newDir)) {
 	}
 }
 $errorDir = WEB_PATH.'log/productInfo/'.date('Y/m-d').'/errorProduct/';
-if(!is_dir($newDir)) {
-	mkdir($newDir, 0777, true);
-	if(!is_dir($newDir)) {
+if(!is_dir($errorDir)) {
+	mkdir($errorDir, 0777, true);
+	if(!is_dir($errorDir)) {
 		exit('不能建立目录!');
 	}
 }
 $wishProductApi	= new WishProductApi('geshan0728', 1);
-$num	= 0;
-$uploadNum	= rand(15, 30);
+$num		= 0;
+$uploadNum	= rand(10, 20);
 foreach($files as $fileKey => $fileVal) {
 	$spuInfo		= explode('.', $fileVal);
 	$spuSn			= $spuInfo[0];
@@ -85,7 +85,7 @@ foreach($files as $fileKey => $fileVal) {
 	$spuData		= json_decode($data[0], true);
 	$tags			= explode(',',$spuData['tags']);
 	if(count($tags) < 5) {		//如果tags数量小于5个，则不上传
-		echo 'tags数量小于5个', PHP_EOL;
+		echo $spuSn.'的tags数量小于5个', PHP_EOL;
 		continue;
 	}
 	unset($data[0], $spuData['key']);
@@ -117,14 +117,15 @@ foreach($files as $fileKey => $fileVal) {
 	$spuData['shipping']	= 1;	//默认运费是$1
 	$spuData['parent_sku']	= $spuParentSku[0].'#P28d';
 	$spuData['name']		= trim($nameInfo[0]).' P28d';
+	echo $spuSn, PHP_EOL;
+	$spuData['main_image']		= imageReplace($spuData['main_image']);
+	$spuData['extra_images']	= imageReplace($spuData['extra_images']);
 	$spuStatus				= $wishProductApi->createProductSpu($spuData);
-	echo $spuSn;
-	print_r($spuData);
 	if(!empty($skuData)) {		//单料号没有子料号，所以不用进来
 		foreach($skuData as $skuKey => $skuVal) {
-			print_r($skuVal);
+			//print_r($skuVal);
 			$skuStatus = $wishProductApi->createProductSku($skuVal);
-			var_dump($skuStatus);
+			//var_dump($skuStatus);
 		}
 	}
 	$time	= rand(10, 30);
@@ -171,4 +172,21 @@ function getPrice($priceInfo, $skuData) {
 		}
 	}
 	return $price;
+}
+
+function imageReplace($images) {
+	$images	= explode('|', $images);
+	foreach($images as $imagesKey => $imagesVal) {
+		preg_match('/\/v\d+/i', $imagesVal, $arr);	//获取版本号，以第一个位置的url为准;
+		$imgVer		= intval(substr($arr[0], 2, strlen($arr[0])));	//url路径中的版本号
+		$imgInfo	= explode('.', $imagesVal);
+		$imgName	= explode('-', basename($imagesVal));
+		array_pop($imgName);
+		if(strlen($imgVer) > 0) {
+			$images[$imagesKey]	= 'http://images.wishtool.cn/v'.$imgVer.'/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+		} else {
+			$images[$imagesKey]	= 'http://images.wishtool.cn/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+		}
+	}
+	return implode('|', $images);
 }
