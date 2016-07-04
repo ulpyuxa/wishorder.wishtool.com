@@ -58,7 +58,7 @@ foreach($files as $fileKey => $fileVal) {
 		}
 	}
 	errorLog('开始上传,'.$spuSn, 'tip');
-	$sql	= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
+	$sql	= 'select spuSn from `ws_wait_publish` where spuSn = "'.$spuSn.'"';
 	$query	= $dbConn->query($sql);
 	$ret	= $dbConn->fetch_array_all($query);
 	if(!empty($ret)) {	//已经上传过此商品
