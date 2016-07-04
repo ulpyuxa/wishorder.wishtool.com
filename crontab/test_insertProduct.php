@@ -110,7 +110,7 @@ foreach($files as $fileKey => $fileVal) {
 	);
 	$sql	= 'insert into ws_wait_publish (`'.implode('`, `', array_keys($insertData)).'`) values ("'.implode('", "', $insertData).'")';
 	$query	= $dbConn->query($sql);
-
+	echo $spuSn, PHP_EOL;
 	$num++;
 }
 
