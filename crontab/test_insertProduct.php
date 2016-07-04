@@ -54,6 +54,7 @@ foreach($files as $fileKey => $fileVal) {
 	$spuSn			= $spuInfo[0];
 	if(!empty($spuArr)) {
 		if(!in_array($spuSn, $spuArr)) {
+			echo $spuSn,'：没有料号信息', PHP_EOL;
 			continue;
 		}
 	}
