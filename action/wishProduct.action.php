@@ -104,30 +104,4 @@ class WishProductAct extends CommonAct{
 		$this->smarty->display('uploadProductList.tpl');
 	}
 
-	public function spuPrice($spuSn) {
-		$logPath	= WEB_PATH.'log/productInfo/';
-		$errorDir	= WEB_PATH.'log/productInfo/'.date('Y/m-d').'/errorProduct/';
-		$spu		= json_encode(array(array('spu'=>$spuSn,"country"=>"Russian Federation","type"=>"1",'platform'=>'wish')));
-		$url		= "http://price.valsun.cn/api.php?mod=distributorPrice&act=productPrice&spu=".$spu."&platform=wish&profit=0.0001&company_name=葛珊";
-		try{
-			$data	= file_get_contents($url);
-		} catch (Exception $e) {
-			return 0;
-		}
-		$data	= json_decode($data, true);
-		$price	= array();
-		foreach($data['data'] as $k => $v) {
-			$price[] = $v['price'];
-		}
-		sort($price);
-		$totalPrice	= round(end($price) - 1, 2);
-		$totalPrice	= round(($totalPrice/(1-(12/100)-0.15))/(6.5) - 1, 2);
-		if($totalPrice <= 0.1) {		//如果料号的价格小于1，则跳过数据
-			echo '价格小于0.1', PHP_EOL;
-			rename($logPath.$spuSn.'.log', $errorDir.$spuSn.'.log');
-			continue;
-		}
-
-		return $totalPrice;
-	}
 }
