@@ -104,7 +104,7 @@ foreach($files as $fileKey => $fileVal) {
 		'shipping'		=> 1,
 		'photoVersion'	=> $imgVer,
 		'shipping_time'	=> $spuData['shipping_time'],
-		'tags'			=> $spuData['tags'],
+		'tags'			=> mysqli_real_escape_string($dbConn->link, $spuData['tags']),
 	);
 	$sql	= 'insert into ws_wait_publish (`'.implode('`, `', array_keys($insertData)).'`) values ("'.implode('", "', $insertData).'")';
 	$query	= $dbConn->query($sql);
