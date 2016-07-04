@@ -46,7 +46,7 @@ foreach($dirDat['data'] as $k => $v) {
 	$ret			= $dbConn->fetch_array_all($query);
 	if(!empty($ret)) {	//已经上传过此商品
 		echo $spuSn, ', 此料号已经上传过了，将跳过上传！', PHP_EOL;
-		file_put_contents($newDir.$v, $productInfo, FILE_APPEND);
+		file_put_contents($newDir.$v, $productInfo."\n", FILE_APPEND);
 		continue;
 	}
 	echo '现在处理可以刊登的料号，料号为：'.$spuSn, PHP_EOL;
