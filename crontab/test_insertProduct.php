@@ -48,7 +48,6 @@ if(!is_dir($errorDir)) {
 }
 $wishProductApi	= new WishProductApi('geshan0728', 1);
 $num		= 0;
-$uploadNum	= rand(10, 20);
 foreach($files as $fileKey => $fileVal) {
 	$spuInfo		= explode('.', $fileVal);
 	$spuSn			= $spuInfo[0];
@@ -75,9 +74,7 @@ foreach($files as $fileKey => $fileVal) {
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
-	if($num > $uploadNum) {	//每天上传100个
-		break;
-	}
+
 	$data			= json_decode($productInfo, true);
 	$data			= explode("\n", $data['data']);
 	$spuData		= json_decode($data[0], true);
