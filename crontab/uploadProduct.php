@@ -195,9 +195,27 @@ function imageReplace($images) {
 function readProductInfo($spu) {
 	global $logPath;
 	$data	= file_get_contents($logPath.$spu.'.log');
+	$dataSec= $data;
 	$sec	= stripos($data, '{"errCode', 50);
-	if($sec > 0) {
-		$data	= substr($data, 0, $sec);
+	$dataArr	= explode('{"errCode', $data);
+	$hasTags	= false;
+	foreach($dataArr as $k => $v) {
+		if(strlen($v) < 100) {
+			continue;
+		}
+		$json		= json_decode('{"errCode'.$v, true);
+		$ret		= explode("\n", $json['data']);
+		foreach($ret as $retKey	=> $retVal) {
+			$spuData	= json_decode($ret[0], true);
+			$tags		= explode(',',$spuData['tags']);
+			if(count($tags) > 5) {
+				$hasTags	= '{"errCode'.$v;
+				break;
+			}
+		}
+		if(strlen($hasTags) > 0) {
+			break;
+		}
 	}
-	return $data;
+	return $hasTags;
 }
