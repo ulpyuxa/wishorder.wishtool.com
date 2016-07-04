@@ -50,7 +50,7 @@ foreach($dirDat['data'] as $k => $v) {
 		continue;
 	}
 	echo '现在处理可以刊登的料号，料号为：'.$spuSn, PHP_EOL;
-	file_put_contents($logPath.$v, $productInfo, FILE_APPEND);	//将数据写入日志备用
+	file_put_contents($logPath.$v, $productInfo);	//将数据写入日志备用
 	continue;//只将数据拉取回来再进行操作。
 }
 
