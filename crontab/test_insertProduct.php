@@ -167,6 +167,9 @@ function readProductInfo($spu) {
 	$sec		= stripos($data, '{"errCode', 50);
 	$dataArr	= explode('{"errCode', $data);
 	$hasTags	= false;
+	if(count($dataArr) === 1) {
+		return $data;
+	} 
 	foreach($dataArr as $k => $v) {
 		if(strlen($v) < 100) {
 			continue;
@@ -178,7 +181,7 @@ function readProductInfo($spu) {
 			$tags		= explode(',',$spuData['tags']);
 			$hasTags	= '{"errCode'.$v;
 		}
-		if(strlen($hasTags) > 0) {
+		if(strlen($hasTags) > 5) {
 			break;
 		}
 	}

@@ -387,4 +387,32 @@ class WishProductModel {
 		}
 		return array('tags' => $tags, 'merchant_tags' => $merchantTags);	//, $data['description'], $data['name'], $data['extra_photo_urls']
 	}
+
+	/**
+	 * 功能：获取待刊登的料号
+	 *
+	 */
+	public function getWaitSpu() {
+		self::initDB();
+
+		$page	= isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
+		$where	= '';
+		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
+			$where = ' where spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
+		} else {
+			$where = '';
+		}
+		//$order	= ' order by spuSn '
+		$sql	= 'select count(*) as count from ws_wait_publish '.$where;
+		$query	= self::$dbConn->query($sql);
+		$count	= self::$dbConn->fetch_array_all($query);
+		$limit	= ' limit '.(($page - 1)*30).', 30';
+		$sql	= 'select * from ws_wait_publish '.$where.$limit;
+		$query	= self::$dbConn->query($sql);
+		$ret	= self::$dbConn->fetch_array_all($query);
+		//数据分页
+		$pagination = new Pagination($page, $count[0]['count'], 30);
+		$pageHtml	= $pagination->parse();
+		return array('data' => $ret, 'pagination' => $pageHtml);
+	}
 }

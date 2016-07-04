@@ -21,7 +21,7 @@
 					  <ul class="dropdown-menu">
 						<li><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online">商品列表</a></li>
 						<li role="separator" class="divider"></li>
-						<li><a href="javascript:void(0)">商品上传列表</a></li>
+						<li><a href="/index.php?mod=wishProduct&act=uploadProductList">商品待上传列表</a></li>
 					  </ul>
 					</li>
 					<li class="dropdown">
