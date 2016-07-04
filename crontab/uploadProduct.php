@@ -71,7 +71,8 @@ foreach($files as $fileKey => $fileVal) {
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
 		continue;
 	}
-	$productInfo	= file_get_contents($logPath.$fileVal);
+	
+	$productInfo	= readProductInfo($spuSn);;
 	if(empty($productInfo)) {
 		echo '没有数据', PHP_EOL;
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
@@ -189,4 +190,14 @@ function imageReplace($images) {
 		}
 	}
 	return implode('|', $images);
+}
+
+function readProductInfo($spu) {
+	global $logPath;
+	$data	= file_get_contents($logPath.$spu.'.log');
+	$sec	= stripos($data, '{"errCode', 50);
+	if($sec > 0) {
+		$data	= substr($data, 0, $sec);
+	}
+	return $data;
 }
