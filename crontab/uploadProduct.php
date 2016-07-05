@@ -73,7 +73,6 @@ foreach($files as $fileKey => $fileVal) {
 	}
 	
 	$productInfo	= readProductInfo($spuSn);
-	var_dump($productInfo);exit;
 	if(empty($productInfo)) {
 		echo '没有数据', PHP_EOL;
 		rename($logPath.$fileVal, $errorDir.$spuSn.'.log');
