@@ -97,11 +97,88 @@ class WishProductAct extends CommonAct{
 		return $tmpInfo; // 返回数据  
 	}
 
+	/**
+	 * 功能: 待刊登列表
+	 */
 	public function act_uploadProductList() {
 		$path	= WEB_PATH.'log/productInfo';
 		$data	= WishProductModel::getWaitSpu();
 		$this->smarty->assign('productData', $data);
 		$this->smarty->display('uploadProductList.tpl');
 	}
+	
+	/**
+	 * 功能: 查看并编辑待刊登料号
+	 */
+	public function act_editUploadProduct() {
+		$spu	= $_REQUEST['spu'];
+		$file	= WEB_PATH.'log/productInfo/'.$spu.'.log';
+		if(!is_file($file)) {
+			return false;
+		}
+		$data	= self::readProductInfo($file);
+		$this->smarty->assign('data', $data);
+		$this->smarty->display('editUploadProduct.tpl');
+	}
 
+	/**
+	 * 功能: 从log文件中提取上传资料
+	 */
+	private function readProductInfo($file) {
+		$data		= file_get_contents($file);
+		$dataArr	= explode('{"errCode', $data);
+		$hasTags	= false;
+		$ret		= array();
+		foreach($dataArr as $k => $v) {
+			if(strlen($v) < 100) {
+				continue;
+			}
+			$json		= json_decode('{"errCode'.$v, true);
+			$ret		= explode("\n", $json['data']);
+			foreach($ret as $retKey	=> $retVal) {
+				if(empty($retVal)) { echo 'fff';
+					unset($ret[$retKey]);
+				}
+				$ret[$retKey] = json_decode($retVal, true);
+				unset($ret[$retKey]['key']);
+				if(isset($ret[$retKey]['main_image'])) {
+					$ret[$retKey]['main_image'] = self::imageReplace($ret[$retKey]['main_image']);
+				}
+				if(isset($ret[$retKey]['extra_images'])) {
+					$ret[$retKey]['extra_images'] = self::imageReplace($ret[$retKey]['extra_images']);
+				}
+				if(isset($ret[$retKey]['sku'])) {
+					$skuInfo	= explode('#', $ret[$retKey]['sku']);
+					$spuInfo	= explode('#', $ret[$retKey]['parent_sku']);
+					$ret[$retKey]['sku'] = $skuInfo[0].'#P28d';
+					$ret[$retKey]['parent_sku'] = $spuInfo[0].'#P28d';
+				}
+			}
+			if(!empty($ret)) {
+				break;
+			}
+		}
+		$ret = array_filter($ret);
+		return $ret;
+	}
+
+	/**
+	 * 功能：提取图片数据
+	 */
+	private function imageReplace($images) {
+		$images	= explode('|', $images);
+		foreach($images as $imagesKey => $imagesVal) {
+			preg_match('/\/v\d+/i', $imagesVal, $arr);	//获取版本号，以第一个位置的url为准;
+			$imgVer		= intval(substr($arr[0], 2, strlen($arr[0])));	//url路径中的版本号
+			$imgInfo	= explode('.', $imagesVal);
+			$imgName	= explode('-', basename($imagesVal));
+			array_pop($imgName);
+			if(strlen($imgVer) > 0) {
+				$images[$imagesKey]	= 'http://images.wishtool.cn/v'.$imgVer.'/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+			} else {
+				$images[$imagesKey]	= 'http://images.wishtool.cn/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+			}
+		}
+		return $images;
+	}
 }

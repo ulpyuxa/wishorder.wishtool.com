@@ -77,7 +77,7 @@
 													操作 <span class="caret"></span>
 												  </button>
 												  <ul class="dropdown-menu">
-													<li><a href="#">修改商品详情</a></li>
+													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}">修改商品详情</a></li>
 													<li role="separator" class="divider"></li>
 													<li><a href="#">删除</a></li>
 												  </ul>
