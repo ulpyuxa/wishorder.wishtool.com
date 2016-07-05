@@ -11,8 +11,8 @@ class AppSmarty extends Smarty{
 		$this->cache_dir		= WEB_PATH.'lib/smarty/cache'; //缓存文件夹
 		$this->use_sub_dirs		= false;   //子目录变量（是否在缓存文件夹中生成子目录）
 		$this->compile_locking	= false;
-		$this->left_delimiter	= '{';
-		$this->right_delimiter	= '}';
+		$this->left_delimiter	= '{{';
+		$this->right_delimiter	= '}}';
 		$this->debugging		= false;
 	}
 }

@@ -8,11 +8,18 @@
 		<title>商品管理</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			* { margin:0; padding:0; }
+			img { vertical-align:bottom; border:none; }
+			body { background:#f0f0f0; height:800px; font-family:Arial;}
+			#bigimage { position:absolute; display:none; }
+			#bigimage img { width:400px; height:400px; padding:5px; background:#fff; border:1px solid #e3e3e3; }
+		</style>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div id = 'nav'>
-				{include file='../header.tpl'}
+				{{include file='../header.tpl'}}
 			</div>
 		</div>
 		<div class="container-fluid">
@@ -22,12 +29,12 @@
 					  <a href="javascript:void(0)" class="list-group-item active">
 						商品管理
 					  </a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.count}</span>商品数量</a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.onlineCount} & {$productData.statisticInfo.offlineCount}</span>在线&下架</a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.approved} &	{$productData.statisticInfo.pending}</span>已批准&待审核</a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSave}</span>收藏数量</a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.countSold}</span>购买数量</a>
-					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{$productData.statisticInfo.rejected}</span>仿品&禁品数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.count}}</span>商品数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.onlineCount}} & {{$productData.statisticInfo.offlineCount}}</span>在线&下架</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.approved}} &	{{$productData.statisticInfo.pending}}</span>已批准&待审核</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.countSave}}</span>收藏数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.countSold}}</span>购买数量</a>
+					  <a href="javascript:void(0)" class="list-group-item"><span class="badge">{{$productData.statisticInfo.rejected}}</span>仿品&禁品数量</a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -39,15 +46,15 @@
 							<form class="form-inline">
 								<div class="form-group">
 									<label for="templateName" class="control-label">商品ID: </label>
-									<input type="text" name="productId" value="{$smarty.get.productId}" class="form-control" />
+									<input type="text" name="productId" value="{{$smarty.get.productId}}" class="form-control" />
 								</div>
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
-									<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" />
+									<input type="text" name="spu" value="{{$smarty.get.spu}}" class="form-control" />
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
-									<input type="hidden" name="act" value="{$smarty.get.act}" />
-									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
-									<input type="hidden" name="isOnline" value="{if isset($smarty.get.isOnline)}{$smarty.get.isOnline}{else}online{/if}" />
+									<input type="hidden" name="act" value="{{$smarty.get.act}}" />
+									<input type="hidden" name="mod" value="{{$smarty.get.mod}}" />
+									<input type="hidden" name="isOnline" value="{{if isset($smarty.get.isOnline)}}{{$smarty.get.isOnline}}{{else}}online{{/if}}" />
 									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
 								</div>
 							</form>
@@ -60,8 +67,8 @@
 					  </div>
 					  <div class="panel-body">
 						<ul class="nav nav-tabs">
-						  <li role="presentation" {if $smarty.get.isOnline == 'online'}class="active"{/if}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online"">在线Listing</a></li>
-						  <li role="presentation" {if $smarty.get.isOnline == 'offline'}class="active"{/if}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=offline">下线listing</a></li>
+						  <li role="presentation" {{if $smarty.get.isOnline == 'online'}}class="active"{{/if}}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=online"">在线Listing</a></li>
+						  <li role="presentation" {{if $smarty.get.isOnline == 'offline'}}class="active"{{/if}}><a href="/index.php?mod=wishProduct&act=wishProductList&isOnline=offline">下线listing</a></li>
 						</ul>
 						<div class="table-responsive">
 							<table class="table table-hover table-bordered">
@@ -70,34 +77,34 @@
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
 										<th width="53%">商品标题</th>
-										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&isOnline=online&order={$productData.order}">收藏数量</a></th>
-										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&isOnline=online&order={$productData.order}">订单数量</a></th>
-										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&isOnline=online&order={$productData.order}">状态</a></th>
+										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&isOnline=online&order={{$productData.order}}">收藏数量</a></th>
+										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&isOnline=online&order={{$productData.order}}">订单数量</a></th>
+										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&isOnline=online&order={{$productData.order}}">状态</a></th>
 										<th width="10%">操作</th>
 									</tr>
 								</thead>
 								<tbody>
-									{foreach $productData.data as $k => $v}
+									{{foreach $productData.data as $k => $v}}
 										<tr>
 											<td>
-												{if $v.isPromoted === 'true'}
+												{{if $v.isPromoted === 'true'}}
 													<div style="position: relative;">
 													  <div style="position: absolute;">
 														<img src="../public/images/golden_diamond.png"/>
 													  </div>  
-													  <img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg"/>
+													  <img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" class="img-responsive"/>
 													</div>  
-												{else}
-												<img src="http://thumb.valsun.cn/{$v.spu}-G-zxhtestx40.jpg" alt="{$v.spu}" class="img-thumbnail">
-												{/if}
+												{{else}}
+												<img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" alt="{{$v.spu}}" class="img-responsive">
+												{{/if}}
 											</td>
-											<td>{$v.spu}</td>
-											<td><a href="https://www.wish.com/c/{$v.productId}" target="_blank">{$v.title}</a></td>
-											<td>{$v.saveSold}</td>
-											<td>{$v.numSold}</td>
-											<td>{if $v.reviewStatus == 'approved'}<font color="green">已批准</font>{else if $v.reviewStatus == 'pending'}<font color="red">待审核</font>{else}已拒绝{/if}</td>
+											<td>{{$v.spu}}</td>
+											<td><a href="https://www.wish.com/c/{{$v.productId}}" target="_blank">{{$v.title}}</a></td>
+											<td>{{$v.saveSold}}</td>
+											<td>{{$v.numSold}}</td>
+											<td>{{if $v.reviewStatus == 'approved'}}<font color="green">已批准</font>{{else if $v.reviewStatus == 'pending'}}<font color="red">待审核</font>{{else}}已拒绝{{/if}}</td>
 											<td>
-												<select name="operateProduct" class="form-control" productId="{$v.productId}" isPromoted="{$v.isPromoted}">
+												<select name="operateProduct" class="form-control" productId="{{$v.productId}}" isPromoted="{{$v.isPromoted}}">
 													<option value="">请选择...</option>
 													<option value="edit">编辑Listing</option>
 													<option value="online">上架</option>
@@ -105,14 +112,14 @@
 												</select>
 											</td>
 										</tr>
-									{/foreach}
+									{{/foreach}}
 								</tbody>
 								<tfoot>
 								</tfoot>
 							</table>
 						</div>
 					  </div>
-					  {$productData.pagination}
+					  {{$productData.pagination}}
 					</div>
 				</div>
 			</div>

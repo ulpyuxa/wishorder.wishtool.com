@@ -111,3 +111,39 @@ function showTags(obj) {
 	var tags = $(obj).parent('p').parent('.caption').children("#tags").val();
 	alertify.alert('商家标签', tags);
 }
+
+/**
+ * 功能: 鼠标悬停预览功能
+ */
+$(function(){	
+	
+	var x = 22;
+	var y = 20;
+		
+	$(".img-responsive").hover(function(e){
+		$("body").append('<p id="bigimage"><img src="'+ $(this).attr('src') + '" alt="" /></p>');
+		$(this).find('img').stop().fadeTo('slow',0.5);		
+		widthJudge(e);
+		$("#bigimage").fadeIn('fast');
+	},function(){
+		$(this).find('img').stop().fadeTo('slow',1);
+		$("#bigimage").remove();
+	});	
+	
+	$(".img-responsive").mousemove(function(e){
+		widthJudge(e);
+	});	
+	
+	function widthJudge(e){
+		var marginRight = document.documentElement.clientWidth - e.pageX; 
+		var imageWidth = $("#bigimage").width();
+		if(marginRight < imageWidth)
+		{
+			x = imageWidth + 22;
+			$("#bigimage").css({top:(e.pageY - y ) + 'px',left:(e.pageX - x ) + 'px'});	
+		}else{
+			x = 22;
+			$("#bigimage").css({top:(e.pageY - y ) + 'px',left:(e.pageX + x ) + 'px'});
+		};	
+	}
+});

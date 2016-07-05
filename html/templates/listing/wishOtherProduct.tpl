@@ -12,7 +12,7 @@
 	<body>
 		<div class="container-fluid">
 			<div id = 'nav'>
-				{include file='../header.tpl'}
+				{{include file='../header.tpl'}}
 			</div>
 		</div>
 		<div class="container-fluid">

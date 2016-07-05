@@ -402,12 +402,12 @@ class WishProductModel {
 		} else {
 			$where = '';
 		}
-		//$order	= ' order by spuSn '
-		$sql	= 'select count(*) as count from ws_wait_publish '.$where;
+		$order	= ' order by spuSn DESC';
+		$sql	= 'select count(*) as count from ws_wait_publish '.$where.$order;
 		$query	= self::$dbConn->query($sql);
 		$count	= self::$dbConn->fetch_array_all($query);
 		$limit	= ' limit '.(($page - 1)*30).', 30';
-		$sql	= 'select * from ws_wait_publish '.$where.$limit;
+		$sql	= 'select * from ws_wait_publish '.$where.$order.$limit;
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 		//数据分页

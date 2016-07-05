@@ -13,7 +13,7 @@
 	<body>
 		<div class="container-fluid">
 			<div id = 'nav'>
-				{include file='../header.tpl'}
+				{{include file='../header.tpl'}}
 			</div>
 		</div>
 		<div class="container-fluid">
@@ -23,10 +23,10 @@
 					  <a href="javascript:void(0)" class="list-group-item active">
 						订单管理
 					  </a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=ALL" class="list-group-item"><span class="badge">{$orderCount.sum}</span>全部订单</a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=APPROVED" class="list-group-item"><span class="badge">{$orderCount.APPROVED}</span>新订单</a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=SHIPPED" class="list-group-item"><span class="badge">{$orderCount.SHIPPED}</span>已发货订单</a>
-					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=REFUNDED" class="list-group-item"><span class="badge">{$orderCount.REFUNDED}</span>已退货订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=ALL" class="list-group-item"><span class="badge">{{$orderCount.sum}}</span>全部订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=APPROVED" class="list-group-item"><span class="badge">{{$orderCount.APPROVED}}</span>新订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=SHIPPED" class="list-group-item"><span class="badge">{{$orderCount.SHIPPED}}</span>已发货订单</a>
+					  <a href="./index.php?mod=wishOrder&act=wishOrderList&state=REFUNDED" class="list-group-item"><span class="badge">{{$orderCount.REFUNDED}}</span>已退货订单</a>
 					</div>
 				</div>
 				<div class="col-md-10">
@@ -38,16 +38,16 @@
 						<form class="form-inline">
 							<div class="form-group">
 								<label class="control-label">子料号：</label>
-								<input type="text" name="sku" class="form-control" value="{$smarty.get.sku}"/>
+								<input type="text" name="sku" class="form-control" value="{{$smarty.get.sku}}"/>
 							</div>
 							<div class="form-group">
 								<label class="control-label">主料号：</label>
-								<input type="text" name="spu" class="form-control" required value="{$smarty.get.spu}"/>
+								<input type="text" name="spu" class="form-control" required value="{{$smarty.get.spu}}"/>
 							</div>
 							<div class="form-group">
 								<input type="submit" name="search" value="搜索" class="btn btn-warning" />
-								<input type="hidden" name="act" value="{$smarty.get.act}" />
-								<input type="hidden" name="mod" value="{$smarty.get.mod}" />
+								<input type="hidden" name="act" value="{{$smarty.get.act}}" />
+								<input type="hidden" name="mod" value="{{$smarty.get.mod}}" />
 							</div>
 						</form>
 					  </div>
@@ -75,33 +75,33 @@
 									</tr>
 								</thead>
 								<tbody>
-									{foreach $orderData.data as $key => $val}
+									{{foreach $orderData.data as $key => $val}}
 									<tr>
-										<td><img src="http://thumb.valsun.cn/{$val.trueSku}-Gx40.jpg" alt="{$val.trueSku}" class="img-thumbnail"></td>
-										<td>{$val.trueSku}</td>
-										<td>{$val.product_name}  [{$val.order_id}]</td>
-										<td>{$val.order_total}</td>
-										<td>{$val.shippingMethod}<br/>{$val.tracknumber}</td>
-										<td>{$val.stateZH}</td>
-										<td>国家：{$val.ShippingDetail_country}<br />省：{$val.ShippingDetail_state}<br />市/区：{$val.ShippingDetail_city}</td>
-										<td>{$val.shipping_cost}</td>
-										<td>{$val.quantity}</td>
-										<td>{$val.order_time|date_format:"%D %T"}</td>
+										<td><img src="http://thumb.valsun.cn/{{$val.trueSku}}-Gx40.jpg" alt="{{$val.trueSku}}" class="img-thumbnail"></td>
+										<td>{{$val.trueSku}}</td>
+										<td>{{$val.product_name}}  [{{$val.order_id}}]</td>
+										<td>{{$val.order_total}}</td>
+										<td>{{$val.shippingMethod}}<br/>{{$val.tracknumber}}</td>
+										<td>{{$val.stateZH}}</td>
+										<td>国家：{{$val.ShippingDetail_country}}<br />省：{{$val.ShippingDetail_state}}<br />市/区：{{$val.ShippingDetail_city}}</td>
+										<td>{{$val.shipping_cost}}</td>
+										<td>{{$val.quantity}}</td>
+										<td>{{$val.order_time|date_format:"%D %T"}}</td>
 										<td>
-											<select class="form-control" name="operate" orderId="{$val.order_id}">
+											<select class="form-control" name="operate" orderId="{{$val.order_id}}">
 												<option value="">请选择...</option>
 												<option value="uploadTrackNumber">上传跟踪号</option>
 												<!-- <option value="disableOrder">取消订单</option> -->
 											</select>
 										</td>
 									</tr>
-									{/foreach}
+									{{/foreach}}
 								</tbody>
 								<tfoot>
 								</tfoot>
 							</table>
 						</div>
-						{$orderData.pageHtml}
+						{{$orderData.pageHtml}}
 					  </div>
 					</div>
 				</div>
@@ -125,9 +125,9 @@
 						<label for="transport" class="col-sm-3 control-label">运输方式：</label>
 						<select class="form-control" name="transport" required>
 							<option value="">请选择运输方式...</option>
-							{foreach $postMethod as $key => $val}
-								<option value="{$val.post_en}" postUrl="{$val.postUrl}">{if empty($val.post_zh)}{$val.post_en}{else}{$val.post_zh}[{$val.post_en}]{/if}</option>
-							{/foreach}
+							{{foreach $postMethod as $key => $val}}
+								<option value="{{$val.post_en}}" postUrl="{{$val.postUrl}}">{{if empty($val.post_zh)}}{{$val.post_en}}{{else}}{{$val.post_zh}}[{{$val.post_en}}]{{/if}}</option>
+							{{/foreach}}
 						</select>
 					</div>
 					<div class="form-group form-inline">

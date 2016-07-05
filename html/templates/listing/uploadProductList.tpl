@@ -8,11 +8,18 @@
 		<title>待刊登产品</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<style>
+			* { margin:0; padding:0; }
+			img { vertical-align:bottom; border:none; }
+			body { background:#f0f0f0; height:800px; font-family:Arial;}
+			#bigimage { position:absolute; display:none; }
+			#bigimage img { width:400px; height:400px; padding:5px; background:#fff; border:1px solid #e3e3e3; }
+		</style>
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div id = 'nav'>
-				{include file='../header.tpl'}
+				{{include file='../header.tpl'}}
 			</div>
 		</div>
 		<div class="container-fluid">
@@ -26,12 +33,10 @@
 							<form class="form-inline">
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
-									<input type="text" name="spu" value="{$smarty.get.spu}" class="form-control" />
+									<input type="text" name="spuSn" value="{{$smarty.get.spuSn}}" class="form-control" />
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
-									<input type="hidden" name="act" value="{$smarty.get.act}" />
-									<input type="hidden" name="mod" value="{$smarty.get.mod}" />
-									<input type="hidden" name="isOnline" value="{if isset($smarty.get.isOnline)}{$smarty.get.isOnline}{else}online{/if}" />
-									<!-- <input type="button" name="updateBtn" value="更新商品信息" class="btn btn-success" /> -->
+									<input type="hidden" name="act" value="{{$smarty.get.act}}" />
+									<input type="hidden" name="mod" value="{{$smarty.get.mod}}" />
 								</div>
 							</form>
 					  </div>
@@ -56,16 +61,16 @@
 									</tr>
 								</thead>
 								<tbody>
-									{foreach $productData.data as $k => $v}
+									{{foreach $productData.data as $k => $v}}
 										<tr>
 											<td>
-												<img src="http://images.wishtool.cn/v{$v.photoVersion}/{$v.main_image}" alt="{$v.spuSn}" class="img-thumbnail">
+												<img src="http://images.wishtool.cn/v{{$v.photoVersion}}/{{$v.main_image}}" alt="" sourceimg = '' class="img-responsive"/>
 											</td>
-											<td>{$v.spuSn}</td>
-											<td>{$v.name}</a></td>
-											<td>{$v.price}</td>
-											<td>{$v.shipping}</td>
-											<td>{$v.tags}</td>
+											<td>{{$v.spuSn}}</td>
+											<td>{{$v.name}}</a></td>
+											<td>{{$v.price}}</td>
+											<td>{{$v.shipping}}</td>
+											<td>{{$v.tags}}</td>
 											<td>
 												<div class="btn-group">
 												  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,14 +84,14 @@
 												</div>
 											</td>
 										</tr>
-									{/foreach}
+									{{/foreach}}
 								</tbody>
 								<tfoot>
 								</tfoot>
 							</table>
 						</div>
 					  </div>
-					  {$productData.pagination}
+					  {{$productData.pagination}}
 					</div>
 				</div>
 
