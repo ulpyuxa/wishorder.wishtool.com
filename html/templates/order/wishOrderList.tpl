@@ -77,7 +77,7 @@
 								<tbody>
 									{{foreach $orderData.data as $key => $val}}
 									<tr>
-										<td><img src="http://thumb.valsun.cn/{{$val.trueSku}}-Gx40.jpg" alt="{{$val.trueSku}}" class="img-thumbnail"></td>
+										<td><img src="http://thumb.valsun.cn/{{$val.trueSku}}-Gx40.jpg" sourceImg='http://images.wishtool.cn/{{$val.trueSku}}-G.jpg' alt="{{$val.trueSku}}" class="img-thumbnail"></td>
 										<td>{{$val.trueSku}}</td>
 										<td>{{$val.product_name}}  [{{$val.order_id}}]</td>
 										<td>{{$val.order_total}}</td>

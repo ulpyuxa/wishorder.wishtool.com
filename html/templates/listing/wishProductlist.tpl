@@ -92,10 +92,10 @@
 													  <div style="position: absolute;">
 														<img src="../public/images/golden_diamond.png"/>
 													  </div>  
-													  <img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" class="img-responsive"/>
+													  <img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" sourceImg='http://images.wishtool.cn/{{$v.spu}}-G-zxhtest.jpg' class="img-responsive"/>
 													</div>  
 												{{else}}
-												<img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" alt="{{$v.spu}}" class="img-responsive">
+												<img src="http://thumb.valsun.cn/{{$v.spu}}-G-zxhtestx40.jpg" sourceImg='http://images.wishtool.cn/{{$v.spu}}-G-zxhtest.jpg' alt="{{$v.spu}}" class="img-responsive">
 												{{/if}}
 											</td>
 											<td>{{$v.spu}}</td>

@@ -64,7 +64,7 @@
 									{{foreach $productData.data as $k => $v}}
 										<tr>
 											<td>
-												<img src="http://images.wishtool.cn/v{{$v.photoVersion}}/{{$v.main_image}}" alt="" sourceimg = '' class="img-responsive"/>
+												<img src="http://images.wishtool.cn/v{{$v.photoVersion}}/{{$v.main_image}}" alt="" sourceimg = 'http://images.wishtool.cn/v{{$v.photoVersion}}/{{$v.main_image}}' class="img-responsive"/>
 											</td>
 											<td>{{$v.spuSn}}</td>
 											<td>{{$v.name}}</a></td>
