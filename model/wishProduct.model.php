@@ -398,7 +398,7 @@ class WishProductModel {
 		$page	= isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
 		$where	= 'where isUpload="N"';
 		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
-			$where = .' spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
+			$where = $where.' spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
 		}
 		$order	= ' order by spuSn DESC';
 		$sql	= 'select count(*) as count from ws_wait_publish '.$where.$order;
