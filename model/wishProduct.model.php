@@ -398,7 +398,7 @@ class WishProductModel {
 		$page	= isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
 		$where	= 'where isUpload="N"';
 		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
-			$where = $where.' spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
+			$where = $where.' and spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
 		}
 		$order	= ' order by spuSn DESC';
 		$sql	= 'select count(*) as count from ws_wait_publish '.$where.$order;
@@ -412,5 +412,91 @@ class WishProductModel {
 		$pagination = new Pagination($page, $count[0]['count'], 30);
 		$pageHtml	= $pagination->parse();
 		return array('data' => $ret, 'pagination' => $pageHtml);
+	}
+
+	/**
+	 * 功能：上传并保存待刊登的料号
+	 */
+	public function saveWaitProduct() {
+		//print_r($_REQUEST);
+		$wishProductApi	= new WishProductApi($_REQUEST['account'], 1);
+		//$wishProductApi->setSandbox();		//设置从沙盒刊登
+		$spuData	= array(
+			'name'			=> $_REQUEST['title'],
+			'description'	=> $_REQUEST['description'],
+			'tags'			=> $_REQUEST['tags'],
+			'sku'			=> $_REQUEST['sku'][0],
+			'color'			=> $_REQUEST['color'][0],
+			'size'			=> $_REQUEST['size'][0],
+			'inventory'		=> $_REQUEST['inventory'][0],
+			'price'			=> $_REQUEST['price'][0],
+			'shipping'		=> $_REQUEST['shipping'][0],
+			'msrp'			=> $_REQUEST['msrp'][0],
+			'shipping_time'	=> $_REQUEST['shipping_time'][0],
+			'main_image'	=> $_REQUEST['main_image'],
+			'parent_sku'	=> count($_REQUEST['sku']) > 1 ? $_REQUEST['spu'] : $_REQUEST['sku'][0],	//单料号的parent_sku使用表格中的子料号
+			'extra_images'	=> $_REQUEST['extra_images'],
+		);
+		$skuData	= array();
+		if(count($_REQUEST['sku']) > 1) {
+			foreach($_REQUEST['sku'] as $skuKey	=> $skuVal) {
+				if($skuKey === 0) {
+					continue;
+				}
+				$skuData[] = array(
+					'parent_sku'	=> $_REQUEST['spu'],
+					'sku'			=> $_REQUEST['sku'][$skuKey],
+					'color'			=> $_REQUEST['color'][$skuKey],
+					'size'			=> $_REQUEST['size'][$skuKey],
+					'inventory'		=> $_REQUEST['inventory'][$skuKey],
+					'price'			=> $_REQUEST['price'][$skuKey],
+					'shipping'		=> $_REQUEST['shipping'][$skuKey],
+					'msrp'			=> $_REQUEST['msrp'][$skuKey],
+					'shipping_time'	=> $_REQUEST['shipping_time'][$skuKey],
+					'main_image'	=> $_REQUEST['skuImg'][$skuKey],
+				);
+			}
+		}
+//		print_r($spuData);
+//		print_r($skuData);exit;
+		$spuStatus = $wishProductApi->createProductSpu($spuData);
+		var_dump($spuStatus);exit;
+		errorLog($_REQUEST['spu'].':'.$spuStatus, 'uploadStatus', 'uploadProduct');
+		if(isset($spuStatus[0]['data']['Product']['id'])) {		//上传成功，已经返回了数据
+			self::updateWaitData($_REQUEST['spu']);
+		}
+		if(!empty($skuData)) {
+			foreach($skuData as $skuKey => $skuVal) {
+				$skuStatus = $wishProductApi->createProductSku($skuVal);
+				errorLog($_REQUEST['spu'].':'.$skuStatus, 'uploadStatus', 'uploadProduct');
+			}
+		}
+		return $spuStatus;
+	}
+
+	public function spuPrice($spuSn) {
+		$spu	= json_encode(array(array('spu'=>$spuSn,"country"=>"Russian Federation","type"=>"1",'platform'=>'wish')));
+		$url	= "http://price.valsun.cn/api.php?mod=distributorPrice&act=productPrice&spu=".$spu."&platform=wish&profit=0.0001&company_name=葛珊";
+		try{
+			$data	= file_get_contents($url);
+		} catch (Exception $e) {
+			return 0;
+		}
+		$data	= json_decode($data, true);
+		$price	= array();
+		foreach($data['data'] as $k => $v) {
+			$price[] = $v['price'];
+		}
+		sort($price);
+		$totalPrice	= round(end($price) - 1, 2);
+		$totalPrice	= round(($totalPrice/(1-(12/100)-0.15))/(6.5) - 1, 2);
+		return $totalPrice;
+	}
+
+	public function updateWaitData($spu) {
+		self::initDB();
+
+		$sql	= 'update ws_wait_publish set isUpload = "Y" where spuSn = "'.$spu.'"';
+		return self::$dbConn->query($sql);
 	}
 }

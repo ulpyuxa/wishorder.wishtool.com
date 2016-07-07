@@ -15,6 +15,10 @@ class WishBase {
 		self::$access_token	= $tokenInfo['access_token'];
 	}
 
+	public function setSandbox() {
+		self::$url	= 'https://sandbox.merchant.wish.com/api/v2';
+	}
+
 	/**
 	 * curl 多线程方法
 	 */

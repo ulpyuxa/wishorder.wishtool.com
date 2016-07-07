@@ -116,7 +116,7 @@ class WishProductAct extends CommonAct{
 		if(!is_file($file)) {
 			return false;
 		}
-		$data	= self::readProductInfo($file);
+		$data	= self::readProductInfo($file, $spu);
 		$this->smarty->assign('data', $data);
 		$this->smarty->display('editUploadProduct.tpl');
 	}
@@ -124,11 +124,12 @@ class WishProductAct extends CommonAct{
 	/**
 	 * 功能: 从log文件中提取上传资料
 	 */
-	private function readProductInfo($file) {
+	private function readProductInfo($file, $spu) {
 		$data		= file_get_contents($file);
 		$dataArr	= explode('{"errCode', $data);
 		$hasTags	= false;
 		$ret		= array();
+		$price		= WishProductModel::spuPrice($spu);		//获取价格
 		foreach($dataArr as $k => $v) {
 			if(strlen($v) < 100) {
 				continue;
@@ -136,8 +137,9 @@ class WishProductAct extends CommonAct{
 			$json		= json_decode('{"errCode'.$v, true);
 			$ret		= explode("\n", $json['data']);
 			foreach($ret as $retKey	=> $retVal) {
-				if(empty($retVal)) { echo 'fff';
+				if(empty($retVal)) {		//删除无用数据
 					unset($ret[$retKey]);
+					continue;
 				}
 				$ret[$retKey] = json_decode($retVal, true);
 				unset($ret[$retKey]['key']);
@@ -147,11 +149,19 @@ class WishProductAct extends CommonAct{
 				if(isset($ret[$retKey]['extra_images'])) {
 					$ret[$retKey]['extra_images'] = self::imageReplace($ret[$retKey]['extra_images']);
 				}
+				if(stripos($ret[$retKey]['name'], '#') > 0) {		//对标题进行重新组装
+					$titleInfo =  explode('#', $ret[$retKey]['name']);
+					array_pop($titleInfo);
+					$ret[$retKey]['name'] = implode('#', $titleInfo);
+				}
+				$ret[$retKey]['name'] = trim($ret[$retKey]['name']).' P28d';
 				if(isset($ret[$retKey]['sku'])) {
 					$skuInfo	= explode('#', $ret[$retKey]['sku']);
 					$spuInfo	= explode('#', $ret[$retKey]['parent_sku']);
-					$ret[$retKey]['sku'] = $skuInfo[0].'#P28d';
+					$ret[$retKey]['sku']		= $skuInfo[0].'#P28d';
 					$ret[$retKey]['parent_sku'] = $spuInfo[0].'#P28d';
+					$ret[$retKey]['price']		= $price - 1;
+					$ret[$retKey]['shipping']	= 1;
 				}
 			}
 			if(!empty($ret)) {
@@ -180,5 +190,12 @@ class WishProductAct extends CommonAct{
 			}
 		}
 		return $images;
+	}
+	/**
+	 * 功能: 保存并刊登待刊登料号
+	 */
+	public function act_saveWaitProduct() {
+		set_time_limit(0);
+		return WishProductModel::saveWaitProduct();
 	}
 }
