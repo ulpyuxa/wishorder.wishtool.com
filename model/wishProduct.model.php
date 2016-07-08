@@ -468,7 +468,7 @@ class WishProductModel {
 		if(!empty($skuData)) {
 			foreach($skuData as $skuKey => $skuVal) {
 				$skuStatus = $wishProductApi->createProductSku($skuVal);
-				errorLog($_REQUEST['spu'].':'.$skuStatus, 'uploadStatus', 'uploadProduct');
+				errorLog($_REQUEST['spu'].':'.json_encode($skuStatus), 'uploadStatus', 'uploadProduct');
 			}
 		}
 		return $spuStatus;
@@ -488,9 +488,9 @@ class WishProductModel {
 			$price[] = $v['price'];
 		}
 		sort($price);
-		$totalPrice	= round(end($price) - 1, 2);
-		$totalPrice	= round(($totalPrice/(1-(12/100)-0.15))/(6.5) - 1, 2);
-		return $totalPrice;
+		$totalPrice	= round(end($price), 2);
+		$totalPrice	= round(($totalPrice/(1-(15/100)-0.15))/(6.5), 2);
+		return $totalPrice - 1;
 	}
 
 	public function updateWaitData($spu) {

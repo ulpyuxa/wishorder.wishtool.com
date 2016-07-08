@@ -11,7 +11,5 @@ include substr(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), 0, stripos(__DIR_
 Core :: getInstance();
 global $dbConn;
 
-$productAct	= new WishProductAct;
-$_REQUEST['productUrl'] = 'https://www.wish.com/c/566bc75e9ad457269c795bd3';
-$dat = $productAct->act_getWishTags();
-print_r($dat);
+$price	= WishProductModel::spuPrice('YSC000026');
+echo $price;

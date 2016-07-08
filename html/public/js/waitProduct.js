@@ -9,6 +9,9 @@ $(document).on("click", 'input[name="pushBtn"]', function(){
 		dataType: "json",
 		success : function (ret) {
 			$("#loading-indicator").hide();
+			if($.isEmptyObject(ret['data'][0]['data']['Product']['id'])) {		//为false表示
+				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功!');
+			}
 		}
 	});
 });
@@ -29,6 +32,7 @@ function extraImages() {
 	$("input[name='extra_images']").val(extImg.join('|'));
 }
 
-function delImages() {
-	
+function delSku(obj) {
+	var rows	= $(obj).parent('td').parent('tr').index();
+	$('table>tbody>tr:eq('+rows+')').remove();
 }

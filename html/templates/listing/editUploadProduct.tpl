@@ -8,6 +8,8 @@
 		<title>待上传商品编辑</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/alertifyjs/css/alertify.min.css" rel="stylesheet" />
+		<link href="../public/alertifyjs/css/themes/bootstrap.min.css" rel="stylesheet" />
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -106,7 +108,7 @@
 										<td><input type="text" name="shipping_time[]" class="form-control" value="{{$skuVal.shipping_time}}" required/></td>
 										<td><input type="checkbox" /></td>
 										<td><input type="checkbox" /></td>
-										<td>删除</td>
+										<td><a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="delSku(this)">删除</a></td>
 									</tr>
 								{{/foreach}}
 							</tbody>
@@ -122,6 +124,7 @@
 		<img src="../public/images/loading.gif" id="loading-indicator" style="display:none" />
 		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../public/alertifyjs/alertify.min.js"></script>
 		<script src="../public/js/product.js"></script>
 		<script src="../public/js/waitProduct.js"></script>
 	</body>

@@ -129,7 +129,7 @@ class WishProductAct extends CommonAct{
 		$dataArr	= explode('{"errCode', $data);
 		$hasTags	= false;
 		$ret		= array();
-		$price		= WishProductModel::spuPrice($spu);		//获取价格
+		$price		= WishProductModel::spuPrice($spu);		//获取价格已经减去$1的运费
 		foreach($dataArr as $k => $v) {
 			if(strlen($v) < 100) {
 				continue;
@@ -160,7 +160,7 @@ class WishProductAct extends CommonAct{
 					$spuInfo	= explode('#', $ret[$retKey]['parent_sku']);
 					$ret[$retKey]['sku']		= $skuInfo[0].'#P28d';
 					$ret[$retKey]['parent_sku'] = $spuInfo[0].'#P28d';
-					$ret[$retKey]['price']		= $price - 1;
+					$ret[$retKey]['price']		= $price;
 					$ret[$retKey]['shipping']	= 1;
 				}
 			}
