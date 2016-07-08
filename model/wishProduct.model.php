@@ -460,9 +460,9 @@ class WishProductModel {
 //		print_r($spuData);
 //		print_r($skuData);exit;
 		$spuStatus = $wishProductApi->createProductSpu($spuData);
-		var_dump($spuStatus);exit;
-		errorLog($_REQUEST['spu'].':'.$spuStatus, 'uploadStatus', 'uploadProduct');
-		if(isset($spuStatus[0]['data']['Product']['id'])) {		//上传成功，已经返回了数据
+		//var_dump($spuStatus);exit;
+		errorLog($_REQUEST['spu'].':'.json_encode($spuStatus), 'uploadStatus', 'uploadProduct');
+		if(!empty($spuStatus)) {		//上传成功，已经返回了数据
 			self::updateWaitData($_REQUEST['spu']);
 		}
 		if(!empty($skuData)) {
@@ -495,7 +495,11 @@ class WishProductModel {
 
 	public function updateWaitData($spu) {
 		self::initDB();
-
+		
+		if(stripos($spu, '#') > 0) {
+			$spuInfo	= explode('#', $spu);
+			$spu		= $spuInfo[0];
+		}
 		$sql	= 'update ws_wait_publish set isUpload = "Y" where spuSn = "'.$spu.'"';
 		return self::$dbConn->query($sql);
 	}
