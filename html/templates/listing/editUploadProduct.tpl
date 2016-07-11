@@ -107,7 +107,7 @@
 										<td><input type="text" name="price[]" class="form-control" value="{{$skuVal.price}}" required/></td>
 										<td><input type="text" name="inventory[]" class="form-control" value="{{$skuVal.inventory}}" required/></td>
 										<td><input type="text" name="shipping[]" class="form-control" value="{{$skuVal.shipping}}" required/></td>
-										<td><input type="text" name="shipping_time[]" class="form-control" value="{{$skuVal.shipping_time}}" required/></td>
+										<td><input type="text" name="shipping_time[]" class="form-control" value="7-28" required/></td>
 										<td><input type="checkbox" /></td>
 										<td><input type="checkbox" /></td>
 										<td><a href="javascript:void(0)" class="btn btn-danger btn-xs" onclick="delSku(this)">删除</a></td>
