@@ -36,3 +36,22 @@ function delSku(obj) {
 	var rows	= $(obj).parent('td').parent('tr').index();
 	$('table>tbody>tr:eq('+rows+')').remove();
 }
+
+function selectImages(obj) {
+	var idx	= $(obj).parent("td").parent("tr").index();
+	$("#snapIdx").val(idx);	//记录临时图片的行编号
+	$("#imgSelect").modal();
+}
+
+$(document).on('dblclick', '#snapImg', function(){
+	var imgUrl	= $(this).attr('src');
+	var idx		= $("#snapIdx").val();
+	$("table>tbody>tr:eq("+idx+") td:eq(2) img").attr('src', imgUrl);
+	$("table>tbody>tr:eq("+idx+") td:eq(2) input").val(imgUrl);
+	$("#imgSelect").modal('hide');
+});
+/*
+function setImages(ret) {
+	$("#loading-indicator").hide();
+	alert(ret.errMsg);
+}*/

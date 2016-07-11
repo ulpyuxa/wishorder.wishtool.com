@@ -1,7 +1,8 @@
 <?php
 class WishProductAct extends CommonAct{
-	static $errCode	=	0;
-	static $errMsg	=	"";
+	static $errCode		= 0;
+	static $errMsg		= "";
+	static $imgVersion	= 0;
 
 	public function __construct() {
 		parent::__construct();
@@ -117,7 +118,11 @@ class WishProductAct extends CommonAct{
 			return false;
 		}
 		$data	= self::readProductInfo($file, $spu);
+		$images	= self::act_getImages($spu, self::$imgVersion);		//获取料号的所有图片地址
 		$this->smarty->assign('data', $data);
+		$this->smarty->assign('imgVersion', self::$imgVersion);
+		$this->smarty->assign('spu', $spu);
+		$this->smarty->assign('images', $images);
 		$this->smarty->display('editUploadProduct.tpl');
 	}
 
@@ -144,10 +149,10 @@ class WishProductAct extends CommonAct{
 				$ret[$retKey] = json_decode($retVal, true);
 				unset($ret[$retKey]['key']);
 				if(isset($ret[$retKey]['main_image'])) {
-					$ret[$retKey]['main_image'] = self::imageReplace($ret[$retKey]['main_image']);
+					$ret[$retKey]['main_image'] = self::imageReplace($ret[$retKey]['main_image'], 'img.pics.valsun.cn');
 				}
 				if(isset($ret[$retKey]['extra_images'])) {
-					$ret[$retKey]['extra_images'] = self::imageReplace($ret[$retKey]['extra_images']);
+					$ret[$retKey]['extra_images'] = self::imageReplace($ret[$retKey]['extra_images'], 'img.pics.valsun.cn');
 				}
 				if(stripos($ret[$retKey]['name'], '#') > 0) {		//对标题进行重新组装
 					$titleInfo =  explode('#', $ret[$retKey]['name']);
@@ -175,8 +180,9 @@ class WishProductAct extends CommonAct{
 	/**
 	 * 功能：提取图片数据
 	 */
-	private function imageReplace($images) {
+	public function imageReplace($images, $url='') {
 		$images	= explode('|', $images);
+		$url	= empty($url) ? 'images.wishtool.cn' : $url;
 		foreach($images as $imagesKey => $imagesVal) {
 			preg_match('/\/v\d+/i', $imagesVal, $arr);	//获取版本号，以第一个位置的url为准;
 			$imgVer		= intval(substr($arr[0], 2, strlen($arr[0])));	//url路径中的版本号
@@ -184,9 +190,11 @@ class WishProductAct extends CommonAct{
 			$imgName	= explode('-', basename($imagesVal));
 			array_pop($imgName);
 			if(strlen($imgVer) > 0) {
-				$images[$imagesKey]	= 'http://images.wishtool.cn/v'.$imgVer.'/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+				self::$imgVersion	= $imgVer;
+				$images[$imagesKey]	= 'http://'.$url.'/v'.$imgVer.'/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
 			} else {
-				$images[$imagesKey]	= 'http://images.wishtool.cn/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
+				self::$imgVersion	= 1;
+				$images[$imagesKey]	= 'http://'.$url.'/'.implode('-', $imgName).'-zxhTest.'.end($imgInfo);
 			}
 		}
 		return $images;
@@ -197,5 +205,23 @@ class WishProductAct extends CommonAct{
 	public function act_saveWaitProduct() {
 		set_time_limit(0);
 		return WishProductModel::saveWaitProduct();
+	}
+
+	/**
+	 * 功能获取图片地址
+	 */
+	public function act_getImages($spuSn, $version) {
+		$url	= "http://pics.valsun.cn/json.php?mod=apiPicture&act=getWishPicByAccountSpu1&jsonp=1&type=2&spuSn=".$spuSn."&account=360beauty&version=".$version."&companyId=1553";
+		try{
+			$ret	= file_get_contents($url);
+		} catch(Exception $e) {
+			$ret	= file_get_contents($url);
+		}
+		$ret	= json_decode($ret, true);
+		foreach($ret['data']['360beauty'][$version] as $k => $v) {
+			$url	= self::imageReplace($v, 'img.pics.valsun.cn');
+			$ret['data']['360beauty'][$version][$k] = end($url);
+		}
+		return $ret['data']['360beauty'][$version];
 	}
 }

@@ -34,6 +34,8 @@
 						<label for="spu" class="col-sm-2 control-label">主料号</label>
 						<div class="col-sm-8">
 						  <input type="text" class="form-control" name="spu" id="spu" placeholder="主料号" value='{{$data[0].parent_sku}}' required/>
+						  <input type="hidden" id="trueSpu" value="{{$spu}}" />
+						  <input type="hidden" id="imgVersion" value="{{$imgVersion}}" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -99,7 +101,7 @@
 									<tr>
 										<td><input type="text" name="sku[]" class="form-control" value="{{$skuVal.sku}}" required/></td>
 										<td><input type="text" name="color[]" class="form-control" value="{{$skuVal.color}}" required/></td>
-										<td><img src='{{$skuVal.main_image[0]}}' class="img-thumbnail"/><input type="hidden" name="skuImg[]" value="{{$skuVal.main_image[0]}}" /></td>
+										<td><img src='{{$skuVal.main_image[0]}}' class="img-thumbnail" onclick="selectImages(this)"/><input type="hidden" name="skuImg[]" value="{{$skuVal.main_image[0]}}" /></td>
 										<td><input type="text" name="size[]" class="form-control" value="{{$skuVal.size}}" required/></td>
 										<td><input type="text" name="msrp[]" class="form-control" value="{{$skuVal.msrp}}" required/></td>
 										<td><input type="text" name="price[]" class="form-control" value="{{$skuVal.price}}" required/></td>
@@ -118,6 +120,31 @@
 						<input type='button' value="刊登" name="pushBtn" class="btn btn-success"/>
 					</div>
 				</form>
+				<div class="modal fade bs-example-modal-lg" id="imgSelect">
+				  <div class="modal-dialog modal-lg">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">图片选择</h4>
+					  </div>
+					  <div class="modal-body">
+						<div class="row">
+							{{foreach $images as $imgKey => $imgVal}}
+								<div class="col-sm-6 col-md-2">
+									<div class="thumbnail">
+									  <img src="{{$imgVal}}" alt="{{$imgKey}}" height="150px" id="snapImg">
+									  <div class="caption">
+										<h6>{{$imgKey}}</h6>
+									  </div>
+									</div>
+								</div>
+							{{/foreach}}
+						</div>
+						<input type="hidden" id="snapIdx" value="" />
+					  </div>
+					</div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
 			  </div>
 			</div>
 		</div>
