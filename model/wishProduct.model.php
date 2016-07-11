@@ -424,6 +424,7 @@ class WishProductModel {
 		//$wishProductApi->setSandbox();		//设置从沙盒刊登
 		$productAct		= new WishProductAct;
 		$extraImage		= $productAct->imageReplace($_REQUEST['extra_images']);
+		$mainImage		= $productAct->imageReplace($_REQUEST['main_image']);
 		$spuData	= array(
 			'name'			=> $_REQUEST['title'],
 			'description'	=> $_REQUEST['description'],
@@ -436,7 +437,7 @@ class WishProductModel {
 			'shipping'		=> $_REQUEST['shipping'][0],
 			'msrp'			=> $_REQUEST['msrp'][0],
 			'shipping_time'	=> $_REQUEST['shipping_time'][0],
-			'main_image'	=> $productAct->imageReplace($_REQUEST['main_image']),
+			'main_image'	=> end($mainImage),
 			'parent_sku'	=> count($_REQUEST['sku']) > 1 ? $_REQUEST['spu'] : $_REQUEST['sku'][0],	//单料号的parent_sku使用表格中的子料号
 			'extra_images'	=> implode('|', $extraImage),
 		);
@@ -446,6 +447,7 @@ class WishProductModel {
 				if($skuKey === 0) {
 					continue;
 				}
+				$mainImage = $productAct->imageReplace($_REQUEST['skuImg'][$skuKey]);
 				$skuData[] = array(
 					'parent_sku'	=> $_REQUEST['spu'],
 					'sku'			=> $_REQUEST['sku'][$skuKey],
@@ -456,7 +458,7 @@ class WishProductModel {
 					'shipping'		=> $_REQUEST['shipping'][$skuKey],
 					'msrp'			=> $_REQUEST['msrp'][$skuKey],
 					'shipping_time'	=> $_REQUEST['shipping_time'][$skuKey],
-					'main_image'	=> $productAct->imageReplace($_REQUEST['skuImg'][$skuKey]),
+					'main_image'	=> end($mainImage),
 				);
 			}
 		}

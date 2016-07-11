@@ -50,8 +50,3 @@ $(document).on('dblclick', '#snapImg', function(){
 	$("table>tbody>tr:eq("+idx+") td:eq(2) input").val(imgUrl);
 	$("#imgSelect").modal('hide');
 });
-/*
-function setImages(ret) {
-	$("#loading-indicator").hide();
-	alert(ret.errMsg);
-}*/
