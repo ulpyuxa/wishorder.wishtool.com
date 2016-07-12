@@ -88,3 +88,16 @@ function delWaitProduct(spuSn) {
 	);
 
 }
+function setPrice(){
+	var price	= $('table>tbody>tr:eq(0)>td:eq(5) input').val();
+	alertify.prompt("批量设置价格", "请输入价格", price,
+		function(evt, value ){
+			var rows = $("table>tbody>tr").length;
+			for(i = 0; i < rows; i++) {
+				$("table>tbody>tr:eq("+i+") td:eq(5) input").val(value);
+			}
+		},
+		function(){
+		}
+	);
+}
