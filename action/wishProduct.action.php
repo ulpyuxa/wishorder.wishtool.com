@@ -224,4 +224,11 @@ class WishProductAct extends CommonAct{
 		}
 		return $ret['data']['360beauty'][$version];
 	}
+
+	/**
+	 * 功能：从数据库中删除待上传料号的列表
+	 */
+	public function act_delWaitProduct(){
+		return WishProductModel::delWaitProduct();
+	}
 }

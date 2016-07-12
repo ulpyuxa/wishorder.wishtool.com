@@ -8,6 +8,7 @@
 		<title>待刊登产品</title>
 		<!-- Bootstrap -->
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="../public/alertifyjs/css/alertify.min.css" rel="stylesheet" />
 		<style>
 			* { margin:0; padding:0; }
 			img { vertical-align:bottom; border:none; }
@@ -79,7 +80,7 @@
 												  <ul class="dropdown-menu">
 													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}">修改商品详情</a></li>
 													<li role="separator" class="divider"></li>
-													<li><a href="#">删除</a></li>
+													<li><a href="javascript:void(0)" onclick="delWaitProduct('{{$v.spuSn}}')">删除</a></li>
 												  </ul>
 												</div>
 											</td>
@@ -129,6 +130,8 @@
 <!-- Modal -->
 		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../public/alertifyjs/alertify.min.js"></script>
 		<script src="../public/js/product.js"></script>
+		<script src="../public/js/waitProduct.js"></script>
 	</body>
 </html>

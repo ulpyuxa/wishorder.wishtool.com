@@ -396,7 +396,7 @@ class WishProductModel {
 		self::initDB();
 
 		$page	= isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
-		$where	= 'where isUpload="N"';
+		$where	= 'where isUpload="N" and isDelete="No"';
 		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
 			$where = $where.' and spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
 		}
@@ -505,7 +505,15 @@ class WishProductModel {
 			$spuInfo	= explode('#', $spu);
 			$spu		= $spuInfo[0];
 		}
-		$sql	= 'update ws_wait_publish set isUpload = "Y" where spuSn = "'.$spu.'"';
+		$sql	= 'update ws_wait_publish set isUpload = "Y" where isDelete="No" and spuSn = "'.$spu.'"';
+		return self::$dbConn->query($sql);
+	}
+
+	public function delWaitProduct() {
+		self::initDB();
+		
+		$spu	= $_REQUEST['spuSn'];
+		$sql	= 'update ws_wait_publish set isDelete="Yes" where spuSn="'.$spu.'"';
 		return self::$dbConn->query($sql);
 	}
 }

@@ -10,7 +10,14 @@ $(document).on("click", 'input[name="pushBtn"]', function(){
 		success : function (ret) {
 			$("#loading-indicator").hide();
 			if(typeof(ret['data'][0]['data']['Product']['id']) != undefined) {		//为false表示
-				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功!');
+				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功! 系统将跳转到待刊登列表页面', 
+					function(){
+						window.location.href="/index.php?mod=wishProduct&act=uploadProductList";
+					}
+				);
+				
+			} else {
+				alertify.alert('刊登状态', $("#spu").val() + ':商品上传失败, 请重试!');
 			}
 		}
 	});
@@ -53,3 +60,31 @@ $(document).on('dblclick', '#snapImg', function(){
 	}
 	$("#imgSelect").modal('hide');
 });
+
+function delWaitProduct(spuSn) {
+	alertify.confirm('删除待上传料号:'+spuSn, "确定删除此料号，并且不再上传此料号吗？",
+		function(){
+			$("#loading-indicator").show();
+			$.ajax({
+				type	: "POST",
+				async	: true,
+				url		: './json.php?mod=wishProduct&act=delWaitProduct&jsonp=1',
+				data	: {'spuSn':spuSn},
+				dataType: "json",
+				success : function (ret) {
+					$("#loading-indicator").hide();
+					if(ret['data']) {		//为false表示
+						alertify.alert('成功', '料号:'+spuSn+', 删除成功');
+						location.reload();
+					} else {
+						alertify.alert('失败', '料号:'+spuSn+', 删除失败');
+					}
+				}
+			});
+		}, 
+		function(){
+			//alertify.alert('料号:'+spuSn+', 删除失败');
+		}
+	);
+
+}
