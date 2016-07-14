@@ -12,7 +12,7 @@ class WishOrderAct extends CommonAct{
 	 * 获取线上订单
 	 */
 	public function act_wishOrderSync($start = 0, $count = 50) {
-		$account		= $argv[1];
+		$account		= $_REQUEST['account'];
 		$wishOrderApi	= new WishOrderApi($account, 1);
 		$ret			= $wishOrderApi->getAllorder($start, $count);
 		$insert			= WishOrderModel::addOrder($ret);

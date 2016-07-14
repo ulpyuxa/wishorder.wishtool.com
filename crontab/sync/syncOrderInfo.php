@@ -11,5 +11,6 @@ include substr(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), 0, stripos(__DIR_
 Core :: getInstance();
 global $dbConn;
 
+$_REQUEST['account'] = $argv[1];
 $data = WishOrderAct :: act_wishOrderSync();
 var_dump($data);
