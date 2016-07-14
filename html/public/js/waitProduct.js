@@ -1,6 +1,7 @@
 $(document).on("click", 'input[name="pushBtn"]', function(){
 	extraImages();	//组装描述图
 	$("#loading-indicator").show();
+	var account = $("input[name='account']").val();
 	$.ajax({
 		type	: "POST",
 		async	: true,
@@ -12,7 +13,7 @@ $(document).on("click", 'input[name="pushBtn"]', function(){
 			if(typeof(ret['data'][0]['data']['Product']['id']) != undefined) {		//为false表示
 				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功! 系统将跳转到待刊登列表页面', 
 					function(){
-						window.location.href="/index.php?mod=wishProduct&act=uploadProductList";
+						window.location.href="/index.php?mod=wishProduct&act=uploadProductList&account="+account;
 					}
 				);
 				
