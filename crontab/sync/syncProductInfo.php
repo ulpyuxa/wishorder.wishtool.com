@@ -13,7 +13,7 @@ global $dbConn;
 
 $since				= '';
 $_REQUEST['page']	= 1;
-$_REQUEST['account']= $argv[1];
+$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'ulpyuxa';
 $ret	= WishProductModel::productList();
 if(!empty($ret)) {
 	$since = date('Y-m-d', strtotime('-2 days'));

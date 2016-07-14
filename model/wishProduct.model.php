@@ -92,6 +92,7 @@ class WishProductModel {
 				'title'			=> $v['Product']['name'],
 				'isOnline'		=> $isOnline,
 				'isPromoted'	=> $v['Product']['is_promoted'],
+				'price'			=> $v['Product']['variants'][0]['Variant']['price']
 			);
 			foreach($v['Product']['variants'] as $variantKey => $variantVal) {
 				$maxData[$v['Product']['id']]['variantsSku']	= array(
@@ -190,10 +191,12 @@ class WishProductModel {
 		self::$dbConn->autocommit(FALSE);
 		foreach($data as $k => $v) {
 			$sql = 'update ws_product set numSold="'.$v['numSold'].'",
-						saveSold = "'.$v['saveSold'].'",
-						reviewStatus = "'.$v['reviewStatus'].'",
-						isPromoted = "'.$v['isPromoted'].'",
-						isOnline	= "'.$v['isOnline'].'"
+						saveSold		= "'.$v['saveSold'].'",
+						reviewStatus	= "'.$v['reviewStatus'].'",
+						isPromoted		= "'.$v['isPromoted'].'",
+						isOnline		= "'.$v['isOnline'].'",
+						title			= "'.$v['title'].'",
+						price			= "'.$v['price'].'"
 						where productId = "'.$v['productId'].'"';
 			$query = self::$dbConn->query($sql);
 		}

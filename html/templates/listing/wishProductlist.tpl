@@ -83,6 +83,7 @@
 									<tr class="success">
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
+										<th width="5%">价格</th>
 										<th width="53%">商品标题</th>
 										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&isOnline=online&order={{$productData.order}}">收藏数量</a></th>
 										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&isOnline=online&order={{$productData.order}}">订单数量</a></th>
@@ -106,6 +107,7 @@
 												{{/if}}
 											</td>
 											<td>{{$v.spu}}</td>
+											<td>${{$v.price}}</td>
 											<td><a href="https://www.wish.com/c/{{$v.productId}}" target="_blank">{{$v.title}}</a></td>
 											<td>{{$v.saveSold}}</td>
 											<td>{{$v.numSold}}</td>
