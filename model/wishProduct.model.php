@@ -21,7 +21,7 @@ class WishProductModel {
 	 */
 	public function getWishProduct($start = 0, $count = 50, $since="") {
 		echo $start, ' ---- ', $count, PHP_EOL;
-		$account		= $argv[1];		//获取进程的参数
+		$account		= $_REQUEST['account'];		//获取进程的参数
 		$wishProduct	= new WishProductApi($account, 1);
 		$products		= $wishProduct->getAllProduct($start, $count, $since);
 		if(!empty($products[0]['data'])) {	//开始插入数据到数据库
