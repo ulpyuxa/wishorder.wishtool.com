@@ -27,7 +27,7 @@
 					<div class="form-group">
 						<label for="account" class="col-sm-2 control-label">店铺账号</label>
 						<div class="col-sm-8">
-						  <input type="text" class="form-control" name="account" id="account" value="geshan0728" placeholder="店铺账号" required />
+						  <input type="text" class="form-control" name="account" id="account" value="{{$smarty.get.account}}" placeholder="店铺账号" required />
 						</div>
 					</div>
 					<div class="form-group">

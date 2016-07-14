@@ -10,7 +10,7 @@ class WishBase {
 	 * 功能: 初使化
 	 */
 	public function __construct($account, $companyId) {
-		$tokenInfo			= file_get_contents(WEB_PATH.'conf/key/1/geshan0728_wishtool.cn.key');
+		$tokenInfo			= file_get_contents(WEB_PATH.'conf/key/1/'.$account.'_wishtool.cn.key');
 		$tokenInfo			= json_decode($tokenInfo, true);
 		self::$access_token	= $tokenInfo['access_token'];
 	}

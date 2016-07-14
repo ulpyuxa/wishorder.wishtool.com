@@ -35,6 +35,10 @@
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
 									<input type="text" name="spuSn" value="{{$smarty.get.spuSn}}" class="form-control" />
+									<select class="form-control" name="account" id="account" required>
+										<option value="geshan0728" {{if $smarty.get.account == 'geshan0728'}}selected{{/if}}>geshan0728</option>
+										<option value="ulpyuxa" {{if $smarty.get.account == 'ulpyuxa'}}selected{{/if}}>ulpyuxa</option>
+									</select>
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 									<input type="hidden" name="act" value="{{$smarty.get.act}}" />
 									<input type="hidden" name="mod" value="{{$smarty.get.mod}}" />
@@ -78,7 +82,7 @@
 													操作 <span class="caret"></span>
 												  </button>
 												  <ul class="dropdown-menu">
-													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}">修改商品详情</a></li>
+													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}&account={{$smarty.get.account}}">修改商品详情</a></li>
 													<li role="separator" class="divider"></li>
 													<li><a href="javascript:void(0)" onclick="delWaitProduct('{{$v.spuSn}}')">删除</a></li>
 												  </ul>

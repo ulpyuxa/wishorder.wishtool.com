@@ -41,6 +41,11 @@ function extraImages() {
 
 function delSku(obj) {
 	var rows	= $(obj).parent('td').parent('tr').index();
+	var rowCount= $(obj).parent('td').parent('tr').parent("tbody").children('tr').length;
+	if(rowCount === 1) {
+		alertify.error('最后一个SKU不能删除！');
+		return ;
+	}
 	$('table>tbody>tr:eq('+rows+')').remove();
 }
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * 功能: 处理商品信息的model
- * max errCode: 1506
+ * max errCode: 1507
  */
 class WishProductModel {
 	public static $dbConn;
@@ -143,7 +143,6 @@ class WishProductModel {
 		//更新分表
 		$num		= substr(md5($trueSpu), 0, 1);
 		$updateData	= array();
-		print_r($maxData);exit;
 		foreach($maxData as $maxKey => $maxVal) {
 			$sql	= 'select * from ws_product_'.$num.' where product="'.$maxVal['productId'].'" and variantsSku="'.$maxVal['variantsSku'].'"';
 			$query	= self::$dbConn->query($sql);
@@ -396,7 +395,8 @@ class WishProductModel {
 		self::initDB();
 
 		$page	= isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
-		$where	= 'where isUpload="N" and isDelete="No"';
+		$account= isset($_REQUEST['account']) ? $_REQUEST['account'] : 'geshan0728';
+		$where	= 'where '.$account.'_upload="N" and isDelete="No"';
 		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
 			$where = $where.' and spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
 		}
@@ -420,11 +420,17 @@ class WishProductModel {
 	public function saveWaitProduct() {
 		set_time_limit(0);
 		//print_r($_REQUEST);
+		if(empty($_REQUEST['account'])) {
+			self::$errCode	= '1507';
+			self::$errMsg	= '请填写需要刊登的账号...';
+			return false;
+		}
 		$wishProductApi	= new WishProductApi($_REQUEST['account'], 1);
 		//$wishProductApi->setSandbox();		//设置从沙盒刊登
 		$productAct		= new WishProductAct;
 		$extraImage		= $productAct->imageReplace($_REQUEST['extra_images']);
-		$mainImage		= $productAct->imageReplace($_REQUEST['main_image']);
+		$spuImage		= isset($_REQUEST['skuImg']) ? current($_REQUEST['skuImg']) : $_REQUEST['main_image'];
+		$mainImage		= $productAct->imageReplace($spuImage);
 		$spuData	= array(
 			'name'			=> $_REQUEST['title'],
 			'description'	=> $_REQUEST['description'],
@@ -465,10 +471,9 @@ class WishProductModel {
 //		print_r($spuData);
 //		print_r($skuData);exit;
 		$spuStatus = $wishProductApi->createProductSpu($spuData);
-		//var_dump($spuStatus);exit;
 		errorLog($_REQUEST['spu'].':'.json_encode($spuStatus), 'uploadStatus', 'uploadProduct');
 		if(!empty($spuStatus)) {		//上传成功，已经返回了数据
-			self::updateWaitData($_REQUEST['spu']);
+			self::updateWaitData($_REQUEST['spu'], $_REQUEST['account']);
 		}
 		if(!empty($skuData)) {
 			foreach($skuData as $skuKey => $skuVal) {
@@ -498,14 +503,14 @@ class WishProductModel {
 		return $totalPrice - 1;
 	}
 
-	public function updateWaitData($spu) {
+	public function updateWaitData($spu, $account) {
 		self::initDB();
 		
 		if(stripos($spu, '#') > 0) {
 			$spuInfo	= explode('#', $spu);
 			$spu		= $spuInfo[0];
 		}
-		$sql	= 'update ws_wait_publish set isUpload = "Y" where isDelete="No" and spuSn = "'.$spu.'"';
+		$sql	= 'update ws_wait_publish set '.$account.'_upload = "Y" where isDelete="No" and spuSn = "'.$spu.'"';
 		return self::$dbConn->query($sql);
 	}
 
