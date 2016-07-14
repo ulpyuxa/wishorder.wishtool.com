@@ -21,7 +21,7 @@ class WishProductModel {
 	 */
 	public function getWishProduct($start = 0, $count = 50, $since="") {
 		echo $start, ' ---- ', $count, PHP_EOL;
-		$account		= 'geshan0728';
+		$account		= $argv[1];		//获取进程的参数
 		$wishProduct	= new WishProductApi($account, 1);
 		$products		= $wishProduct->getAllProduct($start, $count, $since);
 		if(!empty($products[0]['data'])) {	//开始插入数据到数据库
@@ -207,8 +207,8 @@ class WishProductModel {
 		self::initDB();
 
 		$page = isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
-
-		$where = array();
+		$account	= isset($_REQUEST['account']) ? ((int) $_REQUEST['account']) : 'geshan0728';
+		$where = array('account = "'.$account.'"');
 		if(isset($_REQUEST['spu']) && !empty($_REQUEST['spu'])) {
 			$where[] = ' spu like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'%"';
 		}
@@ -255,8 +255,9 @@ class WishProductModel {
 	 */
 	public function statisticProduct() {
 		self::initDB();
-
-		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product WHERE isOnline="online" GROUP BY reviewStatus';
+		
+		$account= isset($_REQUEST['account']) ? $_REQUEST['account'] : 'geshan0728';
+		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product WHERE isOnline="online" and account="'.$account.'" GROUP BY reviewStatus';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 		$data	= array();
@@ -273,12 +274,12 @@ class WishProductModel {
 			}
 		}
 		//统计订单数，收藏数
-		$sql	= 'SELECT SUM(`numSold`) AS countSold, SUM(`saveSold`) AS countSave FROM ws_product';
+		$sql	= 'SELECT SUM(`numSold`) AS countSold, SUM(`saveSold`) AS countSave FROM ws_product where account="'.$account.'" ';
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
 
 		//统计上下架数量
-		$sql		= 'SELECT COUNT(`isOnline`) AS isOfflineCount FROM ws_product where isOnline="offline"';
+		$sql		= 'SELECT COUNT(`isOnline`) AS isOfflineCount FROM ws_product where isOnline="offline" and account="'.$account.'" ';
 		$query		= self::$dbConn->query($sql);
 		$offlineRet	= self::$dbConn->fetch_array_all($query);
 		$data['onlineCount']	= $data['count'];
@@ -296,7 +297,7 @@ class WishProductModel {
 	public function getInfoByProductId($productId) {
 		self::initDB();
 
-		$sql	= 'SELECT spu, productId FROM ws_product WHERE productId = "'.$productId.'"';
+		$sql	= 'SELECT account, spu, productId FROM ws_product WHERE productId = "'.$productId.'"';
 		$query	= self::$dbConn->query($sql);
 		return self::$dbConn->fetch_array_all($query);
 	}
@@ -315,7 +316,7 @@ class WishProductModel {
 		}
 		$action			= isset($_REQUEST['action']) ? $_REQUEST['action'] : $action;
 		$productInfo	= self::getInfoByProductId($productId);
-		$wishProduct = new WishProductApi('geshan0728', 1);
+		$wishProduct = new WishProductApi($productInfo[0]['account'], 1);
 		if(strtolower($action) === 'offline') {
 			$operate = $wishProduct->disableProduct($productId, $productInfo[0]['spu']);
 		} elseif(strtolower($action) === 'online') {
