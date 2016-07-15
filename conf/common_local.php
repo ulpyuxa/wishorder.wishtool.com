@@ -37,6 +37,10 @@ return  array(
 	'TRANSLATE_TOKEN' => array(
 		'0' => 'BKqC2hIKr8foem2E1qiRvB5ttBQJK8objH8kZE/WJVs=',
 	),
+	'ACCOUNTABBR'	=> array(
+		'geshan0728'	=> 'P28d',
+		'ulpyuxa'		=> 'S5e9',
+	),
 );
 
 ?>

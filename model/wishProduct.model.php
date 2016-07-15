@@ -211,7 +211,7 @@ class WishProductModel {
 
 		$page = isset($_REQUEST['page']) ? ((int) $_REQUEST['page']) : 1;
 		$account	= isset($_REQUEST['account']) ? $_REQUEST['account'] : 'geshan0728';
-		$where = array('account = "'.$account.'"');
+		$where = array('account = "'.$account.'" and isDelete="N"');
 		if(isset($_REQUEST['spu']) && !empty($_REQUEST['spu'])) {
 			$where[] = ' spu like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spu']).'%"';
 		}
