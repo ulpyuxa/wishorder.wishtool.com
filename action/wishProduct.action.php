@@ -1,6 +1,6 @@
 <?php
 class WishProductAct extends CommonAct{
-	static $errCode		= 0;
+	static $errCode		= 1601;
 	static $errMsg		= "";
 	static $imgVersion	= 0;
 
@@ -115,6 +115,8 @@ class WishProductAct extends CommonAct{
 		$spu	= $_REQUEST['spu'];
 		$file	= WEB_PATH.'log/productInfo/'.$spu.'.log';
 		if(!is_file($file)) {
+			self::$errCode	= 1601;
+			self::$errMsg	= '未找到'.$spu.'的上传资料！';
 			return false;
 		}
 		$data	= self::readProductInfo($file, $spu);
