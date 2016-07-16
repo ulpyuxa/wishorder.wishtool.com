@@ -45,13 +45,6 @@
 					  <div class="panel-body">
 							<form class="form-inline">
 								<div class="form-group">
-									<label for="account" class="control-label">上传账号: </label>
-									<select class="form-control" name="account" id="account" required>
-										<option value="geshan0728" {{if $smarty.get.account == 'geshan0728'}}selected{{/if}}>geshan0728</option>
-										<option value="ulpyuxa" {{if $smarty.get.account == 'ulpyuxa'}}selected{{/if}}>ulpyuxa</option>
-									</select>
-								</div>
-								<div class="form-group">
 									<label for="templateName" class="control-label">商品ID: </label>
 									<input type="text" name="productId" value="{{$smarty.get.productId}}" class="form-control" />
 								</div>

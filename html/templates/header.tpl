@@ -47,7 +47,16 @@
 					  </ul>
 					</li>
 				  </ul>
-				  <p class="navbar-text navbar-right">Signed in as <a href="javascript:void(0)" class="navbar-link">User</a></p>
+				  <ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{if $smarty.cookies.account != ''}}当前账号:{{$smarty.cookies.account}}{{else}}切换账号{{/if}}<span class="caret"></span></a>
+					  <ul class="dropdown-menu">
+						<li><a href="javascript:void(0)" onclick="setCookie('geshan0728')">geshan0728</a></li>
+						<li role="separator" class="divider"></li>
+						<li><a href="javascript:void(0)" onclick="setCookie('ulpyuxa')">ulpyuxa</a></li>
+					  </ul>
+					</li>
+				  </ul>
 				</div><!-- /.navbar-collapse -->
 			  </div><!-- /.container-fluid -->
 			</nav>
@@ -58,3 +67,9 @@
 			  <li class="active">Data</li>
 			</ol> -->
 			<!--路径导航-->
+			<script>
+				function setCookie(account) {
+					document.cookie='account='+account;
+					location.reload();
+				}
+			</script>

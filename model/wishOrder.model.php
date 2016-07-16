@@ -33,6 +33,9 @@ class WishOrderModel {
 		if (isset($_REQUEST['spu']) && !empty(trim($_REQUEST['spu']))) {
 			$where[] = ' trueSpu="'.trim($_REQUEST['spu']).'"';
 		}
+		if(isset($_COOKIE['account'])) {
+			$where[] = ' account="'.$_COOKIE['account'].'"';
+		}
 		$where = count($where) > 0 ? ' where '.implode(' and ', $where) : '';
 		$order = ' order by order_time desc, sku ASC';
 		//读取表的记录数量
@@ -75,7 +78,7 @@ class WishOrderModel {
 	/**
 	 * 插入订单
 	 */
-	public static function addOrder($orderData) {
+	public static function addOrder($orderData, $account) {
 		self::initDB();
 		$orderId	= array();
 		foreach($orderData[0]['data'] as $key => $val) {
@@ -131,6 +134,7 @@ class WishOrderModel {
 				'variant_id'						=> $v['Order']['variant_id'],
 				'trueSku'							=> $trueSku,
 				'trueSpu'							=> $trueSpu,
+				'account'							=> $account,
 			);
 			$insertSql[] = '("'.implode('","', end($orderInfo)).'")';
 		}
@@ -145,8 +149,9 @@ class WishOrderModel {
 
 		$orderStat	= C('ORDERSTAT');
 		$orderCount	= array();
+		$account	= isset($_COOKIE['account']) ? $_COOKIE['account'] : 'geshan0728';
 		foreach($orderStat as $k => $v) {
-			$sql	= 'select count(*) as counts from ws_order where state = "'.$k.'"';
+			$sql	= 'select count(*) as counts from ws_order where state = "'.$k.'" and account="'.$account.'"';
 			$query	= self::$dbConn->query($sql);
 			$ret	= self::$dbConn->fetch_array_all($query);
 			$orderCount[$k] = $ret[0]['counts'];
@@ -207,7 +212,8 @@ class WishOrderModel {
 	 */
 	public function fulfillOrder() {
 		self::initDB();
-		$orderApi		= new WishOrderApi('geshan0728', 1);
+		$account		= isset($_COOKIE['account']) ? $_COOKIE['account'] : 'geshan0728';
+		$orderApi		= new WishOrderApi($account, 1);
 		$errStr			= self::checkTrackingInfo($_REQUEST);
 		if(strlen($errStr) > 0) {
 			return false;
@@ -218,7 +224,7 @@ class WishOrderModel {
 			$sql	= 'update ws_order set state="SHIPPED",shippingMethod="'.$_REQUEST['transport'].'",
 											tracknumber="'.$_REQUEST['trackNumber'].'",
 											shipNote="'.$_REQUEST['shipNote'].'" 
-						where order_id="'.$_REQUEST['orderId'].'"';
+						where order_id="'.$_REQUEST['orderId'].'" and account="'.$account.'"';
 			$query	= self::$dbConn->query($sql);
 			if(!$query) {
 				self::$errCode	= '1105';
@@ -235,7 +241,8 @@ class WishOrderModel {
 	 * 功能: 修改跟踪号
 	 */
 	public function modifyTracking() {
-		$orderApi		= new WishOrderApi('geshan0728', 1);
+		$account		= isset($_COOKIE['account']) ? $_COOKIE['account'] : 'geshan0728';
+		$orderApi		= new WishOrderApi($account, 1);
 		$errStr			= self::checkTrackingInfo($_REQUEST);
 		if(strlen($errStr) > 0) {
 			return false;

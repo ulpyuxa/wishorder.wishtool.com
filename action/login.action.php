@@ -24,6 +24,7 @@ class LoginAct extends CommonAct {
 			$hostInfo = explode('.', $_SERVER['SERVER_NAME']);
 			unset($hostInfo[0]);
 			setcookie('USERINFO', json_encode($userInfo), 0, "/", ".".implode('.', $hostInfo));
+			setcookie('account', 'geshan0728', 0, "/", ".".implode('.', $hostInfo));
 			header('Location: /index.php?mod=wishProduct&act=wishProductList&isOnline=online');
 			return true;
 		}

@@ -15,7 +15,7 @@ class WishOrderAct extends CommonAct{
 		$account		= $_REQUEST['account'];
 		$wishOrderApi	= new WishOrderApi($account, 1);
 		$ret			= $wishOrderApi->getAllorder($start, $count);
-		$insert			= WishOrderModel::addOrder($ret);
+		$insert			= WishOrderModel::addOrder($ret, $account);
 		if(!$insert) {
 			self::$errCode	= WishOrderModel::$errCode;
 			self::$errMsg	= WishOrderModel::$errMsg;
