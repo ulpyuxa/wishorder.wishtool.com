@@ -35,10 +35,6 @@
 								<div class="form-group">
 									<label for="templateName" class="control-label">主料号: </label>
 									<input type="text" name="spuSn" value="{{$smarty.get.spuSn}}" class="form-control" />
-									<select class="form-control" name="account" id="account" required>
-										<option value="geshan0728" {{if $smarty.get.account == 'geshan0728'}}selected{{/if}}>geshan0728</option>
-										<option value="ulpyuxa" {{if $smarty.get.account == 'ulpyuxa'}}selected{{/if}}>ulpyuxa</option>
-									</select>
 									<input type="submit" name="search" value="搜索" class="btn btn-warning" />
 									<input type="hidden" name="act" value="{{$smarty.get.act}}" />
 									<input type="hidden" name="mod" value="{{$smarty.get.mod}}" />
