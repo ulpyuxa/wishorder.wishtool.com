@@ -78,7 +78,7 @@
 													操作 <span class="caret"></span>
 												  </button>
 												  <ul class="dropdown-menu">
-													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}&account={{$smarty.get.account}}">修改商品详情</a></li>
+													<li><a href="/index.php?mod=wishProduct&act=editUploadProduct&spu={{$v.spuSn}}&account={{$smarty.cookie.account}}">修改商品详情</a></li>
 													<li role="separator" class="divider"></li>
 													<li><a href="javascript:void(0)" onclick="delWaitProduct('{{$v.spuSn}}')">删除</a></li>
 												  </ul>
