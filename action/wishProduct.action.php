@@ -1,6 +1,9 @@
 <?php
+/**
+ * errCode:1601
+ */
 class WishProductAct extends CommonAct{
-	static $errCode		= 1601;
+	static $errCode		= 0;
 	static $errMsg		= "";
 	static $imgVersion	= 0;
 
