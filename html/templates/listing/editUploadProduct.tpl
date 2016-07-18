@@ -72,7 +72,7 @@
 								  <div class="col-xs-6 col-md-2">
 									<div class="thumbnail">
 									  <img src="{{$dataVal}}"  style="height:120px" alt="...">
-									  <a href="javascrip:void(0)" onclick="setMainImage(this)">设为主图</a>
+									  <a href="javascript:void(0);" onclick="setMainImage(this)">设为主图</a>
 									</div>
 								  </div>
 							{{/foreach}}
