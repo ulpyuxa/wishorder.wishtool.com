@@ -116,6 +116,11 @@ class WishProductAct extends CommonAct{
 	 */
 	public function act_editUploadProduct() {
 		$spu	= $_REQUEST['spu'];
+		$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
+		if(preg_match('/^\d+&/', $spuSn) && (strlen($spuSn) <= 8 || strlen($spuSn) >= 7)) {
+			echo '<javascript>alert("不能上传此料号，请返回上一页后，删除此料号！")</javascript>';
+			header('location:'.getenv("HTTP_REFERER"));
+		}
 		$file	= WEB_PATH.'log/productInfo/'.$spu.'.log';
 		if(!is_file($file)) {
 			self::$errCode	= 1601;
