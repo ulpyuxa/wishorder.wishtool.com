@@ -518,10 +518,10 @@ class WishProductModel {
 		return self::$dbConn->query($sql);
 	}
 
-	public function delWaitProduct() {
+	public function delWaitProduct($spu = '') {
 		self::initDB();
 		
-		$spu	= $_REQUEST['spuSn'];
+		$spu	= isset($spu) ? $spu : $_REQUEST['spuSn'];
 		$sql	= 'update ws_wait_publish set isDelete="Yes" where spuSn="'.$spu.'"';
 		return self::$dbConn->query($sql);
 	}
