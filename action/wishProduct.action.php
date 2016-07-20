@@ -115,9 +115,11 @@ class WishProductAct extends CommonAct{
 	 * 功能: 查看并编辑待刊登料号
 	 */
 	public function act_editUploadProduct() {
-		$spu	= $_REQUEST['spu'];
-		$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
-		if(preg_match('/^\d+&/', $spuSn) && (strlen($spuSn) <= 8 || strlen($spuSn) >= 7)) {
+		$spu		= $_REQUEST['spu'];
+		$url		= 'http://api.fenxiao.valsun.cn/api.php?action=getDistributorOpenProducts&v=1.0&spu='.$spuSn.'&companyId=1553&platform=wish&warehouse=CN';
+		$pushInfo	= file_get_contents($url);
+		$pushInfo	= json_decode($pushInfo, true);
+		if(!isset($pushInfo['data']) || empty($pushInfo['data'])) {		//此料号为未开放的料号不能刊登。
 			echo '<javascript>alert("不能上传此料号，请返回上一页后，删除此料号！")</javascript>';
 			header('location:'.getenv("HTTP_REFERER"));
 		}
