@@ -120,7 +120,7 @@ class WishProductAct extends CommonAct{
 		$pushInfo	= file_get_contents($url);
 		$pushInfo	= json_decode($pushInfo, true);
 		if(!isset($pushInfo['data']) || empty($pushInfo['data'])) {		//此料号为未开放的料号不能刊登。
-			echo '<javascript>alert("不能上传此料号，请返回上一页后，删除此料号！")</javascript>';
+			WishProductModel::delWaitProduct($spu);		//删除可刊登料号
 			header('location:'.getenv("HTTP_REFERER"));
 		}
 		$file	= WEB_PATH.'log/productInfo/'.$spu.'.log';
