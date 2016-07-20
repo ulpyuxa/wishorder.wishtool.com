@@ -32,6 +32,9 @@ if(!is_dir($newDir)) {
 
 $dirDat	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&dir=1');
 $dirDat	= json_decode($dirDat, true);
+if(!isset($dirDat['data']) || empty($dirDat['data'])) {
+	exit('未找到到数据');
+}
 foreach($dirDat['data'] as $k => $v) {
 	$spuSn			= substr($v, 0, stripos($v, '.'));
 	$productInfo	= file_get_contents('http://wishtool.valsun.cn/json.php?mod=apiWish&act=getlistingLog&jsonp=1&spuSn='.$spuSn);
@@ -39,6 +42,12 @@ foreach($dirDat['data'] as $k => $v) {
 		continue;
 	}
 	if(preg_match('/^(OS|AM|TT|MT|CB|DZ|WH)/i', $spuSn)) {
+		continue;
+	}
+	$url			= 'http://api.fenxiao.valsun.cn/api.php?action=getDistributorOpenProducts&v=1.0&spu='.$spuSn.'&companyId=1553&platform=wish&warehouse=CN';
+	$pushInfo		= file_get_contents($url);
+	$pushInfo		= json_decode($pushInfo, true);
+	if(!isset($pushInfo['data']) || empty($pushInfo['data'])) {		//此料号为未开放的料号不能刊登。
 		continue;
 	}
 	$sql			= 'select spu from `ws_product` where spu = "'.$spuSn.'"';
