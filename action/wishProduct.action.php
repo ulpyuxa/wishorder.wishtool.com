@@ -116,7 +116,7 @@ class WishProductAct extends CommonAct{
 	 */
 	public function act_editUploadProduct() {
 		$spu		= $_REQUEST['spu'];
-		$url		= 'http://api.fenxiao.valsun.cn/api.php?action=getDistributorOpenProducts&v=1.0&spu='.$spuSn.'&companyId=1553&platform=wish&warehouse=CN';
+		$url		= 'http://api.fenxiao.valsun.cn/api.php?action=getDistributorOpenProducts&v=1.0&spu='.$spu.'&companyId=1553&platform=wish&warehouse=CN';
 		$pushInfo	= file_get_contents($url);
 		$pushInfo	= json_decode($pushInfo, true);
 		if(!isset($pushInfo['data']) || empty($pushInfo['data'])) {		//此料号为未开放的料号不能刊登。
