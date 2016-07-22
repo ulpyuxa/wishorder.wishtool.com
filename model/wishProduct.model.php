@@ -85,6 +85,10 @@ class WishProductModel {
 					$isOnline = 'online';
 				}
 			}
+			$tags = array();
+			foreach($v['Product']['tags'] as $tagsKey => $tagsVal) {
+				$tags[] = $tagsVal['Tag']['name'];
+			}
 			$data[$v['Product']['id']] = array(
 				'account'		=> $account,
 				'productId'		=> $v['Product']['id'],
@@ -96,10 +100,11 @@ class WishProductModel {
 				'title'			=> $v['Product']['name'],
 				'isOnline'		=> $isOnline,
 				'isPromoted'	=> $v['Product']['is_promoted'],
-				'price'			=> $v['Product']['variants'][0]['Variant']['price']
+				'price'			=> $v['Product']['variants'][0]['Variant']['price'],
+				'tags'			=> implode(',', $tags),
 			);
 			foreach($v['Product']['variants'] as $variantKey => $variantVal) {
-				$maxData[$v['Product']['id']]['variantsSku']	= array(
+				$maxData[$v['Product']['id']][]	= array(
 					'account'				=> $account,
 					'productId'				=> $v['Product']['id'],
 					'spu'					=> $trueSpu,
@@ -108,7 +113,7 @@ class WishProductModel {
 					'variantsPrice'			=> $variantVal['Variant']['price'],
 					'variantsEnable'		=> $variantVal['Variant']['enabled'],
 					'variantsShipping'		=> $variantVal['Variant']['shipping'],
-					'variantsAll_images'	=> $variantVal['Variant']['all_images'],
+					'variantsAll_images'	=> mysqli_real_escape_string(self::$dbConn->link, $variantVal['Variant']['all_images']),
 					'variantsInventory'		=> $variantVal['Variant']['inventory'],
 					'variantsShipping_time'	=> $variantVal['Variant']['shipping_time'],
 					'variantsMsrp'			=> $variantVal['Variant']['msrp'],
@@ -128,12 +133,27 @@ class WishProductModel {
 		$idsSql	= 'select productId,spu from ws_product where productId in("'.implode('","', $ids).'")';
 		$query		= self::$dbConn->query($idsSql);
 		$ret		= self::$dbConn->fetch_array_all($query);
-		//更新主表
+		//整理主表数据
 		$updateInfo	= array();
 		foreach($ret as $k => $v) {		//过滤重复的listing
 			if(isset($data[$v['productId']])) {
 				$updateInfo[] = $data[$v['productId']];
 				unset($data[$v['productId']], $sql[$v['productId']]);
+			}
+		}
+		//整理分表数据
+		$updateData	= array();
+		foreach($maxData as $maxKey => $maxVal) {
+			foreach($maxVal as $skuKey => $skuVal) {
+				$num		= substr(md5($skuVal['spu']), 0, 1);
+				$subsql	= 'select * from ws_product_'.$num.' where productId="'.$skuVal['productId'].'" and variantsSku="'.$skuVal['variantsSku'].'"';
+				$query	= self::$dbConn->query($subsql);
+				$ret	= self::$dbConn->fetch_array_all($query);
+				if(!empty($ret)) {
+					$updateData[] = $maxVal;
+					unset($maxSql[$skuVal['productId'].$skuVal['variantsSku']], $maxData[$maxKey]);
+					continue;
+				}
 			}
 		}
 		if(!empty($updateInfo)) {	//更新listing
@@ -142,25 +162,20 @@ class WishProductModel {
 		if(empty($data)) {		//没有数据需要写入数据库
 			return true;
 		}
-		//插入Listing
+		//插入主表Listing的数据
 		$sql	= 'insert into ws_product (`'.implode('`,`', array_keys(end($data))).'`) values '.implode(',', $sql);
 		$query	= self::$dbConn->query($sql);
-		//更新分表
-		$num		= substr(md5($trueSpu), 0, 1);
-		$updateData	= array();
-		foreach($maxData as $maxKey => $maxVal) {
-			$sql	= 'select * from ws_product_'.$num.' where product="'.$maxVal['productId'].'" and variantsSku="'.$maxVal['variantsSku'].'"';
-			$query	= self::$dbConn->query($sql);
-			$ret	= self::$dbConn->fetch_array_all($query);
-			if(!empty($ret)) {
-				$updateData[] = $maxVal;
-				unset($maxSql[$maxVal['productId'].$maxSql['variantsSku']], $maxData[$maxKey]);
-				continue;
-			}
-		}
+
+		//插入分表Listing的数据
 		if(!empty($maxData)) {	//插入分表数据
-			$sql = 'insert into ws_product_'.$num.'(`'.implode('`,`', array_keys(end($maxData))).'`) values'.implode(',', $maxSql);
-			$query	= self::$dbConn->query($sql);
+			foreach($maxData as $maxKey => $maxVal) {
+				$num = substr(md5($maxVal[0]['spu']), 0, 1);
+				foreach($maxVal as $subKey => $subVal) {	//子表的数据
+					$sql = 'insert into ws_product_'.$num.'(`'.implode('`,`', array_keys($subVal)).'`) values ("'.implode('", "', $subVal).'")';
+					echo $sql, PHP_EOL;
+					self::$dbConn->query($sql);
+				}
+			}
 		}
 		if(!empty($updateData)) {
 			self::updateProductSub($updateData);
