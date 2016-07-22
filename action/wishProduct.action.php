@@ -177,8 +177,8 @@ class WishProductAct extends CommonAct{
 				if(isset($ret[$retKey]['sku'])) {
 					$skuInfo	= explode('#', $ret[$retKey]['sku']);
 					$spuInfo	= explode('#', $ret[$retKey]['parent_sku']);
-					$ret[$retKey]['sku']		= $skuInfo[0].'#'.$accountAbbr;
-					$ret[$retKey]['parent_sku'] = $spuInfo[0].'#'.$accountAbbr;
+					$ret[$retKey]['sku']		= substr_replace($skuInfo[0], $accountAbbr, 4,0);
+					$ret[$retKey]['parent_sku'] = substr_replace($spuInfo[0], $accountAbbr, 4,0);
 					$ret[$retKey]['price']		= $price;
 					$ret[$retKey]['shipping']	= 1;
 				}
