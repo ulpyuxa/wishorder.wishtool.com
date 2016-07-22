@@ -10,6 +10,10 @@ $(document).on("click", 'input[name="pushBtn"]', function(){
 		dataType: "json",
 		success : function (ret) {
 			$("#loading-indicator").hide();
+			if(typeof(ret.errCode) != undefined && ret.errCode > 0) {
+				alertify.alert("刊登状态", ret.errMsg);
+				return false;
+			}
 			if(typeof(ret['data'][0]['data']['Product']['id']) != undefined) {		//为false表示
 				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功! 系统将跳转到待刊登列表页面', 
 					function(){
