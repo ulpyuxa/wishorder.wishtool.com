@@ -1,7 +1,7 @@
 <?php
 /**
  * 功能: 处理商品信息的model
- * max errCode: 1507
+ * max errCode: 1509
  */
 class WishProductModel {
 	public static $dbConn;
@@ -450,10 +450,21 @@ class WishProductModel {
 		}
 		$tags	= explode(',', $_REQUEST['tags']);
 		if(count($tags) < 10) {
-			self::$errCode	= '1507';
+			self::$errCode	= '1508';
 			self::$errMsg	= '商品关键字的数据少于10个, 请重新输入!!!';
 			return false;
 		}
+		$accountAbbr= C('ACCOUNTABBR')[$_REQUEST['account']];
+		$spu			= str_ireplace($accountAbbr, '', $_REQUEST['spu']);
+		$spu			= str_ireplace('#', '', $spu);
+		$productInfo	= self::getProductBySpu($spu);
+		if(!empty($productInfo)) {
+			self::updateWaitData($spu, $_REQUEST['account']);	//将上传状态更改已上传
+			self::$errCode	= '1509';
+			self::$errMsg	= '此料号已经刊登，请不要重复刊登！';
+			return false;
+		}
+
 		$wishProductApi	= new WishProductApi($_REQUEST['account'], 1);
 		//$wishProductApi->setSandbox();		//设置从沙盒刊登
 		$productAct		= new WishProductAct;
@@ -512,6 +523,14 @@ class WishProductModel {
 		}
 		return $spuStatus;
 	}
+
+	public function getProductBySpu($spu) {
+		self::initDB();
+		$sql	= 'selecgt * from ws_product where spu="'.$spu.'"';
+		$query	= self::$dbConn->query($sql);
+		return $ret	= self::$dbConn->fetch_array_all();
+	}
+
 
 	public function spuPrice($spuSn) {
 		$spu	= json_encode(array(array('spu'=>$spuSn,"country"=>"Russian Federation","type"=>"1",'platform'=>'wish')));
