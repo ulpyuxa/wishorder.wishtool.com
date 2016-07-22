@@ -13,8 +13,8 @@
 			* { margin:0; padding:0; }
 			img { vertical-align:bottom; border:none; }
 			body { background:#f0f0f0; height:800px; font-family:Arial;}
-			#bigimage { position:absolute; display:none; }
-			#bigimage img { width:400px; height:400px; padding:5px; background:#fff; border:1px solid #e3e3e3; }
+			#bigimage { position:absolute; display:none; width: 400px;background: white; text-align: center;}
+			#bigimage img { height:400px; padding:5px; background:#fff; }
 		</style>
 	</head>
 	<body>
