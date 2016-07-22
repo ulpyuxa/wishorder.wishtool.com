@@ -62,8 +62,12 @@ class WishProductModel {
 		$data	= array();
 		$maxData= array();
 		foreach($ret as $k => $v) {
-			$skuInfo	= explode('#', $v['Product']['parent_sku']);
-			$trueSpu	= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
+			$trueSpu	= str_ireplace("ZSON", '', $v['Product']['parent_sku']);
+			$trueSpu	= str_ireplace("P28d", '', $trueSpu);
+			$trueSpu	= str_ireplace("S5e9", '', $trueSpu);
+			$trueSpu	= str_ireplace("#", '', $trueSpu);
+			/*$skuInfo	= explode('#', $v['Product']['parent_sku']);
+			$trueSpu	= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理*/
 			//判断上下架
 			$isOnline	= 'offline';
 			$count		= count($v['Product']['variants']);
@@ -111,7 +115,7 @@ class WishProductModel {
 					'variantsSize'			=> $variantVal['Variant']['size'],
 
 				);
-				$maxSql[$v['Product']['id'].$variantVal['Variant']['sku']] = '("'.implode('","', end($maxData)).'")';
+				$maxSql[$v['Product']['id'].$variantVal['Variant']['sku']] = '("'.implode('","', end($maxData[$v['Product']['id']])).'")';
 			}
 			$ids[] = $v['Product']['id'];
 			$sql[$v['Product']['id']] = '("'.implode('","', end($data)).'")';

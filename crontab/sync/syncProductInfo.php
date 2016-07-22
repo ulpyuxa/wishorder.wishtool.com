@@ -3,6 +3,7 @@
  * 功能: 定时同步产品信息及产品状态到系统中
  * author: zxh
  * 日期: 2016/2/19 15:55
+ * http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728
  */
 error_reporting(E_ALL);
 define("SYSTEM_CRONTAB_USER","true");	//跳过所有权限验证
@@ -13,7 +14,7 @@ global $dbConn;
 
 $since				= '';
 $_REQUEST['page']	= 1;
-$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'ulpyuxa';
+$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'geshan0728';
 $ret	= WishProductModel::productList();
 if(!empty($ret)) {
 	$since = date('Y-m-d', strtotime('-2 days'));

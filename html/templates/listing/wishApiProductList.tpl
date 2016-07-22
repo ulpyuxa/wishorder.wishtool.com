@@ -35,7 +35,7 @@
 					{{foreach $data as $dataKey => $dataVal}}
 						<div class="col-sm-6 col-md-3">
 							<div class="thumbnail equalize">
-							  <img src="{{$dataVal.display_picture}}" alt="{{$dataVal.display_picture}}" style="min-height:230px;height:230px;width">
+							  <img src="{{$dataVal.display_picture}}" alt="{{$dataVal.display_picture}}" style="min-height:230px;height:230px">
 							  <div class="caption">
 								<h5>{{$dataVal.name}}</h3>
 								<p>${{$dataVal.commerce_product_info.variations[0].price}}</p>
