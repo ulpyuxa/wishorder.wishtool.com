@@ -448,6 +448,12 @@ class WishProductModel {
 			self::$errMsg	= '请填写需要刊登的账号...';
 			return false;
 		}
+		$tags	= explode(',', $_REQUEST['tags']);
+		if(count($tags) < 10) {
+			self::$errCode	= '1507';
+			self::$errMsg	= '商品关键字的数据少于10个, 请重新输入!!!';
+			return false;
+		}
 		$wishProductApi	= new WishProductApi($_REQUEST['account'], 1);
 		//$wishProductApi->setSandbox();		//设置从沙盒刊登
 		$productAct		= new WishProductAct;

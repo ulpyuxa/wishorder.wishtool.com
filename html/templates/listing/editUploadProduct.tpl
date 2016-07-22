@@ -86,10 +86,10 @@
 									<th width="5%">颜色</th>
 									<th width="5%">图片</th>
 									<th width="5%">尺寸</th>
-									<th width="5%">MSRP($)</th>
-									<th width="5%"><a href="javascript:void(0)" onclick="setPrice()" class="btn btn-danger btn-xs">价格($)</a></th>
-									<th width="5%">库存</th>
-									<th width="5%">运费</th>
+									<th width="5%"><a href="javascript:void(0)" onclick="setPrice(this)" class="btn btn-danger btn-xs">MSRP($)</a></th>
+									<th width="5%"><a href="javascript:void(0)" onclick="setPrice(this)" class="btn btn-danger btn-xs">价格($)</a></th>
+									<th width="5%"><a href="javascript:void(0)" onclick="setPrice(this)" class="btn btn-danger btn-xs">库存</a></th>
+									<th width="5%"><a href="javascript:void(0)" onclick="setPrice(this)" class="btn btn-danger btn-xs">运费</a></th>
 									<th width="10%">运输时间(天数)</th>
 									<th width="5%">禁用</th>
 									<th width="5%">上架</th>
