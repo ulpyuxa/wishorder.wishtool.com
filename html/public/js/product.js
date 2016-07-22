@@ -121,7 +121,7 @@ $(function(){
 	var y = 20;
 		
 	$(".img-responsive").hover(function(e){
-		$("body").append('<p id="bigimage"><img src="'+ $(this).attr('sourceImg') + '" alt="" /></p>');
+		$("body").append('<p id="bigimage"><img src="'+ $(this).attr('sourceImg') + '" alt="" heigth="400px"/></p>');
 		$(this).find('img').stop().fadeTo('slow',0.5);		
 		widthJudge(e);
 		$("#bigimage").fadeIn('fast');
