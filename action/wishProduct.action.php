@@ -218,7 +218,13 @@ class WishProductAct extends CommonAct{
 	 */
 	public function act_saveWaitProduct() {
 		set_time_limit(0);
-		return WishProductModel::saveWaitProduct();
+		$status = WishProductModel::saveWaitProduct();
+		if(!$status) {
+			self::$errCode	= WishProductModel::$errCode;
+			self::$errMsg	= WishProductModel::$errMsg;
+			return false;
+		}
+		return true;
 	}
 
 	/**
