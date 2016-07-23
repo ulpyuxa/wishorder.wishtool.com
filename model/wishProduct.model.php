@@ -458,7 +458,6 @@ class WishProductModel {
 		$spu			= str_ireplace($accountAbbr, '', $_REQUEST['spu']);
 		$spu			= str_ireplace('#', '', $spu);
 		$productInfo	= self::getProductBySpu($spu);
-		print_r($productInfo);exit;
 		if(!empty($productInfo)) {
 			self::updateWaitData($spu, $_REQUEST['account']);	//将上传状态更改已上传
 			self::$errCode	= '1509';
