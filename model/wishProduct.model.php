@@ -150,7 +150,7 @@ class WishProductModel {
 				$query	= self::$dbConn->query($subsql);
 				$ret	= self::$dbConn->fetch_array_all($query);
 				if(!empty($ret)) {
-					$updateData[] = $maxVal;
+					$updateData[] = $skuVal;
 					unset($maxSql[$skuVal['productId'].$skuVal['variantsSku']], $maxData[$maxKey]);
 					continue;
 				}
