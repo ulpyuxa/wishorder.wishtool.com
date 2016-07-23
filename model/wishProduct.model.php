@@ -529,7 +529,7 @@ class WishProductModel {
 		self::initDB();
 		$sql	= 'select * from ws_product where spu="'.$spu.'"';
 		$query	= self::$dbConn->query($sql);
-		return $ret	= self::$dbConn->fetch_array_all();
+		return $ret	= self::$dbConn->fetch_array_all($query);
 	}
 
 
