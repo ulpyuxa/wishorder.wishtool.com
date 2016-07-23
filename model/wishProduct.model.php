@@ -458,6 +458,7 @@ class WishProductModel {
 		$spu			= str_ireplace($accountAbbr, '', $_REQUEST['spu']);
 		$spu			= str_ireplace('#', '', $spu);
 		$productInfo	= self::getProductBySpu($spu);
+		print_r($productInfo);exit;
 		if(!empty($productInfo)) {
 			self::updateWaitData($spu, $_REQUEST['account']);	//将上传状态更改已上传
 			self::$errCode	= '1509';
@@ -526,7 +527,7 @@ class WishProductModel {
 
 	public function getProductBySpu($spu) {
 		self::initDB();
-		$sql	= 'selecgt * from ws_product where spu="'.$spu.'"';
+		$sql	= 'select * from ws_product where spu="'.$spu.'"';
 		$query	= self::$dbConn->query($sql);
 		return $ret	= self::$dbConn->fetch_array_all();
 	}
