@@ -42,8 +42,6 @@
 					  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">wish平台商品 <span class="caret"></span></a>
 					  <ul class="dropdown-menu">
 						<li><a href="/index.php?mod=wishProduct&act=apiProductList">商品搜索</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="/index.php?mod=wishProduct&act=getWishTags">wish tags</a></li>
 					  </ul>
 					</li>
 				  </ul>

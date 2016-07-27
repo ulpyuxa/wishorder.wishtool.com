@@ -18,37 +18,66 @@
 			</div>
 		</div>
 		<div class="container-fluid">
-			<form class="form-group" method="GET">
-				<div class="form-inline">
-				  <div class="form-group">
-					<label for="tags">关键词: </label>
-					<input type="text" class="form-control" name="tags" id="tags" size=80 placeholder="请输入关键字搜索" required value="{{$smarty.get.tags}}">
-					<input type="hidden" name="mod" value="{{$smarty.get.mod}}"/>
-					<input type="hidden" name="act" value="{{$smarty.get.act}}"/>
+			<div class="panel panel-info">
+			  <div class="panel-heading">
+				<h3 class="panel-title">查看商品的标签</h3>
+			  </div>
+			  <div class="panel-body">
+				  <div class="form-horizontal">
+					  <div class="form-group">
+						<label for="productUrl" class="col-sm-1 control-label">商品URL地址:</label>
+						<div class="col-sm-4">
+						  <input type="text" name="productUrl" id="productUrl" value="" class="form-control" placeholder="输入链接后，请按Enter键"/>
+						</div>
+						<div class="col-sm-1">
+						  <button name="submitBtn" id="submitBtn" type='button' class="btn btn-primary">查看商品标签</button>
+						</div>
+					  </div>
 				  </div>
-				  <button type="submit" class="btn btn-default">搜索产品</button>
+			  </div>
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">搜索wish平台的商品</h3>
 				</div>
-			</form>
-			
-			<div class="row">
-				<div class="from-group">
-					{{foreach $data as $dataKey => $dataVal}}
-						<div class="col-sm-6 col-md-3">
-							<div class="thumbnail equalize">
-							  <img src="{{$dataVal.display_picture}}" alt="{{$dataVal.display_picture}}" style="min-height:230px;height:230px">
-							  <div class="caption">
-								<h5>{{$dataVal.name}}</h3>
-								<p>${{$dataVal.commerce_product_info.variations[0].price}}</p>
-								<p>
-									<a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="getTags('{{$dataVal.id}}')">查看wish给的tags</a>
-									<a href="javascript:void(0)" class="btn btn-default" role="button" onclick="showTags(this)" >查看此商品的tags</a>
-								</p>
-								<input type="hidden" id="tags" value="{{foreach $dataVal.tags as $tagsKey => $tagsVal}}{{$tagsVal.name}}, {{/foreach}}" />
-								<input type="hidden" id="productId" value="{{$dataVal.id}}" />
-							  </div>
+				<div class="panel-body">
+				  <form class="form-horizontal">
+					  <div class="form-group">
+						<label for="tags" class="col-sm-1 control-label">关键词:</label>
+						<div class="col-sm-4">
+						  <input type="text" name="tags" id="tags" value="" class="form-control" placeholder="请输入关键字搜索" required value="{{$smarty.get.tags}}"/>
+						  <input type="hidden" name="mod" value="{{$smarty.get.mod}}"/>
+						  <input type="hidden" name="act" value="{{$smarty.get.act}}"/>
+						</div>
+						<div class="col-sm-1">
+						  <button type="submit" class="btn btn-primary">搜索产品</button>
+						</div>
+					  </div>
+				  </form>
+				  <hr>
+					<div class='form-group'>
+						<div class="row">
+							<div class="from-group">
+								{{foreach $data as $dataKey => $dataVal}}
+									<div class="col-sm-6 col-md-3">
+										<div class="thumbnail equalize">
+										  <img src="{{$dataVal.display_picture}}" alt="{{$dataVal.display_picture}}" style="min-height:230px;height:230px">
+										  <div class="caption">
+											<h5>{{$dataVal.name}}</h3>
+											<p>${{$dataVal.commerce_product_info.variations[0].price}}</p>
+											<p>
+												<a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="getTags('{{$dataVal.id}}')">查看wish给的tags</a>
+												<a href="javascript:void(0)" class="btn btn-default" role="button" onclick="showTags(this)" >查看此商品的tags</a>
+											</p>
+											<input type="hidden" id="tags" value="{{foreach $dataVal.tags as $tagsKey => $tagsVal}}{{$tagsVal.name}}, {{/foreach}}" />
+											<input type="hidden" id="productId" value="{{$dataVal.id}}" />
+										  </div>
+										</div>
+									</div>
+								{{/foreach}}
 							</div>
 						</div>
-					{{/foreach}}
+					</div>
 				</div>
 			</div>
 		</div>

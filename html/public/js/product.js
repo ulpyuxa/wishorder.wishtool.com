@@ -68,10 +68,11 @@ $(document).on('click', "button[name='submitBtn']", function(){
 				itemTags.push(key);
 				itemTagsZh.push(val);
 			});
-			$("#wishTags").val(wishTags.join(","));
+			alertify.alert('商品的标签', "<b>wish定的标签:</b><br />"+wishTags.join(",")+"<br /><br /><b>商品的标签:</b><br /> "+itemTags.join(","));
+			/*$("#wishTags").val(wishTags.join(","));
 			$("#wishTagsZh").val(wishTagsZh.join(""));
 			$("#itemTags").val(itemTags.join(","));
-			$("#itemTagsZh").val(itemTagsZh.join(""));
+			$("#itemTagsZh").val(itemTagsZh.join(""));*/
 		}
 	});
 });
