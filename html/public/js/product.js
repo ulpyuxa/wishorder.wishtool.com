@@ -45,8 +45,10 @@ $(document).on('change', 'select[name="operateProduct"]', function(){
 
 $(document).on('click', "button[name='submitBtn']", function(){
 	var url = $("input[name='productUrl']").val();
-	$("#wishTags").val("");
-	$("#itemTags").val("");
+	if($("#wishTags").val().length > 0) {
+		alertify.alert('商品的标签', "<b>wish定的标签:</b><br />"+$("#wishTags").val()+"<br /><br /><b>商品的标签:</b><br /> "+$("#itemTags").val());
+		return;
+	}
 	$("#loading-indicator").show();
 	$.ajax({
 		type	: "POST",
@@ -69,10 +71,8 @@ $(document).on('click', "button[name='submitBtn']", function(){
 				itemTagsZh.push(val);
 			});
 			alertify.alert('商品的标签', "<b>wish定的标签:</b><br />"+wishTags.join(",")+"<br /><br /><b>商品的标签:</b><br /> "+itemTags.join(","));
-			/*$("#wishTags").val(wishTags.join(","));
-			$("#wishTagsZh").val(wishTagsZh.join(""));
+			$("#wishTags").val(wishTags.join(","));
 			$("#itemTags").val(itemTags.join(","));
-			$("#itemTagsZh").val(itemTagsZh.join(""));*/
 		}
 	});
 });
@@ -147,4 +147,9 @@ $(function(){
 			$("#bigimage").css({top:(e.pageY - y ) + 'px',left:(e.pageX + x ) + 'px'});
 		};	
 	}
+});
+
+$(document).on('change', 'input[name="productId"]', function(){
+	$("#wishTags").val("");
+	$("#itemTags").val("");
 });

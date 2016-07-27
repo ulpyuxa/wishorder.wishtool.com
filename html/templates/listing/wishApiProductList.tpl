@@ -28,6 +28,8 @@
 						<label for="productUrl" class="col-sm-1 control-label">商品URL地址:</label>
 						<div class="col-sm-4">
 						  <input type="text" name="productUrl" id="productUrl" value="" class="form-control" placeholder="输入链接后，请按Enter键"/>
+						  <input type="hidden" id="wishTags" value="" />
+						  <input type="hidden" id="itemTags" value="" />
 						</div>
 						<div class="col-sm-1">
 						  <button name="submitBtn" id="submitBtn" type='button' class="btn btn-primary">查看商品标签</button>
