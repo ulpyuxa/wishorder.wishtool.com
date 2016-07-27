@@ -149,7 +149,7 @@ $(function(){
 	}
 });
 
-$(document).on('change', 'input[name="productId"]', function(){
+$(document).on('change', 'input[name="productUrl"]', function(){
 	$("#wishTags").val("");
 	$("#itemTags").val("");
 });
