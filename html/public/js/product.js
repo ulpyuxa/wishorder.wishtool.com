@@ -70,7 +70,7 @@ $(document).on('click', "button[name='submitBtn']", function(){
 				itemTags.push(key);
 				itemTagsZh.push(val);
 			});
-			alertify.alert('商品的标签', "<b>wish定的标签:</b><br />"+wishTags.join(",")+"<br /><br /><b>商品的标签:</b><br /> "+itemTags.join(","));
+			alertify.alert('商品的标签', "<b>wish定的标签:</b><br />"+wishTags.join(", ")+"<br /><br /><b>商品的标签:</b><br /> "+itemTags.join(", "));
 			$("#wishTags").val(wishTags.join(","));
 			$("#itemTags").val(itemTags.join(","));
 		}
