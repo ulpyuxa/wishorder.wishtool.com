@@ -431,6 +431,10 @@ class WishProductModel {
 		$sql	= 'select * from ws_wait_publish '.$where.$order.$limit;
 		$query	= self::$dbConn->query($sql);
 		$ret	= self::$dbConn->fetch_array_all($query);
+		foreach($ret as $k => $v) {
+			$tags	= explode(',', $v['tags']);
+			$ret[$k]['tags'] = implode(', ', $tags);
+		}
 		//数据分页
 		$pagination = new Pagination($page, $count[0]['count'], 30);
 		$pageHtml	= $pagination->parse();

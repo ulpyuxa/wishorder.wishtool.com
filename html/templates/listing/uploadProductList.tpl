@@ -55,10 +55,10 @@
 									<tr class="success">
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
-										<th width="53%">商品标题</th>
+										<th width="30%">商品标题</th>
 										<th width="5%">价格</th>
 										<th width="5%">运费</th>
-										<th width="8%">tags</th>
+										<th width="30%">tags</th>
 										<th width="10%">操作</th>
 									</tr>
 								</thead>
