@@ -10,6 +10,7 @@
 		<link href="../public/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 		<link href="../public/alertifyjs/css/alertify.min.css" rel="stylesheet" />
 		<link href="../public/alertifyjs/css/themes/bootstrap.min.css" rel="stylesheet" />
+		<script src="../public/js/jquery-2.2.2.min.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -84,7 +85,6 @@
 			</div>
 		</div>
 		<img src="../public/images/loading.gif" id="loading-indicator" style="display:none" />
-		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../public/alertifyjs/alertify.min.js"></script>
 		<script src="../public/js/product.js"></script>

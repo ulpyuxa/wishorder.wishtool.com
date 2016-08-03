@@ -16,6 +16,7 @@
 			#bigimage { position:absolute; display:none; width: 400px;background: white; text-align: center;}
 			#bigimage img { height:400px; padding:5px; background:#fff; }
 		</style>
+		<script src="../public/js/jquery-2.2.2.min.js"></script>
 	</head>
 	<body>
 		<div class="container-fluid">
@@ -128,7 +129,6 @@
 		  </div>
 		</div>
 <!-- Modal -->
-		<script src="../public/js/jquery-2.2.2.min.js"></script>
 		<script src="../public/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../public/alertifyjs/alertify.min.js"></script>
 		<script src="../public/js/product.js"></script>

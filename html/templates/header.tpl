@@ -66,8 +66,13 @@
 			</ol> -->
 			<!--路径导航-->
 			<script>
-				function setCookie(account) {
+				function setCookie(account) {		//切换账号用
 					document.cookie='account='+account;
 					location.reload();
 				}
+				$('ul.nav li.dropdown').hover(function() {		//bootstrap菜单事件
+				  $(this).find('.dropdown-menu').stop(true, true).delay(50).fadeIn(0);
+				}, function() {
+				  $(this).find('.dropdown-menu').stop(true, true).delay(50).fadeOut(0);
+				});
 			</script>
