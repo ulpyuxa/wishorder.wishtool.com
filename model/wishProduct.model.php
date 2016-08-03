@@ -423,7 +423,7 @@ class WishProductModel {
 		if(isset($_REQUEST['spuSn']) && !empty($_REQUEST['spuSn'])) {
 			$where = $where.' and spuSn like "%'.mysqli_real_escape_string(self::$dbConn->link,$_REQUEST['spuSn']).'%"';
 		}
-		$order	= ' order by spuSn DESC';
+		$order	= ' order by id DESC';
 		$sql	= 'select count(*) as count from ws_wait_publish '.$where.$order;
 		$query	= self::$dbConn->query($sql);
 		$count	= self::$dbConn->fetch_array_all($query);
