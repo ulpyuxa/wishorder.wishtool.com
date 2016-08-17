@@ -69,8 +69,8 @@
 											<h5>{{$dataVal.name}}</h3>
 											<p>${{$dataVal.commerce_product_info.variations[0].price}}</p>
 											<p>
-												<a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="getTags('{{$dataVal.id}}')">查看wish给的tags</a>
-												<a href="javascript:void(0)" class="btn btn-default" role="button" onclick="showTags(this)" >查看此商品的tags</a>
+												<a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="getTags('{{$dataVal.id}}')">wish给的tags</a>
+												<a href="javascript:void(0)" class="btn btn-default" role="button" onclick="showTags(this)" >此商品的tags</a>
 											</p>
 											<input type="hidden" id="tags" value="{{foreach $dataVal.tags as $tagsKey => $tagsVal}}{{$tagsVal.name}}, {{/foreach}}" />
 											<input type="hidden" id="productId" value="{{$dataVal.id}}" />
