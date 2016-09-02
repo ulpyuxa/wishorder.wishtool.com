@@ -98,4 +98,17 @@ class WishProductApi extends WishBase {
 		);
 		return $ret = $this->sendHttpRequest($para);
 	}
+
+	/**
+	 * 功能: 修改子料号的信息，暂只支持修改价格
+	 */
+	public function variantUpdate($data) {
+		$this->api	= 'variant';
+		$this->act	= 'update';
+		$para	= array(
+			'sku'	=> urlencode($data['sku']),
+			'price'	=> urlencode($data['price']),
+		);
+		return $ret = $this->sendHttpRequest($para);
+	}
 }

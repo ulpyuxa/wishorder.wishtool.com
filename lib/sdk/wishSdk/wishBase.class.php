@@ -47,7 +47,21 @@ class WishBase {
 	public function sendHttpRequest ($para) {
 		$url	= self::$url.$this->api.'/'.$this->act.'?access_token='.self::$access_token.'&'.http_build_query($para);
 		//echo $url;exit;
-		$ret	= $this->curlResult(array($url));
+		if($this->act === 'update' && $this->api === 'variant') {
+			$url = sprintf(
+				"https://china-merchant.wish.com/api/v2/variant/update?access_token=%s&sku=%s&&price=%s",
+				self::$access_token, $para['sku'], $para['price']);
+			$context = stream_context_create(array(
+				'http' => array(
+					'method'        => 'GET',
+					'ignore_errors' => true,
+				),
+			));
+			// Send the request
+			$ret = file_get_contents($url, TRUE, $context);
+		} else {
+			$ret	= $this->curlResult(array($url));
+		}
 		return $ret;
 	}
 
