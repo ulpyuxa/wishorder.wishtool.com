@@ -1,7 +1,6 @@
 <?php
 include __DIR__.'/common.php';
 
-$argv[1]	= 'geshan0728';
 $account	= $argv[1];
 if(empty($account)) {
 	exit('请输入账号!');
