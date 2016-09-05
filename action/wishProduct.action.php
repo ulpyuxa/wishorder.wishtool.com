@@ -147,7 +147,7 @@ class WishProductAct extends CommonAct{
 		$hasTags	= false;
 		$ret		= array();
 		$account	= isset($_COOKIE['account']) ? $_COOKIE['account'] : 'geshan0728';
-		$accountAbbr= C('ACCOUNTABBR')[$account];
+		$accountAbbr= strtoupper(C('ACCOUNTABBR')[$account]);
 		$price		= WishProductModel::spuPrice($spu);		//获取价格已经减去$1的运费
 		foreach($dataArr as $k => $v) {
 			if(strlen($v) < 100) {
