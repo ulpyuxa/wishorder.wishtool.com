@@ -72,13 +72,18 @@ function getIp() {
 	return $ip;
 }
 $domainInfo = getDomainInfo();
-$domianId	= $domainInfo['domains'][0]['id'];
-$records = domainList($domainInfo['domains'][0]['id']);
+$domianId	= '';
+foreach($domainInfo['domains'] as $key => $val) {
+	if($val['name'] === 'wishtool.cn') {
+		$domianId = $val['id'];
+	}
+}
+$records = domainList($domainInfo['domains'][0]['id']);		//暂时只更改域名：wishtool.cn
 $myIp	= getIp();
 foreach($records['records'] as $k => $v) {
 	if(in_array($v['name'],array('pi-phpmyadmin','pi-order', 'www')) && $v['value'] !== $myIp) {
 		$para = array(
-			'domain_id'		=> $domainInfo['domains'][0]['id'],
+			'domain_id'		=> $domianId,
 			'record_id'		=> $v['id'],
 			'sub_domain'	=> $v['name'],
 			'value'			=> $myIp,
