@@ -5,19 +5,37 @@
  * 日期: 2016/2/19 15:55
  * http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728
  */
-error_reporting(E_ALL);
-define("SYSTEM_CRONTAB_USER","true");	//跳过所有权限验证
-set_time_limit(0);
-include substr(str_replace(DIRECTORY_SEPARATOR, '/', __DIR__), 0, stripos(__DIR__, 'crontab'))."framework.php";
-Core::getInstance();
+include __DIR__.'/../common.php';
+
 global $dbConn;
 
 $since				= '';
 $_REQUEST['page']	= 1;
 $_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'geshan0728';
+$freshToken = getAccountToken($_REQUEST['account']);
+if(!$freshToken) {
+	exit('token更新失败！');
+}
+echo $argv[1].' token更新成功', PHP_EOL;
 $ret	= WishProductModel::productList();
 if(!empty($ret)) {
 	$since = date('Y-m-d', strtotime('-2 days'));
 }
 $data	= WishProductModel::getWishProduct(0, 50, $since);
 var_dump($data);
+
+function getAccountToken($account) {
+	$url = 'http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728';
+	$ret = json_decode(file_get_contents($url), true);
+	if(empty($ret)) {
+		return false;
+	}
+	$file = WEB_PATH.'conf/key/1/'.$account.'.key';
+	if(!is_file($file)) {
+		return false;
+	}
+	$token = json_decode(file_get_contents($file), true);
+	$token['expiry_time'] = $ret['data']['expiry_time'];
+	$token['access_token'] = $ret['data']['access_token'];
+	return file_put_contents($file, json_encode($token));
+}

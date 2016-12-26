@@ -20,6 +20,7 @@ function post_data($url, $data) {
 	curl_close($ch);
 	return $result;
 } 
+//获取域名的记录信息
 function domainList($domainId) {
 	$url = 'https://dnsapi.cn/Record.List';
 	$config = array(
@@ -33,6 +34,7 @@ function domainList($domainId) {
 	$post_data = post_data($url, $config);
 	return json_decode($post_data, true);
 } 
+//解析域名
 function updateDomain($para) {
 	$url = 'https://dnsapi.cn/Record.Modify';
 	$config = array(
@@ -51,7 +53,7 @@ function updateDomain($para) {
 	$post_data = post_data($url, $config);
 	return json_decode($post_data, true);
 }
-
+//获取域名信息
 function getDomainInfo() {
 	$url = 'https://dnsapi.cn/Domain.List';
 	$config = array(

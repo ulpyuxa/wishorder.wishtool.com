@@ -1,6 +1,7 @@
 <?php
 include __DIR__.'/common.php';
 
+$argv[1]	= 'ulpyuxa';
 $account	= $argv[1];
 if(empty($account)) {
 	exit('请输入账号!');
@@ -31,6 +32,7 @@ for($i = 0; $i < $pages; $i++) {
 				'price'	=> $price,
 			);
 			$wishRet	= $wishProductApi->variantUpdate($data);
+			var_dump($wishRet);exit;
 			$wishRet	= json_decode($wishRet, true);
 			if($wishRet['code'] === 0) {
 				$sql	= 'update ws_product_'.$num.' set variantsPrice='.$price.' where productId="'.$itemVal['productId'].'" and variantsSku="'.$detailVal['variantsSku'].'"';

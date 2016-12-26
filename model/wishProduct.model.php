@@ -10,7 +10,7 @@ class WishProductModel {
 
 	public function __construct() {
 	}
-	
+
 	public static function initDB() {
 		global $dbConn;
 		self::$dbConn = $dbConn;
@@ -199,7 +199,7 @@ class WishProductModel {
 			$sql	= 'update ws_product_'.$num.' set '.implode(',', $setData).' where productId="'.$val['productId'].'" and variantsSku="'.$val['variantsSku'].'"';
 			$query	= self::$dbConn->query($sql);
 		}
-		return self::$dbConn->commit();		
+		return self::$dbConn->commit();
 	}
 
 	/**
@@ -277,7 +277,7 @@ class WishProductModel {
 	 */
 	public function statisticProduct() {
 		self::initDB();
-		
+
 		$account= isset($_COOKIE['account']) ? $_COOKIE['account'] : 'geshan0728';
 		$sql	= 'SELECT COUNT(reviewStatus) as counts, reviewStatus FROM ws_product WHERE isOnline="online" and account="'.$account.'" GROUP BY reviewStatus';
 		$query	= self::$dbConn->query($sql);
@@ -334,7 +334,7 @@ class WishProductModel {
 		if(empty($productId)) {
 			self::$errCode	= '1502';
 			self::$errMsg	= '产品ID不正确！';
-			return false;			
+			return false;
 		}
 		$action			= isset($_REQUEST['action']) ? $_REQUEST['action'] : $action;
 		$productInfo	= self::getInfoByProductId($productId);
@@ -346,7 +346,7 @@ class WishProductModel {
 		} else {
 			self::$errCode	= '1503';
 			self::$errMsg	= '请选择需要的操作...';
-			return false;			
+			return false;
 		}
 		if(isset($operate[0]['code']) && empty($operate[0]['code'])) {
 			$sql	= 'UPDATE ws_product SET isOnline="'.strtolower($action).'" WHERE productId="'.$productId.'"';
@@ -364,12 +364,12 @@ class WishProductModel {
 	}
 
 	/**
-	 * 功能：根据url地址，拉取wish平台的关键字标题和描述 
+	 * 功能：根据url地址，拉取wish平台的关键字标题和描述
 	 */
 	public function getItemDetail($url) {
 		set_time_limit(0);
 		/*ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
-		$opts = array( 
+		$opts = array(
 			'http' => array (
 				'method'	=> "GET",
 				'timeout'	=> 3,
@@ -557,7 +557,7 @@ class WishProductModel {
 
 	public function updateWaitData($spu, $account) {
 		self::initDB();
-		
+
 		if(stripos($spu, '#') > 0) {
 			$spuInfo	= explode('#', $spu);
 			$spu		= $spuInfo[0];
@@ -568,7 +568,7 @@ class WishProductModel {
 
 	public function delWaitProduct($spu = '') {
 		self::initDB();
-		
+
 		$spu	= isset($spu) ? $spu : $_REQUEST['spuSn'];
 		$sql	= 'update ws_wait_publish set isDelete="Yes" where spuSn="'.$spu.'"';
 		return self::$dbConn->query($sql);
