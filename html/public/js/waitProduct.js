@@ -14,13 +14,13 @@ $(document).on("click", 'input[name="pushBtn"]', function(){
 				alertify.alert("刊登状态", ret.errMsg);
 				return false;
 			}
-			if(typeof(ret['data'][0]['data']['Product']['id']) != undefined) {		//为false表示
-				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功! 系统将跳转到待刊登列表页面', 
+			if(ret.data === true) {		//为false表示
+				alertify.alert('刊登状态', $("#spu").val() + ':商品上传成功! 系统将跳转到待刊登列表页面',
 					function(){
 						window.location.href="/index.php?mod=wishProduct&act=uploadProductList&account="+account;
 					}
 				);
-				
+
 			} else {
 				alertify.alert('刊登状态', $("#spu").val() + ':商品上传失败, 请重试!');
 			}
@@ -91,7 +91,7 @@ function delWaitProduct(spuSn) {
 					}
 				}
 			});
-		}, 
+		},
 		function(){
 			//alertify.alert('料号:'+spuSn+', 删除失败');
 		}
