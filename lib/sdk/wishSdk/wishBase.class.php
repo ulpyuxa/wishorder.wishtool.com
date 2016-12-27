@@ -45,11 +45,18 @@ class WishBase {
 	 * 功能: 单个请求
 	 */
 	public function sendHttpRequest ($para) {
+		$paraStr = array();
+		foreach ($para as $key => $val) {
+			if($val === "") {
+				unset($para[$key]);
+				continue;
+			}
+			$paraStr[] = $key.'=%s';
+		}
 		$url	= self::$url.$this->api.'/'.$this->act.'?access_token='.self::$access_token.'&'.http_build_query($para);
-		//echo $url;exit;
 		if($this->act === 'update' && $this->api === 'variant') {
 			$url = sprintf(
-				"https://china-merchant.wish.com/api/v2/variant/update?access_token=%s&sku=%s&&price=%s",
+				"https://china-merchant.wish.com/api/v2/".$this->act."/update?access_token=%s&sku=%s&&price=%s",
 				self::$access_token, $para['sku'], $para['price']);
 			$context = stream_context_create(array(
 				'http' => array(
@@ -60,7 +67,17 @@ class WishBase {
 			// Send the request
 			$ret = file_get_contents($url, TRUE, $context);
 		} else {
-			$ret	= $this->curlResult(array($url));
+			$paraStr[] = 'access_token=%s';
+			$para['access_token'] = self::$access_token;
+			$url = vsprintf("https://china-merchant.wish.com/api/v2/product/add?".implode("&", $paraStr),$para);
+			$context = stream_context_create(array(
+				'http' => array(
+					'method'        => 'GET',
+					'ignore_errors' => true,
+				),
+			));
+			// Send the request
+			$ret = file_get_contents($url, TRUE, $context);
 		}
 		return $ret;
 	}

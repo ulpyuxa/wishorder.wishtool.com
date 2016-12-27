@@ -49,7 +49,7 @@ class WishProductApi extends WishBase {
 		$ret = $this->sendHttpRequest($para);
 		return $ret;
 	}
-	
+
 	/**
 	 * 功能: 创建商品主料号
 	 */
@@ -57,25 +57,25 @@ class WishProductApi extends WishBase {
 		$this->api = 'product';
 		$this->act = 'add';
 		$para	= array(
-			'main_image'		=> $data['main_image'],
-			'name'				=> $data['name'],
-			'description'		=> $data['description'],
-			'tags'				=> $data['tags'],
-			'sku'				=> $data['sku'],
-			'inventory'			=> $data['inventory'],
-			'price'				=> $data['price'],
-			'shipping'			=> $data['shipping'],
-			'extra_images'		=> $data['extra_images'],
-			'parent_sku'		=> $data['parent_sku'],
-			'msrp'				=> $data['msrp'],
-			'color'				=> $data['color'],
-			'size'				=> $data['size'],
-			'brand'				=> $data['brand'],
-			'shipping_time'		=> $data['shipping_time'],
-			'landing_page_url'	=> $data['landing_page_url'],
-			'upc'				=> $data['upc'],
+			'main_image'		=> isset($data['main_image']) ? $data['main_image'] : '',
+			'name'				=> isset($data['name']) ? $data['name'] : '',
+			'description'		=> isset($data['description']) ? $data['description'] : '',
+			'tags'				=> isset($data['tags']) ? $data['tags'] : '',
+			'sku'				=> isset($data['sku']) ? $data['sku'] : '',
+			'inventory'			=> isset($data['inventory']) ? $data['inventory'] : '',
+			'price'				=> isset($data['price']) ? $data['price'] : '',
+			'shipping'			=> isset($data['shipping']) ? $data['shipping'] : '',
+			'extra_images'		=> isset($data['extra_images']) ? $data['extra_images'] : '',
+			'parent_sku'		=> isset($data['parent_sku']) ? $data['parent_sku'] : '',
+			'msrp'				=> isset($data['msrp']) ? $data['msrp'] : '',
+			'color'				=> isset($data['color']) ? $data['color'] : '',
+			'size'				=> isset($data['size']) ? $data['size'] : '',
+			'brand'				=> isset($data['brand']) ? $data['brand'] : '',
+			'shipping_time'		=> isset($data['shipping_time']) ? $data['shipping_time'] : '',
+			'landing_page_url'	=> isset($data['landing_page_url']) ? $data['landing_page_url'] : '',
+			'upc'				=> isset($data['upc']) ? $data['upc'] : '',
 		);
-		return $ret = $this->sendHttpRequest($para);
+		return json_decode($ret = $this->sendHttpRequest($para), true);
 	}
 
 	/**

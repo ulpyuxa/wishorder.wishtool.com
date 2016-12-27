@@ -512,8 +512,8 @@ class WishProductModel {
 				);
 			}
 		}
-//		print_r($spuData);
-//		print_r($skuData);exit;
+		//print_r($spuData);
+		//print_r($skuData);exit;
 		$spuStatus = $wishProductApi->createProductSpu($spuData);
 		errorLog($_REQUEST['spu'].':'.json_encode($spuStatus), 'uploadStatus', 'uploadProduct');
 		if(!empty($spuStatus)) {		//上传成功，已经返回了数据
@@ -525,7 +525,7 @@ class WishProductModel {
 				errorLog($_REQUEST['spu'].':'.json_encode($skuStatus), 'uploadStatus', 'uploadProduct');
 			}
 		}
-		return $spuStatus;
+		return isset($spuStatus['data']['Product']) ? true : false;
 	}
 
 	public function getProductBySpu($spu, $account) {
