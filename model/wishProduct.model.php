@@ -186,13 +186,14 @@ class WishProductModel {
 	/**
 	 * 功能: 更新商品分表的数据
 	 */
-	public function updateProductSub($data, $num) {
+	public function updateProductSub($data, $num="") {
 		self::initDB();
 
 		self::$dbConn->autocommit(FALSE);
 		foreach($data as $key => $val) {
 			$updateKey	= array_keys($val);
 			$setData	= array();
+			print_r($val);exit('ffff');
 			foreach($updateKey as $updateKey => $updateVal) {
 				$setData[] = $updateVal.'="'.$val[$updateVal].'"';
 			}
