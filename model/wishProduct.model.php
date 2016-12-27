@@ -24,13 +24,13 @@ class WishProductModel {
 		$account		= $_REQUEST['account'];		//获取进程的参数
 		$wishProduct	= new WishProductApi($account, 1);
 		$products		= $wishProduct->getAllProduct($start, $count, $since);
-		if(!empty($products[0]['data'])) {	//开始插入数据到数据库
-			self::insertProductInfo($products[0]['data'], $account);
+		if(!empty($products['data'][0]['Product'])) {	//开始插入数据到数据库
+			self::insertProductInfo($products['data'], $account);
 		} else {	//如果没有数据则退出递归方法
 			return true;
 		}
-		if(isset($products[0]['paging']['next'])) {
-			$pageInfo	= parse_url($products[0]['paging']['next']);
+		if(isset($products['paging']['next'])) {
+			$pageInfo	= parse_url($products['paging']['next']);
 			$paraInfo	= explode('&', $pageInfo['query']);
 			$para		= array();
 			foreach($paraInfo as $k => $v) {
@@ -197,6 +197,7 @@ class WishProductModel {
 				$setData[] = $updateVal.'="'.$val[$updateVal].'"';
 			}
 			$sql	= 'update ws_product_'.$num.' set '.implode(',', $setData).' where productId="'.$val['productId'].'" and variantsSku="'.$val['variantsSku'].'"';
+			echo $sql;exit;
 			$query	= self::$dbConn->query($sql);
 		}
 		return self::$dbConn->commit();

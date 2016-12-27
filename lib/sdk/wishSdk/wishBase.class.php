@@ -69,7 +69,7 @@ class WishBase {
 		} else {
 			$paraStr[] = 'access_token=%s';
 			$para['access_token'] = self::$access_token;
-			$url = vsprintf("https://china-merchant.wish.com/api/v2/product/add?".implode("&", $paraStr),$para);
+			$url = vsprintf("https://china-merchant.wish.com/api/v2/".$this->api."/".$this->act."?".implode("&", $paraStr),$para);
 			$context = stream_context_create(array(
 				'http' => array(
 					'method'        => 'GET',
@@ -79,7 +79,7 @@ class WishBase {
 			// Send the request
 			$ret = file_get_contents($url, TRUE, $context);
 		}
-		return $ret;
+		return json_decode($ret, true);
 	}
 
 	/**

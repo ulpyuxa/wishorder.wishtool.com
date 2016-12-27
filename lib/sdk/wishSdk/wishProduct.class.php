@@ -75,7 +75,7 @@ class WishProductApi extends WishBase {
 			'landing_page_url'	=> isset($data['landing_page_url']) ? $data['landing_page_url'] : '',
 			'upc'				=> isset($data['upc']) ? $data['upc'] : '',
 		);
-		return json_decode($ret = $this->sendHttpRequest($para), true);
+		return $ret = $this->sendHttpRequest($para);
 	}
 
 	/**
