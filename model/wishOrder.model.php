@@ -10,7 +10,7 @@ class WishOrderModel {
 
 	public function __construct() {
 	}
-	
+
 	public static function initDB() {
 		global $dbConn;
 		self::$dbConn = $dbConn;
@@ -18,7 +18,7 @@ class WishOrderModel {
 
 	public static function getOrderData() {
 		self::initDB();
-		
+
 		//设置当前页及limit
 		$page	= isset($_GET['page']) ? ((int) $_GET['page']) : 1;
 		$limit	= ' limit '.(($page - 1)*30).', 30';
@@ -58,7 +58,7 @@ class WishOrderModel {
 		return array('data' => $ret, 'pageHtml' => $pageHtml);
 	}
 
-	/** 
+	/**
 	 * 根据订单ID查询订单
 	 */
 	public static function getOrderDataById($ids = array()) {
@@ -81,26 +81,26 @@ class WishOrderModel {
 	public static function addOrder($orderData, $account) {
 		self::initDB();
 		$orderId	= array();
-		foreach($orderData[0]['data'] as $key => $val) {
+		foreach($orderData['data'] as $key => $val) {
 			$orderId[] = $val['Order']['order_id'];
 		}
 		$oldOrder	= array();
 		$ret		= self::getOrderDataById($orderId);
-		foreach($orderData[0]['data'] as $k => $v) {		//删除重复的订单
+		foreach($orderData['data'] as $k => $v) {		//删除重复的订单
 			if(isset($ret[$v['Order']['order_id']])) {
 				$oldOrder[$v['Order']['order_id']] = $v['Order']['state'];
 				unset($orderData[0]['data'][$k]);
 			}
 		}
 		self::updateOrderInfo($oldOrder);
-		if(!isset($orderData[0]['data']) || empty($orderData[0]['data'])) {
+		if(!isset($orderData['data']) || empty($orderData['data'])) {
 			self::$errCode	= '1001';
 			self::$errMsg	= '遗憾, 还没有新订单';
 			return false;
 		}
 		$orderInfo = array();
 		$insertSql = array();
-		foreach($orderData[0]['data'] as $k => $v) {
+		foreach($orderData['data'] as $k => $v) {
 			$skuInfo		= explode('#', $v['Order']['sku']);
 			$trueSku		= $skuInfo[0] === 'ZSON' ? $skuInfo[1] : $skuInfo[0];		//兼容处理
 			$trueSkuArr		= explode("_", $trueSku);
@@ -205,7 +205,7 @@ class WishOrderModel {
 			self::$errCode	= '1102';
 			self::$errMsg	= $errStr;
 			return false;
-		}		
+		}
 	}
 	/**
 	 * 功能: 上传跟踪号
@@ -223,7 +223,7 @@ class WishOrderModel {
 			//跟踪号上传成功
 			$sql	= 'update ws_order set state="SHIPPED",shippingMethod="'.$_REQUEST['transport'].'",
 											tracknumber="'.$_REQUEST['trackNumber'].'",
-											shipNote="'.$_REQUEST['shipNote'].'" 
+											shipNote="'.$_REQUEST['shipNote'].'"
 						where order_id="'.$_REQUEST['orderId'].'" and account="'.$account.'"';
 			$query	= self::$dbConn->query($sql);
 			if(!$query) {

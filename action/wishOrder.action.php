@@ -54,6 +54,6 @@ class WishOrderAct extends CommonAct{
 	 * 功能: 发货提醒模板列表
 	 */
 	public function act_shipNodeList() {
-		
+
 	}
 }

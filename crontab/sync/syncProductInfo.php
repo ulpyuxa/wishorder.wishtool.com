@@ -23,19 +23,3 @@ if(!empty($ret)) {
 }
 $data	= WishProductModel::getWishProduct(0, 50, $since);
 var_dump($data);
-
-function getAccountToken($account) {
-	$url = 'http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728';
-	$ret = json_decode(file_get_contents($url), true);
-	if(empty($ret)) {
-		return false;
-	}
-	$file = WEB_PATH.'conf/key/1/'.$account.'.key';
-	if(!is_file($file)) {
-		return false;
-	}
-	$token = json_decode(file_get_contents($file), true);
-	$token['expiry_time'] = $ret['data']['expiry_time'];
-	$token['access_token'] = $ret['data']['access_token'];
-	return file_put_contents($file, json_encode($token));
-}

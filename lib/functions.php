@@ -10,7 +10,7 @@
 			case 'string':
 			{
 				//$str = mb_convert_encoding ($str,'UTF-8','GB2312,BIG5,ISO-8859-1');
-				$str = htmlspecialchars($str,ENT_QUOTES ,'UTF-8');//•ENT_QUOTES 
+				$str = htmlspecialchars($str,ENT_QUOTES ,'UTF-8');//•ENT_QUOTES
 				break;
 			}
 			case 'array':
@@ -49,26 +49,26 @@
 		return $status;
 	}
 
-	function http($url, $data='', $method='GET'){   
-		$curl = curl_init(); // 启动一个CURL会话  
-		curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址  
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查  
-		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在  
-		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'); // 模拟用户使用的浏览器  
-		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转  
-		curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer  
-		if($method=='POST'){  
-			curl_setopt($curl, CURLOPT_POST, 1); // 发送一个常规的Post请求  
-			if ($data != ''){  
-				curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Post提交的数据包  
-			}  
-		}  
-		curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环  
-		curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容  
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回  
-		$tmpInfo = curl_exec($curl); // 执行操作  
-		curl_close($curl); // 关闭CURL会话  
-		return $tmpInfo; // 返回数据  
+	function http($url, $data='', $method='GET'){
+		$curl = curl_init(); // 启动一个CURL会话
+		curl_setopt($curl, CURLOPT_URL, $url); // 要访问的地址
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false); // 对认证证书来源的检查
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); // 从证书中检查SSL加密算法是否存在
+		curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'); // 模拟用户使用的浏览器
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1); // 使用自动跳转
+		curl_setopt($curl, CURLOPT_AUTOREFERER, 1); // 自动设置Referer
+		if($method=='POST'){
+			curl_setopt($curl, CURLOPT_POST, 1); // 发送一个常规的Post请求
+			if ($data != ''){
+				curl_setopt($curl, CURLOPT_POSTFIELDS, $data); // Post提交的数据包
+			}
+		}
+		curl_setopt($curl, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
+		curl_setopt($curl, CURLOPT_HEADER, 0); // 显示返回的Header区域内容
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1); // 获取的信息以文件流的形式返回
+		$tmpInfo = curl_exec($curl); // 执行操作
+		curl_close($curl); // 关闭CURL会话
+		return $tmpInfo; // 返回数据
 	}
 
 	/**
@@ -79,4 +79,20 @@
 		$url	= 'http://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId=A4D660A48A6A97CCA791C34935E4C02BBB1BEC1C&from='.$from.'&to='.$to.'&text='.$str;
 		$result	= file_get_contents($url);
 		return $result;
+	}
+
+	function getAccountToken($account) {
+		$url = 'http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728';
+		$ret = json_decode(file_get_contents($url), true);
+		if(empty($ret)) {
+			return false;
+		}
+		$file = WEB_PATH.'conf/key/1/'.$account.'.key';
+		if(!is_file($file)) {
+			return false;
+		}
+		$token = json_decode(file_get_contents($file), true);
+		$token['expiry_time'] = $ret['data']['expiry_time'];
+		$token['access_token'] = $ret['data']['access_token'];
+		return file_put_contents($file, json_encode($token));
 	}

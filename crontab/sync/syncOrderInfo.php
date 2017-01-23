@@ -9,5 +9,6 @@ include __DIR__.'/../common.php';
 global $dbConn;
 
 $_REQUEST['account'] = isset($argv[1]) ? $argv[1] : 'geshan0728';
+$freshToken = getAccountToken($_REQUEST['account']);
 $data = WishOrderAct :: act_wishOrderSync();
 var_dump($data);
