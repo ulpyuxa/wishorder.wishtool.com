@@ -78,9 +78,9 @@
 										<th width="5%">图片</th>
 										<th width="10%">料号</th>
 										<th width="5%">价格</th>
-										<th width="53%">商品标题</th>
 										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=saveSold&isOnline=online&order={{$productData.order}}">收藏数量</a></th>
 										<th width="5%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=numSold&isOnline=online&order={{$productData.order}}">订单数量</a></th>
+										<th width="53%">商品标题</th>
 										<th width="8%"><a href="./index.php?mod=wishProduct&act=wishProductList&orderBy=reviewStatus&isOnline=online&order={{$productData.order}}">状态</a></th>
 										<th width="10%">操作</th>
 									</tr>
@@ -102,9 +102,9 @@
 											</td>
 											<td>{{$v.spu}}</td>
 											<td>${{$v.price}}</td>
-											<td><a href="https://www.wish.com/c/{{$v.productId}}" target="_blank">{{$v.title}}</a></td>
 											<td>{{$v.saveSold}}</td>
 											<td>{{$v.numSold}}</td>
+											<td><a href="https://www.wish.com/c/{{$v.productId}}" target="_blank">{{$v.title}}</a></td>
 											<td>{{if $v.reviewStatus == 'approved'}}<font color="green">已批准</font>{{else if $v.reviewStatus == 'pending'}}<font color="red">待审核</font>{{else}}已拒绝{{/if}}</td>
 											<td>
 												<select name="operateProduct" class="form-control" productId="{{$v.productId}}" isPromoted="{{$v.isPromoted}}">
