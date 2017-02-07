@@ -190,6 +190,7 @@ class WishProductModel {
 
 		self::$dbConn->autocommit(FALSE);
 		foreach($data as $key => $val) {
+			print_r($val);exit;
 			$updateKey	= array_keys($val);
 			$setData	= array();
 			foreach($updateKey as $updateKey => $updateVal) {
@@ -209,6 +210,7 @@ class WishProductModel {
 		self::$dbConn->autocommit(FALSE);
 		foreach($data as $k => $v) {
 			$sql = 'update ws_product set numSold="'.$v['numSold'].'",
+						account			= "'.$v['account'].'",
 						saveSold		= "'.$v['saveSold'].'",
 						reviewStatus	= "'.$v['reviewStatus'].'",
 						isPromoted		= "'.$v['isPromoted'].'",

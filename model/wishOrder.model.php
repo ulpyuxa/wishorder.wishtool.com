@@ -88,7 +88,10 @@ class WishOrderModel {
 		$ret		= self::getOrderDataById($orderId);
 		foreach($orderData['data'] as $k => $v) {		//删除重复的订单
 			if(isset($ret[$v['Order']['order_id']])) {
-				$oldOrder[$v['Order']['order_id']] = $v['Order']['state'];
+				$oldOrder[$v['Order']['order_id']] = array(
+					'state' => $v['Order']['state'],
+					'account' => $account,
+				);
 				unset($orderData['data'][$k]);
 			}
 		}
@@ -170,7 +173,7 @@ class WishOrderModel {
 		if(!empty($orderState)) {
 			self::$dbConn->autocommit(FALSE);
 			foreach($orderState as $k => $v) {
-				$sql	= 'update ws_order set state="'.$v.'" where order_id="'.$k.'"';
+				$sql	= 'update ws_order set state="'.$v['state'].'", account="'.$v['account'].'" where order_id="'.$k.'"';
 				$query	= self::$dbConn->query($sql);
 			}
 			self::$dbConn->commit();

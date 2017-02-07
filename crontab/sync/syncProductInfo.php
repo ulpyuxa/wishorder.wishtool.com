@@ -11,7 +11,7 @@ global $dbConn;
 
 $since				= '';
 $_REQUEST['page']	= 1;
-$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'ulpyuxa';
+$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'geshan0728';
 $freshToken = getAccountToken($_REQUEST['account']);
 if(!$freshToken) {
 	exit('token更新失败！');
