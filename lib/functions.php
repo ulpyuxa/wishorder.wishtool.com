@@ -82,9 +82,11 @@
 	}
 
 	function getAccountToken($account) {
-		$url = 'http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account=geshan0728';
+		$url = 'http://token.valsun.cn/json.php?mod=api&act=reuqireWishAgentTokenByAccount&jsonp=1&account='.$account;
+		echo $url, PHP_EOL;
 		$ret = json_decode(file_get_contents($url), true);
-		if(empty($ret)) {
+		if(empty($ret) || $ret['errCode'] != 200) {
+			echo $ret['errMsg'], PHP_EOL;
 			return false;
 		}
 		$file = WEB_PATH.'conf/key/1/'.$account.'.key';
@@ -92,7 +94,7 @@
 			return false;
 		}
 		$token = json_decode(file_get_contents($file), true);
-		$token['expiry_time'] = $ret['data']['expiry_time'];
+		$token['expiry_time'] = isset($ret['data']['expiry_time']) ? $ret['data']['expiry_time'] : '';
 		$token['access_token'] = $ret['data']['access_token'];
 		return file_put_contents($file, json_encode($token));
 	}

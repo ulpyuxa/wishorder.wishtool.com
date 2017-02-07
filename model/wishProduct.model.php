@@ -172,7 +172,6 @@ class WishProductModel {
 				$num = substr(md5($maxVal[0]['spu']), 0, 1);
 				foreach($maxVal as $subKey => $subVal) {	//子表的数据
 					$sql = 'insert into ws_product_'.$num.'(`'.implode('`,`', array_keys($subVal)).'`) values ("'.implode('", "', $subVal).'")';
-					echo $sql, PHP_EOL;
 					self::$dbConn->query($sql);
 				}
 			}
@@ -193,12 +192,10 @@ class WishProductModel {
 		foreach($data as $key => $val) {
 			$updateKey	= array_keys($val);
 			$setData	= array();
-			print_r($val);exit('ffff');
 			foreach($updateKey as $updateKey => $updateVal) {
 				$setData[] = $updateVal.'="'.$val[$updateVal].'"';
 			}
 			$sql	= 'update ws_product_'.$num.' set '.implode(',', $setData).' where productId="'.$val['productId'].'" and variantsSku="'.$val['variantsSku'].'"';
-			echo $sql;exit;
 			$query	= self::$dbConn->query($sql);
 		}
 		return self::$dbConn->commit();

@@ -11,12 +11,12 @@ global $dbConn;
 
 $since				= '';
 $_REQUEST['page']	= 1;
-$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'geshan0728';
+$_REQUEST['account']= isset($argv[1]) ? $argv[1] : 'ulpyuxa';
 $freshToken = getAccountToken($_REQUEST['account']);
 if(!$freshToken) {
 	exit('token更新失败！');
 }
-echo $argv[1].' token更新成功', PHP_EOL;
+echo $_REQUEST['account'].' token更新成功', PHP_EOL;
 $ret	= WishProductModel::productList();
 if(!empty($ret)) {
 	$since = date('Y-m-d', strtotime('-2 days'));
