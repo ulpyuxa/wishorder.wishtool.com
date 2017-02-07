@@ -87,9 +87,12 @@ class WishOrderModel {
 		$oldOrder	= array();
 		$ret		= self::getOrderDataById($orderId);
 		foreach($orderData['data'] as $k => $v) {		//删除重复的订单
+			if($v['Order']['order_id'] === '588dd3aa72b765584542998c') {
+				print_r($v);exit;
+			}
 			if(isset($ret[$v['Order']['order_id']])) {
 				$oldOrder[$v['Order']['order_id']] = $v['Order']['state'];
-				unset($orderData[0]['data'][$k]);
+				unset($orderData['data'][$k]);
 			}
 		}
 		self::updateOrderInfo($oldOrder);
