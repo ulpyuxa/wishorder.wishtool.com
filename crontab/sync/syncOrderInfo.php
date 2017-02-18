@@ -9,11 +9,11 @@ include __DIR__.'/../common.php';
 global $dbConn;
 
 $_REQUEST['account'] = isset($argv[1]) ? $argv[1] : 'geshan0728';
-$freshToken = getAccountToken($_REQUEST['account']);
+/*$freshToken = getAccountToken($_REQUEST['account']);
 if(!$freshToken) {
 	exit('token更新失败！');
 }
-echo $_REQUEST['account'].' token更新成功', PHP_EOL;
+echo $_REQUEST['account'].' token更新成功', PHP_EOL;*/
 $data = WishOrderAct :: act_wishOrderSync();
 if(!$data) {
 	echo WishOrderAct::$errMsg, PHP_EOL;
