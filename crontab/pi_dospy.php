@@ -66,6 +66,11 @@ function getDomainInfo() {
 	$post_data = post_data($url, $config);
 	return json_decode($post_data, true);
 }
+function getOpenWRTIP(){
+	$url = 'http://192.168.1.1/ip.html';
+	$ip = file_get_contents($url);
+	return trim($ip);
+}
 function getIp1() {		//用来获取路由器的外网IP
 	//$url = 'http://ip.taobao.com/service/getIpInfo2.php?ip=myip';
 	$url = 'http://ip.chinaz.com/getip.aspx';
@@ -117,12 +122,22 @@ if(empty($domainId)) {
 	exit('本次未获取到domainId');
 }
 $records = domainList($domainId);
-$myIp	= getIp1();
+/*$myIp	= getIp1();
 if(empty($myIp)) {
 	$myIp	= getIp2();
 }
 if(empty($myIp)) {
 	$myIp	= getIp3();
+}*/
+$myIp = getOpenWRTIP();
+$myIp = trim($myIp);
+if(is_file(__DIR__.'/storeIp.txt')) {
+	$storeIp = file_get_contents(__DIR__.'/storeIp.txt');
+} else {
+	$storeIp = "";
+}
+if($myIp == $storeIp) {
+	exit('本次获取的IP与上次获取的IP一致，不需要进行解析');
 }
 echo $myIp, PHP_EOL;
 if(empty($myIp)) {

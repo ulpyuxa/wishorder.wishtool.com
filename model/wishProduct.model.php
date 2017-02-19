@@ -190,7 +190,6 @@ class WishProductModel {
 
 		self::$dbConn->autocommit(FALSE);
 		foreach($data as $key => $val) {
-			print_r($val);exit;
 			$updateKey	= array_keys($val);
 			$setData	= array();
 			foreach($updateKey as $updateKey => $updateVal) {

@@ -21,5 +21,6 @@ $ret	= WishProductModel::productList();
 if(!empty($ret)) {
 	$since = date('Y-m-d', strtotime('-2 days'));
 }
+$since="";
 $data	= WishProductModel::getWishProduct(0, 50, $since);
 var_dump($data);
