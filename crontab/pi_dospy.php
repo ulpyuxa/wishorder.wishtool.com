@@ -66,6 +66,11 @@ function getDomainInfo() {
 	$post_data = post_data($url, $config);
 	return json_decode($post_data, true);
 }
+function getOpenWRTIP(){
+	$url = 'http://192.168.1.1/ip.html';
+	$ip = file_get_contents($url);
+	return trim($ip);
+}
 function getIp1() {		//用来获取路由器的外网IP
 	//$url = 'http://ip.taobao.com/service/getIpInfo2.php?ip=myip';
 	$url = 'http://ip.chinaz.com/getip.aspx';
@@ -93,6 +98,7 @@ function getIp2() {		//用来获取路由器的外网IP
 	$myIp		= @file_get_contents($url, false, stream_context_create($opts));
 	return trim($myIp);
 }
+//先得到IP
 function getIp3() {
     $url = 'http://www.ip138.com/ip2city.asp';
 	ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
@@ -105,7 +111,31 @@ function getIp3() {
 	$html		= @file_get_contents($url, false, stream_context_create($opts));
     preg_match('/\[(.*)\]/', $html, $myIp);
     return $myIp[1];
- }
+}
+/*$myIp	= getIp1();
+if(empty($myIp)) {
+	$myIp	= getIp2();
+}
+if(empty($myIp)) {
+	$myIp	= getIp3();
+}*/
+$myIp = getOpenWRTIP();
+$saveIp = "";
+if(is_file(__DIR__.'/saveIp.txt')) {
+	$saveIp = file_get_contents(__DIR__.'/saveIp.txt');
+}
+if(empty($myIp)) {
+        exit('本次未获取到IP，等待下次重试');
+}
+if($myIp === $saveIp) {
+        exit("本次获取的IP{$myIp}与存储的IP{$saveIp}一致，不需要再进行解析\r\n");
+}
+file_put_contents(__DIR__.'/saveIp.txt', $myIp);        //将IP存储到文件中
+
+echo '新IP：'.$myIp, PHP_EOL;
+
+//得到IP后再进行域名解析
+
 $domainInfo = getDomainInfo();
 $domainId	= 0;
 foreach($domainInfo['domains'] as $key => $val) {
@@ -117,18 +147,8 @@ if(empty($domainId)) {
 	exit('本次未获取到domainId');
 }
 $records = domainList($domainId);
-$myIp	= getIp1();
-if(empty($myIp)) {
-	$myIp	= getIp2();
-}
-if(empty($myIp)) {
-	$myIp	= getIp3();
-}
-echo $myIp, PHP_EOL;
-if(empty($myIp)) {
-	exit('本次未获取到IP，等待下次重试');
-}
-$siteArr= array('pi-order','order', 'mysql', 'www','invoice');
+
+$siteArr= array('pi-order','order', 'mysql', 'www','invoice', 'laravel');
 foreach($records['records'] as $k => $v) {
 	if(in_array($v['name'],$siteArr) && $v['value'] !== $myIp) {
 		$para = array(
