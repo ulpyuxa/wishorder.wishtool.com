@@ -147,8 +147,33 @@ if(empty($domainId)) {
 	exit('本次未获取到domainId');
 }
 $records = domainList($domainId);
+<<<<<<< HEAD
 
 $siteArr= array('pi-order','order', 'mysql', 'www','invoice', 'laravel');
+=======
+/*$myIp	= getIp1();
+if(empty($myIp)) {
+	$myIp	= getIp2();
+}
+if(empty($myIp)) {
+	$myIp	= getIp3();
+}*/
+$myIp = getOpenWRTIP();
+$myIp = trim($myIp);
+if(is_file(__DIR__.'/storeIp.txt')) {
+	$storeIp = file_get_contents(__DIR__.'/storeIp.txt');
+} else {
+	$storeIp = "";
+}
+if($myIp == $storeIp) {
+	exit('本次获取的IP与上次获取的IP一致，不需要进行解析');
+}
+echo $myIp, PHP_EOL;
+if(empty($myIp)) {
+	exit('本次未获取到IP，等待下次重试');
+}
+$siteArr= array('pi-order','order', 'mysql', 'www','invoice');
+>>>>>>> 8ff74f6359dfabcfd144991a606693df4f697e72
 foreach($records['records'] as $k => $v) {
 	if(in_array($v['name'],$siteArr) && $v['value'] !== $myIp) {
 		$para = array(
