@@ -98,6 +98,7 @@ function getIp2() {		//用来获取路由器的外网IP
 	$myIp		= @file_get_contents($url, false, stream_context_create($opts));
 	return trim($myIp);
 }
+//先得到IP
 function getIp3() {
     $url = 'http://www.ip138.com/ip2city.asp';
 	ini_set('user_agent', "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; .NET CLR 2.0.50727; .NET CLR 3.0.04506.30; GreenBrowser)");
@@ -134,6 +135,10 @@ if(empty($domainId)) {
 	exit('本次未获取到domainId');
 }
 $records = domainList($domainId);
+<<<<<<< HEAD
+
+$siteArr= array('pi-order','order', 'mysql', 'www','invoice', 'laravel');
+=======
 /*$myIp	= getIp1();
 if(empty($myIp)) {
 	$myIp	= getIp2();
@@ -146,6 +151,7 @@ if(empty($myIp)) {
 	exit('本次未获取到IP，等待下次重试');
 }
 $siteArr= array('pi-order','order', 'mysql', 'www','invoice');
+>>>>>>> 8ff74f6359dfabcfd144991a606693df4f697e72
 foreach($records['records'] as $k => $v) {
 	if(in_array($v['name'],$siteArr) && $v['value'] !== $myIp) {
 		$para = array(
