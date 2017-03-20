@@ -110,7 +110,19 @@ function getIp3() {
 	$html		= @file_get_contents($url, false, stream_context_create($opts));
     preg_match('/\[(.*)\]/', $html, $myIp);
     return $myIp[1];
- }
+}
+$myIp = getOpenWRTIP();
+$myIp = trim($myIp);
+if(is_file(__DIR__.'/storeIp.txt')) {
+	$storeIp = file_get_contents(__DIR__.'/storeIp.txt');
+} else {
+	$storeIp = "";
+}
+if($myIp == $storeIp) {
+	exit('本次获取的IP与上次获取的IP一致，不需要进行解析');
+}
+echo $myIp, PHP_EOL;
+
 $domainInfo = getDomainInfo();
 $domainId	= 0;
 foreach($domainInfo['domains'] as $key => $val) {
@@ -129,17 +141,7 @@ if(empty($myIp)) {
 if(empty($myIp)) {
 	$myIp	= getIp3();
 }*/
-$myIp = getOpenWRTIP();
-$myIp = trim($myIp);
-if(is_file(__DIR__.'/storeIp.txt')) {
-	$storeIp = file_get_contents(__DIR__.'/storeIp.txt');
-} else {
-	$storeIp = "";
-}
-if($myIp == $storeIp) {
-	exit('本次获取的IP与上次获取的IP一致，不需要进行解析');
-}
-echo $myIp, PHP_EOL;
+
 if(empty($myIp)) {
 	exit('本次未获取到IP，等待下次重试');
 }
