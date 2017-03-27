@@ -135,10 +135,8 @@ if(empty($domainId)) {
 	exit('本次未获取到domainId');
 }
 $records = domainList($domainId);
-<<<<<<< HEAD
 
 $siteArr= array('pi-order','order', 'mysql', 'www','invoice', 'laravel');
-=======
 /*$myIp	= getIp1();
 if(empty($myIp)) {
 	$myIp	= getIp2();
@@ -151,7 +149,6 @@ if(empty($myIp)) {
 	exit('本次未获取到IP，等待下次重试');
 }
 $siteArr= array('pi-order','order', 'mysql', 'www','invoice');
->>>>>>> 8ff74f6359dfabcfd144991a606693df4f697e72
 foreach($records['records'] as $k => $v) {
 	if(in_array($v['name'],$siteArr) && $v['value'] !== $myIp) {
 		$para = array(
